@@ -1,0 +1,24 @@
+[
+  
+    {
+      "title"    : "Markdown Extra Components",
+      "tags"     : "markdown, components, and extra",
+      "url"      : "/markdown-extra-components/",
+      "date"     : "24 Feb 2016"
+    } ,
+  
+    {
+      "title"    : "Markdown Common Elements",
+      "tags"     : "markdown and elements",
+      "url"      : "/markdown-common-elements/",
+      "date"     : "24 Feb 2016"
+    } ,
+  
+    {
+      "title"    : "Indigo, minimalist jekyll theme",
+      "tags"     : "jekyll",
+      "url"      : "/indigo-jekyll-theme/",
+      "date"     : "23 Jan 2016"
+    } 
+  
+]

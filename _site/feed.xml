@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<generator uri="http://jekyllrb.com" version="3.0.3">Jekyll</generator>
+<link href="http://sergiokopplin.github.io/indigo/feed.xml" rel="self" type="application/atom+xml" />
+<link href="http://sergiokopplin.github.io/indigo/" rel="alternate" type="text/html" />
+<updated>2016-03-10T20:46:36-08:00</updated>
+<id>http://sergiokopplin.github.io/indigo/</id>
+<title>John Doe</title>
+<entry>
+<title>Markdown Extra Components</title>
+<link href="http://sergiokopplin.github.io/indigo/markdown-extra-components/" rel="alternate" type="text/html" title="Markdown Extra Components" />
+<published>2016-02-24T22:48:00-08:00</published>
+<updated>2016-02-24T22:48:00-08:00</updated>
+<id>http://sergiokopplin.github.io/indigo/markdown-extra-components</id>
+<content type="html" xml:base="http://sergiokopplin.github.io/indigo/markdown-extra-components/">&lt;h2 id=&quot;summary&quot;&gt;Summary:&lt;/h2&gt;
+
+&lt;p&gt;You can pick as item to see how to apply in markdown.&lt;/p&gt;
+
+&lt;h4 id=&quot;especial-elements&quot;&gt;Especial Elements&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#evidence&quot;&gt;Evidence&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#side-by-side&quot;&gt;Side-by-Side&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#star&quot;&gt;Star&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#especial-breaker&quot;&gt;Especial Breaker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;external-elements&quot;&gt;External Elements&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#gist&quot;&gt;Gist&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#codepen&quot;&gt;Codepen&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#slideshare&quot;&gt;Slideshare&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#videos&quot;&gt;Videos&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;evidence&quot;&gt;Evidence&lt;/h2&gt;
+
+&lt;p&gt;You can try the evidence!&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;evidence&quot;&gt;Paragraphs can be written like so. A paragraph is the basic block of Markdown. A paragraph is what text will turn into when there is no reason it should become anything else.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}
+&lt;span class=&quot;evidence&quot;&gt;Paragraphs can be written like so. A paragraph is the basic block of Markdown. A paragraph is what text will turn into when there is no reason it should become anything else.&lt;/span&gt;
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;side-by-side&quot;&gt;Side-by-side&lt;/h2&gt;
+
+&lt;p&gt;Like the &lt;a href=&quot;https://medium.com/&quot;&gt;Medium&lt;/a&gt; component.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Image&lt;/strong&gt; on the left and &lt;strong&gt;Text&lt;/strong&gt; on the right:&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;div class=&quot;side-by-side&quot;&gt;
+    &lt;div class=&quot;toleft&quot;&gt;
+        &lt;img class=&quot;image&quot; src=&quot;{{ site.url }}/{{ site.picture }}&quot; alt=&quot;Alt Text&quot; /&gt;
+        &lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toright&quot;&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;div class=&quot;side-by-side&quot;&gt;
+    &lt;div class=&quot;toleft&quot;&gt;
+        &lt;img class=&quot;image&quot; src=&quot;{{ site.url }}/{{ site.picture }}&quot; alt=&quot;Alt Text&quot; /&gt;
+        &lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toright&quot;&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Text&lt;/strong&gt; on the left and &lt;strong&gt;Image&lt;/strong&gt; on the right:&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;div class=&quot;side-by-side&quot;&gt;
+    &lt;div class=&quot;toleft&quot;&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toright&quot;&gt;
+        &lt;img class=&quot;image&quot; src=&quot;{{ site.url }}/{{ site.picture }}&quot; alt=&quot;Alt Text&quot; /&gt;
+        &lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;div class=&quot;side-by-side&quot;&gt;
+    &lt;div class=&quot;toleft&quot;&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toright&quot;&gt;
+        &lt;img class=&quot;image&quot; src=&quot;{{ site.url }}/{{ site.picture }}&quot; alt=&quot;Alt Text&quot; /&gt;
+        &lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;star&quot;&gt;Star&lt;/h2&gt;
+
+&lt;p&gt;You can give evidence to a post. Just add the tag to the markdown file.&lt;/p&gt;
+
+&lt;p&gt;{% highlight raw %}
+star: true
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;especial-breaker&quot;&gt;Especial Breaker&lt;/h2&gt;
+
+&lt;p&gt;You can add a especial &lt;em&gt;hr&lt;/em&gt; to your text.&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;div class=&quot;breaker&quot;&gt;&lt;/div&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;div class=&quot;breaker&quot;&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;gist&quot;&gt;Gist&lt;/h2&gt;
+
+&lt;p&gt;You can add Gists from github.&lt;/p&gt;
+
+&lt;p&gt;{% highlight raw %}
+{ % gist sergiokopplin/5afb058da029a13de73e % }
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;{% gist sergiokopplin/5afb058da029a13de73e %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;codepen&quot;&gt;Codepen&lt;/h2&gt;
+
+&lt;p&gt;You can add Pens from Codepen.&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;p data-height=&quot;268&quot; data-theme-id=&quot;0&quot; data-slug-hash=&quot;gfdDu&quot; data-default-tab=&quot;result&quot; data-user=&quot;chriscoyier&quot; class=&quot;codepen&quot;&gt;
+    See the Pen &lt;a href=&quot;http://codepen.io/chriscoyier/pen/gfdDu/&quot;&gt;Crappy Recreation of the Book Cover of *The Flame Alphabet*&lt;/a&gt; by Chris Coyier (&lt;a href=&quot;http://codepen.io/chriscoyier&quot;&gt;&lt;a href=&quot;https://github.com/chriscoyier&quot; class=&quot;user-mention&quot;&gt;@chriscoyier&lt;/a&gt;&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;//assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p data-height=&quot;268&quot; data-theme-id=&quot;0&quot; data-slug-hash=&quot;gfdDu&quot; data-default-tab=&quot;result&quot; data-user=&quot;chriscoyier&quot; class=&quot;codepen&quot;&gt;See the Pen &lt;a href=&quot;http://codepen.io/chriscoyier/pen/gfdDu/&quot;&gt;Crappy Recreation of the Book Cover of *The Flame Alphabet*&lt;/a&gt; by Chris Coyier (&lt;a href=&quot;http://codepen.io/chriscoyier&quot;&gt;&lt;a href=&quot;https://github.com/chriscoyier&quot; class=&quot;user-mention&quot;&gt;@chriscoyier&lt;/a&gt;&lt;/a&gt;) on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/p&gt;
+&lt;script async=&quot;&quot; src=&quot;//assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;slideshare&quot;&gt;Slideshare&lt;/h2&gt;
+
+&lt;p&gt;Add your presentations here!&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/key/hqDhSJoWkrHe7l&quot; width=&quot;560&quot; height=&quot;310&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen=&quot;&quot;&gt; &lt;/iframe&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/key/hqDhSJoWkrHe7l&quot; width=&quot;560&quot; height=&quot;310&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen=&quot;&quot;&gt; &lt;/iframe&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;videos&quot;&gt;Videos&lt;/h2&gt;
+
+&lt;p&gt;Do you want some videos? Youtube, Vimeo or Vevo? Copy the embed code and paste on your post!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;310&quot; src=&quot;https://www.youtube.com/embed/r7XhWUDj-Ts&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;310&quot; src=&quot;https://www.youtube.com/embed/r7XhWUDj-Ts&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+</content>
+<category term="markdown" />
+<category term="components" />
+<category term="extra" />
+<summary>Summary:</summary>
+</entry>
+<entry>
+<title>Markdown Common Elements</title>
+<link href="http://sergiokopplin.github.io/indigo/markdown-common-elements/" rel="alternate" type="text/html" title="Markdown Common Elements" />
+<published>2016-02-24T22:44:00-08:00</published>
+<updated>2016-02-24T22:44:00-08:00</updated>
+<id>http://sergiokopplin.github.io/indigo/markdown-common-elements</id>
+<content type="html" xml:base="http://sergiokopplin.github.io/indigo/markdown-common-elements/">&lt;h2 id=&quot;summary&quot;&gt;Summary:&lt;/h2&gt;
+
+&lt;p&gt;You can pick as item to see how to apply in markdown.&lt;/p&gt;
+
+&lt;h3 id=&quot;comum-elements&quot;&gt;Comum Elements&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#basic-formatting&quot;&gt;Basic formatting&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#headings&quot;&gt;Headings&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#lists&quot;&gt;Lists&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#paragraph-modifiers&quot;&gt;Paragraph Modifiers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#urls&quot;&gt;Urls&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#horizontal-rule&quot;&gt;Horizontal Rule&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#images&quot;&gt;Images&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;basic-formatting&quot;&gt;Basic formatting&lt;/h2&gt;
+
+&lt;p&gt;This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what &lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; is &lt;em&gt;capable of doing&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;And that’s how to do it.&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}
+This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what [Markdown][some/link] is &lt;em&gt;capable of doing&lt;/em&gt;.
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;headings&quot;&gt;Headings&lt;/h2&gt;
+
+&lt;p&gt;There are six levels of headings. They correspond with the six levels of HTML headings. You’ve probably noticed them already in the page. Each level down uses one more hash character. But we are using just 4 of them.&lt;/p&gt;
+
+&lt;h1 id=&quot;headings-can-be-small&quot;&gt;Headings can be small&lt;/h1&gt;
+
+&lt;h2 id=&quot;headings-can-be-small-1&quot;&gt;Headings can be small&lt;/h2&gt;
+
+&lt;h3 id=&quot;headings-can-be-small-2&quot;&gt;Headings can be small&lt;/h3&gt;
+
+&lt;h4 id=&quot;headings-can-be-small-3&quot;&gt;Headings can be small&lt;/h4&gt;
+
+&lt;p&gt;{% highlight raw %}
+# Heading
+## Heading
+### Heading
+#### Heading
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;lists&quot;&gt;Lists&lt;/h2&gt;
+
+&lt;h3 id=&quot;ordered-list&quot;&gt;Ordered list&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;A second item&lt;/li&gt;
+  &lt;li&gt;Number 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;{% highlight raw %}
+1. Item 1
+2. A second item
+3. Number 3
+{% endhighlight %}&lt;/p&gt;
+
+&lt;h3 id=&quot;unordered-list&quot;&gt;Unordered list&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An item&lt;/li&gt;
+  &lt;li&gt;Another item&lt;/li&gt;
+  &lt;li&gt;Yet another item&lt;/li&gt;
+  &lt;li&gt;And there’s more…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;{% highlight raw %}
+* An item
+* Another item
+* Yet another item
+* And there’s more…
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;paragraph-modifiers&quot;&gt;Paragraph modifiers&lt;/h2&gt;
+
+&lt;h3 id=&quot;quote&quot;&gt;Quote&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Here is a quote. What this is should be self explanatory. Quotes are automatically indented when they are used.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;{% highlight raw %}
+&amp;gt; Here is a quote. What this is should be self explanatory.
+{% endhighlight raw %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;urls&quot;&gt;URLs&lt;/h2&gt;
+
+&lt;p&gt;URLs can be made in a handful of ways:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A named link to &lt;a href=&quot;http://www.markitdown.net/&quot;&gt;Mark It Down&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Another named link to &lt;a href=&quot;http://markitdown.net/&quot;&gt;Mark It Down&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Sometimes you just want a URL like &lt;a href=&quot;http://markitdown.net/&quot;&gt;http://markitdown.net/&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;{% highlight raw %}
+* A named link to &lt;a href=&quot;http://www.markitdown.net/&quot;&gt;MarkItDown&lt;/a&gt;.
+* Another named link to &lt;a href=&quot;http://markitdown.net/&quot;&gt;MarkItDown&lt;/a&gt;
+* Sometimes you just want a URL like &lt;a href=&quot;http://markitdown.net/&quot;&gt;http://markitdown.net/&lt;/a&gt;.
+{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;horizontal-rule&quot;&gt;Horizontal rule&lt;/h2&gt;
+
+&lt;p&gt;A horizontal rule is a line that goes across the middle of the page.
+It’s sometimes handy for breaking things up.&lt;/p&gt;
+
+&lt;h2 id=&quot;highlight-raw-&quot;&gt;{% highlight raw %}&lt;/h2&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;images&quot;&gt;Images&lt;/h2&gt;
+
+&lt;p&gt;Markdown can also contain images. I’ll need to add something here sometime.&lt;/p&gt;
+
+&lt;p&gt;{% highlight raw %}
+![Markdowm Image][/image/url]
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure Caption&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;{% highlight raw %}
+![Markdowm Image][/image/url]&lt;/p&gt;
+&lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
+&lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+
+&lt;p&gt;&lt;em&gt;Bigger Images&lt;/em&gt;?&lt;/p&gt;
+
+&lt;p&gt;{% highlight raw %}
+![Markdowm Image][/image/url]{: class=”bigger-image” }
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; class=&quot;bigger-image&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+
+&lt;p&gt;A HTML Example:&lt;/p&gt;
+
+&lt;p&gt;{% highlight html %}
+&amp;lt;!DOCTYPE html&amp;gt;&lt;/p&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Just a test&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;A CSS Example:&lt;/p&gt;
+
+&lt;p&gt;{% highlight css %}
+pre {
+    padding: 10px;
+    font-size: .8em;
+    white-space: pre;
+}&lt;/p&gt;
+
+&lt;p&gt;pre, table {
+    width: 100%;
+}&lt;/p&gt;
+
+&lt;p&gt;code, pre, tt {
+    font-family: Monaco, Consolas, Inconsolata, monospace, sans-serif;
+    background: rgba(0,0,0,.05);
+}
+{% endhighlight %}&lt;/p&gt;
+
+&lt;p&gt;A JS Example:&lt;/p&gt;
+
+&lt;p&gt;{% highlight js %}
+// Sticky Header
+$(window).scroll(function() {&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ($(window).scrollTop() &amp;gt; 900 &amp;amp;&amp;amp; !$(&quot;body&quot;).hasClass(&#39;show-menu&#39;)) {
+    $(&#39;#hamburguer__open&#39;).fadeOut(&#39;fast&#39;);
+} else if (!$(&quot;body&quot;).hasClass(&#39;show-menu&#39;)) {
+    $(&#39;#hamburguer__open&#39;).fadeIn(&#39;fast&#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;});
+{% endhighlight %}&lt;/p&gt;
+
+</content>
+<category term="markdown" />
+<category term="elements" />
+<summary>Summary:</summary>
+</entry>
+<entry>
+<title>Indigo, minimalist jekyll theme</title>
+<link href="http://sergiokopplin.github.io/indigo/indigo-jekyll-theme/" rel="alternate" type="text/html" title="Indigo, minimalist jekyll theme" />
+<published>2016-01-23T22:10:00-08:00</published>
+<updated>2016-01-23T22:10:00-08:00</updated>
+<id>http://sergiokopplin.github.io/indigo/indigo-jekyll-theme</id>
+<content type="html" xml:base="http://sergiokopplin.github.io/indigo/indigo-jekyll-theme/">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sergiokopplin/indigo/gh-pages/screen-shot.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Example of project - Indigo Minimalist Jekyll Template - &lt;a href=&quot;http://sergiokopplin.github.io/indigo/&quot;&gt;Demo&lt;/a&gt;. This is a simple and minimalist template for Jekyll for those who likes to eat noodles.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;What has inside?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Gulp&lt;/li&gt;
+  &lt;li&gt;BrowserSync&lt;/li&gt;
+  &lt;li&gt;Stylus&lt;/li&gt;
+  &lt;li&gt;SVG&lt;/li&gt;
+  &lt;li&gt;Travis&lt;/li&gt;
+  &lt;li&gt;No JS&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fsergiokopplin.github.io%2Findigo%2F&quot;&gt;98/100&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://sergiokopplin.github.io/indigo/&quot;&gt;Check it out&lt;/a&gt; here.
+If you need some help, just &lt;a href=&quot;http://github.com/sergiokopplin/indigo/issues&quot;&gt;tell me&lt;/a&gt;.&lt;/p&gt;
+</content>
+<category term="jekyll" />
+<summary></summary>
+</entry>
+</feed>

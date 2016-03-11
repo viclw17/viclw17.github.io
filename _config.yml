@@ -1,6 +1,6 @@
 # main text of home
-name: John Doe
-bio: 'A Man who travels the world eating noodles'
+name: Victor Li
+bio: 'Technical Artist | Computer Graphics Wizard | Mr. Curiosity'
 
 # if it's an external image, update below for true
 external-image: false
