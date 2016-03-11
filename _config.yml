@@ -3,7 +3,7 @@ name: Victor Li
 bio: 'Technical Artist | Computer Graphics Wizard | Mr. Curiosity'
 
 # if it's an external image, update below for true
-external-image: false
+external-image: true
 picture: 'assets/images/profile.jpg'
 
 url: http://sergiokopplin.github.io/indigo
