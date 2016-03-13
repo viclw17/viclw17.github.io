@@ -1,12 +1,12 @@
 # main text of home
 name: Victor Li
-bio: 'Technical Artist | Computer Graphics Wizard | Mr. Curiosity'
+bio: 'Technical Artist'
 
 # if it's an external image, update below for true
 external-image: true
 picture: 'assets/images/profile.jpg'
 
-url: http://sergiokopplin.github.io/indigo
+url: http://viclw17.github.io
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -20,22 +20,22 @@ analytics-google: 'UA-MYANALYTICS'
 disqus: mydisqus
 
 # if you don't have any of social below, comment the line
-facebook: myfacebook
-twitter: mytwitter
+facebook: https://www.facebook.com/viclw17
+twitter: https://twitter.com/viclw17
 # google: mygoogle
 # instagram: myinstagram
 # pinterest: mypinterest
-linkedin: mylinkedin
-youtube: myyoutube
-spotify: myspotify
-github: mygithub
-medium: medium
-email: myemail@gmail.com
+#linkedin: mylinkedin
+#youtube: myyoutube
+#spotify: myspotify
+#github: mygithub
+#medium: medium
+email: viclw17@gmail.com
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
 # normal = 560px / large = 810px
-width: normal
+width: large
 
 # if you don't need pagination, comment the *paginate* configs below
 # paginate: 5
@@ -55,7 +55,7 @@ read-time: true
 show-tags: true
 
 # related posts inside a post?
-related: true
+related: false #true
 
 # do you want some animations?
 animation: true
