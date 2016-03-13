@@ -20,15 +20,15 @@ analytics-google: 'UA-MYANALYTICS'
 disqus: mydisqus
 
 # if you don't have any of social below, comment the line
-facebook: https://www.facebook.com/viclw17
-twitter: https://twitter.com/viclw17
+facebook: viclw17
+twitter: viclw17
 # google: mygoogle
 # instagram: myinstagram
 # pinterest: mypinterest
 #linkedin: mylinkedin
 #youtube: myyoutube
 #spotify: myspotify
-#github: mygithub
+github: viclw17
 #medium: medium
 email: viclw17@gmail.com
 
