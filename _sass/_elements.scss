@@ -1,11 +1,11 @@
-hr { 
-    display: block; 
-    margin: 1em 0; 
+hr {
+    display: block;
+    margin: 1em 0;
     padding: 0;
-    height: 1px; 
-    border: 0; 
+    height: 1px;
+    border: 0;
     border-top: 1px solid #ccc;
-    border-bottom: 1px solid #fff; 
+    border-bottom: 1px solid #fff;
 }
 
 // Figures and images
@@ -18,7 +18,7 @@ figure {
   img {
     margin-bottom: 10px;
   }
-  a { 
+  a {
     img {
       @include translate(0, 0);
       -webkit-transition-duration: 0.25s;
@@ -56,7 +56,7 @@ figure {
   }
 }
 svg:not(:root) {
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 // Buttons
@@ -69,15 +69,15 @@ svg:not(:root) {
   background-color: $primary;
   color: $white;
   border-width: 2px !important;
-  border-style: solid !important;
+  //border-style: solid !important;
   border-color: $primary;
   @include rounded(3px);
   &:visited {
     color: $white;
   }
   &:hover {
-    background-color: $white;
-    color: $primary;
+    background-color: $victor-color;//$white;
+    color: $white;//$primary;
   }
 }
 .btn-inverse {
@@ -88,7 +88,7 @@ svg:not(:root) {
     color: $primary;
   }
   &:hover {
-    background-color: $primary;
+    background-color: $victor-color;//$primary;
     color: $white;
   }
 }

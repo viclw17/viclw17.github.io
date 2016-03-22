@@ -1,17 +1,23 @@
 {
-  "name": "hpstr-theme",
-  "author": "Michael Rose <michael@mademistakes.com>",
-  "homepage": "http://mmistakes.github.io/hpstr-jekyll-theme/",
+  "name": "",
+
+  "author": "",
+
+  "homepage": "",
+
   "repository": {
-    "type": "git",
-    "url": "git://github.com/mmistakes/hpstr-jekyll-theme.git"
+    "type": "",
+    "url": ""
   },
+
   "bugs": {
-    "url": "https://github.com/mmistakes/hpstr-jekyll-theme/issues"
+    "url": ""
   },
+
   "engines": {
     "node": ">= 0.10.0"
   },
+
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",

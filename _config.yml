@@ -1,41 +1,45 @@
-title:            Site Title
-description:      Describe your website here.
-disqus_shortname: 
-reading_time:     true
-words_per_minute: 200
+title:            1000 forms of bunnies
+description:      Victor's computer graphics playground.
+disqus_shortname:
+#reading_time:     true
+#words_per_minute: 200
+
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
 # When testing locally leave blank or use http://localhost:4000
-url:
+url: # http://viclw17.github.io
 
 # Owner/author information
 owner:
-  name:           Your Name
+  name:           Victor Li
   avatar:         avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          you@email.com
+  bio:            "Technical Artist,"
+  bio1:            "CG Engineer,"
+  bio2:            "Mr. Curiosity."
+  email:          viclw17@gmail.com
+
   # Social networking links used in footer. Update and remove as you like.
-  twitter:        
-  facebook:       
-  github:         
-  stackexchange:  
-  linkedin:       
-  instagram:      
-  flickr:         
-  tumblr:         
+  twitter: viclw17
+  #facebook: viclw17
+  github: viclw17
+  stackexchange:
+  linkedin: https://ca.linkedin.com/in/viclw17
+  instagram:
+  flickr:
+  tumblr:
   # google plus id, include the '+', eg +mmistakes
   google_plus:
 
 # Background image to be tiled on all pages
-background: 
+background: shattered.png #parchment.jpg
 
 # Analytics and webmaster tools stuff goes here
-google_analytics:   
-google_verify:      
+google_analytics:
+google_verify:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:         
+bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    America/New_York
+timezone:    America/Vancouver
 future:      true
 highlighter: rouge
 markdown:    kramdown
@@ -48,7 +52,7 @@ sass:
   style: compressed
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
+permalink:   /:categories/:year/:month/:day/:title/ #/:categories/:title/
 
 # Amount of post to show on home page
 paginate: 5
@@ -71,9 +75,11 @@ kramdown:
 # Default extensions
 post_ext: md
 page_ext: md
+
 # Found in _templates/
 post_layout: post
 page_layout: page
+
 # Format titles with titlecase?
 titlecase: true
 

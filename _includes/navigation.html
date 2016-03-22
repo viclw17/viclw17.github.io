@@ -8,7 +8,8 @@
 				<li>
 					<img src="{{ site.url }}/images/{{ site.owner.avatar }}" alt="{{ site.owner.name }} photo" class="author-photo">
 					<h4>{{ site.owner.name }}</h4>
-					<p>{{ site.owner.bio }}</p>
+					<!-- BR!!!-->
+					<p>{{ site.owner.bio }}<br /> {{ site.owner.bio1 }}<br /> {{ site.owner.bio2 }}</p>
 				</li>
 				<li><a href="{{ site.url }}/about/"><span class="btn btn-inverse">Learn More</span></a></li>
 				{% if site.owner.email %}<li>
@@ -23,12 +24,16 @@
 				{% if site.owner.google_plus %}<li>
 					<a href="https://google.com/{{ site.owner.google_plus }}"><i class="fa fa-fw fa-google-plus"></i> Google+</a>
 				</li>{% endif %}
-				{% if site.owner.linkedin %}<li>
-					<a href="https://linkedin.com/in/{{ site.owner.linkedin }}"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
-				</li>{% endif %}
 				{% if site.owner.github %}<li>
 					<a href="https://github.com/{{ site.owner.github }}"><i class="fa fa-fw fa-github"></i> GitHub</a>
 				</li>{% endif %}
+				{% if site.owner.linkedin %}<li>
+					<a href="{{ site.owner.linkedin }}"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+<!--
+					<a href="https://linkedin.com/in/{{ site.owner.linkedin }}"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+-->
+				</li>{% endif %}
+
 				{% if site.owner.stackexchange %}<li>
 					<a href="{{ site.owner.stackexchange }}"><i class="fa fa-fw fa-stack-exchange"></i> Stackexchange</a>
 				</li>{% endif %}
@@ -43,6 +48,11 @@
 				</li>{% endif %}
 			</ul><!-- /.dl-submenu -->
 		</li>
+
+<li><a href="{{ site.url }}/posts/">All Posts</a></li>
+<li><a href="{{ site.url }}/tags/">All Tags</a></li>
+
+<!--
 		<li>
 			<a href="#">Posts</a>
 			<ul class="dl-submenu">
@@ -50,6 +60,8 @@
 				<li><a href="{{ site.url }}/tags/">All Tags</a></li>
 			</ul>
 		</li>
+-->
+
 		{% for link in site.data.navigation %}
 	    {% if link.url contains 'http' %}
 	        {% assign domain = '' %}

@@ -61,6 +61,11 @@ body {
 		color: lighten($base-color,20);
 	}
 }
+
+
+
+
+// index!
 .feature .header-title {
 	position: absolute;
 	top: 0;
@@ -80,6 +85,8 @@ body {
 		font-weight: 700;
 		margin: 10px 60px;
 		color: $white;
+		text-transform: capitalize;//lowercase;//uppercase;
+
 		text-shadow: 1px 1px 4px rgba($base-color,0.6);
 		a {
 			color: $white;
@@ -89,8 +96,8 @@ body {
 	}
 	h2 {
 		margin: 0;
-		color: $white;
-		text-transform: uppercase;
+		color: lighten($victor-color,20);//$white;//$victor-color;//$white;
+		text-transform: capitalize;//lowercase;//uppercase;
 		@media #{$medium} {
 			a {
 				color: $white;
@@ -101,11 +108,14 @@ body {
 		color: $white;
 	}
 }
+
+
+
 .entry-image {
 	position: relative;
-	top: -50%; 
-	left: -50%; 
-	width: 200%; 
+	top: -50%;
+	left: -50%;
+	width: 200%;
 	height: 200%;
 	min-height: $feature-image-height;
 	overflow: hidden;
@@ -116,19 +126,21 @@ body {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba($base-color,0.3);
+		background-color: rgba($base-color,0.5);// make dimmer!
 	}
 	img {
-		position: absolute; 
-		top: 0; 
-		left: 0; 
-		right: 0; 
-		bottom: 0; 
-		margin: auto; 
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
 		min-width: 50%;
 		min-height: $feature-image-height; // match .entry-image min-height
 	}
 }
+
+
 // Feature Image height on Front Page
 #post-index {
 	&.feature .header-title {
@@ -141,6 +153,8 @@ body {
 		}
 	}
 }
+
+
 // Feature Image Caption
 .image-credit {
 	position: absolute;
@@ -326,7 +340,7 @@ header .entry-meta {
 	h3 {
 		margin: 0;
 		@include font-rem(28);
-		a { 
+		a {
 			color: $text-color;
 		}
 		@media #{$medium} {
@@ -340,11 +354,11 @@ header .entry-meta {
 .list-item {
 	width: 100%;
 	text-align: left;
-	h4 { 
+	h4 {
 		@include font-rem(18);
-		margin-bottom: 0; 
+		margin-bottom: 0;
 	}
-	span { 
+	span {
 		display: block;
 		@include font-rem(14);
 		color: lighten($base-color,50);
@@ -358,7 +372,7 @@ header .entry-meta {
 	}
 }
 
-// Post Index 
+// Post Index
 // --------------------------------------------------
 #post-index {
 	#main {
@@ -427,7 +441,7 @@ header .entry-meta {
 // --------------------------------------------------
 .socialcount {
 	@include font-rem(16);
-	li { 
+	li {
 		padding-left: 10px;
 		padding-right: 10px;
 	}

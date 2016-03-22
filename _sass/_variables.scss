@@ -1,8 +1,8 @@
 // Page
 // --------------------------------------------------
 
-$feature-image-height: 400px; // min 150px recommended
-$front-page-feature-image-height: 400px; // min 150px recommended
+$feature-image-height: 350px;//400px; // min 150px recommended
+$front-page-feature-image-height: 350px;//400px; // min 150px recommended
 
 // Typography
 // --------------------------------------------------
@@ -20,7 +20,7 @@ $doc-line-height: 26;
 // set-up the body font-size / line-height
 body {
 	margin-top: 0px + $doc-line-height;
-	font-size: 0px + $doc-font-size;	
+	font-size: 0px + $doc-font-size;
 }
 
 
@@ -29,11 +29,13 @@ body {
 $base-color				   : rgba(#222,0.8);
 $body-color      		 : #e8e8e8;
 $text-color      		 : rgba(#222,0.8);
-$comp-color 	 		   : complement(#222); 
+$comp-color 	 		   : complement(#222);
 $border-color    		 : lighten($base-color,60);
 $white           		 : #fff;
 $black           		 : #000;
 $link-color 		     : rgba(#222,0.8);
+
+$victor-color 		   : #4abdac;
 
 $primary			       : #222;
 $success			       : #5cb85c;
