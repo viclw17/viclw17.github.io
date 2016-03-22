@@ -2,7 +2,7 @@
 layout: page
 title: About Me & My Blog
 image:
-  feature: mandelbrot-zoom-more.png
+  feature: mandelbrot-zoom-more-min.png
   credit: dargadgetz
   creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 comments: false
