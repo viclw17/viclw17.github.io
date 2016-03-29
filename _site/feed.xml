@@ -2,33 +2,33 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">1000 forms of bunnies</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
-<link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2016-03-29T00:31:23-07:00</updated>
-<id>http://localhost:4000/</id>
+<link rel="self" type="application/atom+xml" href="http://viclw17.github.io/feed.xml" />
+<link rel="alternate" type="text/html" href="http://viclw17.github.io" />
+<updated>2016-03-29T01:35:56-07:00</updated>
+<id>http://viclw17.github.io/</id>
 <author>
   <name>Victor Li</name>
-  <uri>http://localhost:4000/</uri>
+  <uri>http://viclw17.github.io/</uri>
   <email>viclw17@gmail.com</email>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[Water Shader Exploration Part-1]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/2016/03/28/water-shader-exploration/" />
-  <id>http://localhost:4000/2016/03/28/water-shader-exploration</id>
+ <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/03/28/water-shader-exploration/" />
+  <id>http://viclw17.github.io/2016/03/28/water-shader-exploration</id>
   <updated>2016-03-28T00:00:00-00:00</updated>
   <published>2016-03-28T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://localhost:4000</uri>
+    <uri>http://viclw17.github.io</uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
     &lt;p&gt;One of my current VR projects needs a nice and light water shader. I have been working on it for a while and keep iterating the the overall effect. Here is the water effect I have achieved so far, however it’s still far away from perfect simulation:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/water0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/water0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/o transparency.&lt;/figcaption&gt;
 
 &lt;p&gt;Water effect has been always a complicated topic in shading especially for runtime scenario. As the most usual material in our daily life, water has lots of visual features that we are very familiar with. However, all these features also got lots of physics and lighting formulas involved which are interacting with each other.&lt;/p&gt;
@@ -61,10 +61,10 @@
 
 &lt;p&gt;I firstly wrote a script to move the vertex of a plane mesh according to sine wave, and added &lt;a href=&quot;http://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html&quot;&gt;Perlin Noise&lt;/a&gt; function to add some randomness. Then I started to write my water shader to turn this waving plane into a water like surface with all the interesting lighting attributes that I can think about. In Part-2 I will go through my exploration in details.&lt;/p&gt;
 
-&lt;!-- &lt;img src=&quot;http://localhost:4000/images/water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
+&lt;!-- &lt;img src=&quot;http://viclw17.github.io/images/water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/o transparency.&lt;/figcaption&gt; --&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/ transparency and faint tint and BUNNY!&lt;/figcaption&gt;
 
 &lt;p&gt;The current water effect is enough for the scope of my project and it’s light to implement and has decent visual features. However, this is just a very very high-level implement using Unity and for simple environment. Also, there are a lot of features that are very important in water, like refraction, that I haven’t implemented. I will keep working on my exploration on this topic in the future.&lt;/p&gt;
@@ -76,21 +76,21 @@
 
 &lt;p&gt;(TBC)&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/2016/03/28/water-shader-exploration/&quot;&gt;Water Shader Exploration Part-1&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://localhost:4000&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 28, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/03/28/water-shader-exploration/&quot;&gt;Water Shader Exploration Part-1&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 28, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[First Post!]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/2016/03/26/first-post/" />
-  <id>http://localhost:4000/2016/03/26/first-post</id>
+ <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/03/26/first-post/" />
+  <id>http://viclw17.github.io/2016/03/26/first-post</id>
   <updated>2016-03-26T00:00:00-00:00</updated>
   <published>2016-03-26T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://localhost:4000</uri>
+    <uri>http://viclw17.github.io</uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -109,9 +109,9 @@
 &lt;h3 id=&quot;blueprint&quot;&gt;Blueprint&lt;/h3&gt;
 &lt;p&gt;In my blog, I will mainly keep records of all my problem solving experiences working in the industry, partly as future reference and partly as showcasing. I’m still learning and practicing all the different techniques ranging from game programming to graphics optimizing, so I will keep summarizing my study progress in my blog. Working on many side projects with my friends allows me to develop my own tools, sometimes from scratch, so for this purpose I will also keep my dev log here.&lt;/p&gt;
 
-&lt;p&gt;Thank you for visiting my playground. Now it’s time to play! XD&lt;/p&gt;
+&lt;p&gt;V&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/2016/03/26/first-post/&quot;&gt;First Post!&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://localhost:4000&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 26, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/03/26/first-post/&quot;&gt;First Post!&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 26, 2016.&lt;/p&gt;
   </content>
 </entry>
 
