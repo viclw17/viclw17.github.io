@@ -10,6 +10,11 @@ image:
   creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 ---
 
+Center image with caption.
+
+<img src="{{ site.url }}/images/water0.gif" width="400" height="400" style="display:block; margin:auto;">
+<figcaption style="text-align: center;">Final work w/o transparency.</figcaption>
+
 Below is just about everything you'll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.
 
 # Heading 1
