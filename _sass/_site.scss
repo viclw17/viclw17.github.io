@@ -1,14 +1,14 @@
 // Selection
 // --------------------------------------------------
-::-moz-selection { 
-	background-color: lighten($base-color, 65%); 
-	color: $base-color; 
-	text-shadow: none; 
-}  	
-::selection { 
-	background-color: lighten($base-color, 65%); 
-	color: $base-color; 
-	text-shadow: none; 
+::-moz-selection {
+	background-color: lighten($base-color, 65%);
+	color: $base-color;
+	text-shadow: none;
+}
+::selection {
+	background-color: lighten($base-color, 65%);
+	color: $base-color;
+	text-shadow: none;
 }
 
 // Global Classes
@@ -29,6 +29,13 @@
 	float: none;
 	@media #{$medium} {
 		float: right;
+	}
+}
+// victor
+.image-center {
+	float: none;
+	@media #{$medium} {
+		float: center;
 	}
 }
 .unstyled-list {

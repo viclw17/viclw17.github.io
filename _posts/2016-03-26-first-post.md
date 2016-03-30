@@ -27,4 +27,4 @@ I started my graduate student life at the [Centre for Digital Media (CDM)](http:
 ### Blueprint
 In my blog, I will mainly keep records of all my problem solving experiences working in the industry, partly as future reference and partly as showcasing. I'm still learning and practicing all the different techniques ranging from game programming to graphics optimizing, so I will keep summarizing my study progress in my blog. Working on many side projects with my friends allows me to develop my own tools, sometimes from scratch, so for this purpose I will also keep my dev log here.
 
-Thank you for visiting my playground. Now it's time to play! XD
+V
