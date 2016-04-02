@@ -1,0 +1,69 @@
+<p>My first water shader exploration in unity started with trying to make the water surface waving. This required mesh manipulation through shader or scripts.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">v2f</span> <span class="nf">vert</span><span class="p">(</span><span class="n">appdata_full</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">v2f</span> <span class="n">o</span><span class="p">;</span>
+
+				<span class="n">o</span><span class="p">.</span><span class="n">uv_MainTex</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">texcoord</span><span class="p">,</span> <span class="n">_MainTex</span><span class="p">);</span>
+				<span class="n">o</span><span class="p">.</span><span class="n">uv_DispTex</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">texcoord</span><span class="p">,</span> <span class="n">_DispTex</span><span class="p">);</span>
+
+				<span class="n">o</span><span class="p">.</span><span class="n">uv_MainTex</span> <span class="o">+=</span> <span class="n">float2</span><span class="p">(</span><span class="n">_Time</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">_Time</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">_Speed1</span><span class="p">;</span>
+				<span class="n">o</span><span class="p">.</span><span class="n">uv_DispTex</span> <span class="o">+=</span> <span class="n">float2</span><span class="p">(</span><span class="n">_Time</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">_Time</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span><span class="n">_Speed2</span><span class="p">;</span>
+
+				<span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">.</span><span class="n">xyz</span> <span class="o">+=</span> <span class="n">v</span><span class="p">.</span><span class="n">normal</span> <span class="o">*</span> <span class="n">tex2Dlod</span><span class="p">(</span><span class="n">_DispTex</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">uv_DispTex</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">_Displacement</span><span class="p">;</span>
+
+				<span class="n">o</span><span class="p">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">UNITY_MATRIX_MVP</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">);</span>
+
+				<span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+			<span class="p">}</span></code></pre></figure>
+
+<p>First try of water effect in Unity.</p>
+
+<p>One of my current VR projects needs a nice and light water shader. I have been working on it for a while and keep iterating the the overall effect. Here is the water effect I have achieved so far, however it’s still far away from perfect simulation:</p>
+
+<p><img src="http://viclw17.github.io/images/water0.gif" width="400" height="400" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;">Final work w/o transparency.</figcaption>
+
+<p>Water effect has been always a complicated topic in shading especially for runtime scenario. As the most usual material in our daily life, water has lots of visual features that we are very familiar with. However, all these features also got lots of physics and lighting formulas involved which are interacting with each other.</p>
+
+<p>I started with thinking about the most typical physical and lighting features that came into mind and got my hand dirty immediately to achieve as much as I can. Here is my <strong>checklist</strong>:</p>
+
+<ul>
+  <li>Blue-ish color.</li>
+  <li>Waving surface.
+    <ul>
+      <li>Using script to deform a plane mesh, <strong>OR</strong></li>
+      <li>Manipulating vertex in vertex shader.</li>
+    </ul>
+  </li>
+  <li>Ripple.
+    <ul>
+      <li>Texture &amp; Normal Map</li>
+      <li>UV Scrolling</li>
+    </ul>
+  </li>
+  <li>Reflection.
+    <ul>
+      <li>Specular lighting model</li>
+      <li>Cubemap</li>
+    </ul>
+  </li>
+  <li>Transparency.</li>
+  <li>Refraction. (no idea…)</li>
+</ul>
+
+<p>I firstly wrote a script to move the vertex of a plane mesh according to sine wave, and added <a href="http://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html">Perlin Noise</a> function to add some randomness. Then I started to write my water shader to turn this waving plane into a water like surface with all the interesting lighting attributes that I can think about. In Part-2 I will go through my exploration in details.</p>
+
+<!-- <img src="http://viclw17.github.io/images/water1.gif" width="400" height="400" style="display:block; margin:auto;">
+<figcaption style="text-align: center;">Final work w/o transparency.</figcaption> -->
+
+<p><img src="http://viclw17.github.io/images/water2.gif" width="400" height="400" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;">Final work w/ transparency and faint tint and BUNNY!</figcaption>
+
+<p>The current water effect is enough for the scope of my project and it’s light to implement and has decent visual features. However, this is just a very very high-level implement using Unity and for simple environment. Also, there are a lot of features that are very important in water, like refraction, that I haven’t implemented. I will keep working on my exploration on this topic in the future.</p>
+
+<p>P.S. My ultimate goal about water simulation could be <strong>Low-Level GPU-Based Volumetric Fluid Simulation</strong>. Hopefully I’m able to give a shot someday. Video here just for admiring and future reference. :)</p>
+
+<iframe src="https://player.vimeo.com/video/87050516?autoplay=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+<p><a href="https://vimeo.com/87050516">PIC/FLIP Simulator Dam Break Test- Final Render</a> from <a href="https://vimeo.com/user3522674">Yining Karl Li</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+
+<p>(TBC)</p>
