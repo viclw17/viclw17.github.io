@@ -45,20 +45,19 @@ Then I decided to go for scripting approach. This is my script to move the verte
 {% highlight c %}
 public class WaterPlane : MonoBehaviour
 {
+  public float scale = 1.0f;
+  public float sinSpeedX = 1.0f;
+  public float sinSpeedZ = 1.0f;
+  public float perlinSpeedX = 1.0f;
+  public float perlinSpeedZ = 1.0f;
+  private Vector3[] baseVertices;
+  public bool recalculateNormals = true;
 
-	public float scale = 1.0f;
-	public float sinSpeedX = 1.0f;
-	public float sinSpeedZ = 1.0f;
-	public float perlinSpeedX = 1.0f;
-	public float perlinSpeedZ = 1.0f;
-	private Vector3[] baseVertices;
-	public bool recalculateNormals = true;
+  public bool isSin = false;
+  public bool isPerlin = true;
 
-	public bool isSin = false;
-	public bool isPerlin = true;
-
-	Mesh mesh;
-	Vector3[] vertices;
+  Mesh mesh;
+  Vector3[] vertices;
 
   void Start () {
     mesh = GetComponent<MeshFilter>().mesh;
