@@ -1,0 +1,321 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Specular Shading Optimization &#8211; 1000 forms of bunnies</title>
+<meta name="description" content="Optimizing specular shader to achieve a more natural looking.">
+<meta name="keywords" content="Unity Shader">
+
+
+<!-- Twitter Cards -->
+<!-- original
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="http://viclw17.github.io/images/">
+  
+<meta name="twitter:title" content="Specular Shading Optimization">
+<meta name="twitter:description" content="Optimizing specular shader to achieve a more natural looking.">
+<meta name="twitter:creator" content="@viclw17">
+
+-->
+
+
+<!-- Twitter Cards
+clean and functional code
+-->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://viclw17.github.io/images/">
+<meta name="twitter:title" content="Specular Shading Optimization">
+<meta name="twitter:description" content="Optimizing specular shader to achieve a more natural looking.">
+<meta name="twitter:creator" content="@viclw17">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Specular Shading Optimization">
+<meta property="og:description" content="Optimizing specular shader to achieve a more natural looking.">
+<meta property="og:url" content="http://viclw17.github.io/2016/04/10/specular-shading-optimization/">
+<meta property="og:site_name" content="1000 forms of bunnies">
+
+
+
+
+
+<link rel="canonical" href="http://viclw17.github.io/2016/04/10/specular-shading-optimization/">
+<link href="http://viclw17.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="1000 forms of bunnies Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://viclw17.github.io/assets/css/main.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="http://viclw17.github.io/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://viclw17.github.io/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://viclw17.github.io/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://viclw17.github.io/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://viclw17.github.io/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://viclw17.github.io/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://viclw17.github.io/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+<style type="text/css">body {background-image:url(http://viclw17.github.io/images/shattered.png);}</style>
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://viclw17.github.io/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://viclw17.github.io/images/avatar.jpg" alt="Victor Li photo" class="author-photo">
+					<h4>Victor Li</h4>
+					<!-- BR!!!-->
+					<p>Technical Artist,<br /> CG Engineer,<br /> Mr. Curiosity.</p>
+				</li>
+				<li><a href="http://viclw17.github.io/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:viclw17@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				<li>
+					<a href="https://twitter.com/viclw17"><i class="fa fa-fw fa-twitter"></i> Twitter</a>
+				</li>
+				
+				
+				<li>
+					<a href="https://github.com/viclw17"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://ca.linkedin.com/in/viclw17"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+<!--
+					<a href="https://linkedin.com/in/https://ca.linkedin.com/in/viclw17"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+-->
+				</li>
+
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+
+<li><a href="http://viclw17.github.io/posts/">All Posts</a></li>
+<li><a href="http://viclw17.github.io/tags/">All Tags</a></li>
+
+<!--
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://viclw17.github.io/posts/">All Posts</a></li>
+				<li><a href="http://viclw17.github.io/tags/">All Tags</a></li>
+			</ul>
+		</li>
+-->
+
+		
+	    
+	    <li><a href="http://iamvictorli.com" target="_blank">Portfolio</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://viclw17.github.io/2016/04/10/specular-shading-optimization/" rel="bookmark" title="Specular Shading Optimization">Specular Shading Optimization</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2016-04-10T00:00:00-07:00">April 10, 2016</time></span></h2>
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>When learning and practicing shader programming for Unity, I found the <a href="https://en.wikibooks.org/wiki/Cg_Programming/Unity">Cg Wiki</a> website extremely benevolent on getting a well-rounded understanding of how to shade an object step by step. Apart from the magic configuration parts(Shader Properties/Passes/Tags etc.) of a typical Unity shader, the main function-related part of the shader only lies between <em>CGPROGRAM</em> and <em>ENDCG</em>. According to my practice, I believe <a href="https://en.wikibooks.org/wiki/Cg_Programming/Unity">Cg Wiki</a> and <a href="http://docs.unity3d.com/Manual/SL-Reference.html">Unity Shader Reference</a> can cover almost all the basic tricks of Unity shader programming. ;)</p>
+
+<p>However, when I went through the <a href="https://en.wikibooks.org/wiki/Cg_Programming/Unity/Specular_Highlights">Specular Highlights</a> tutorial trying to achieve a <a href="https://en.wikipedia.org/wiki/Phong_shading">Phong Shading</a> effect from scratch, I found the code snippet that the tutorial provided has some artifacts.</p>
+
+<p><img src="http://www.itchy-animation.co.uk/tutorials/01-intro-01.jpg" width="400" height="400" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;">Different areas of a typical shaded sphere. <br /> Note that the terminator line should be a soft gradient. </figcaption>
+
+<p>After implementing the shading algorithm, the visual looks pretty promising. But when I rotate the light source or move the view direction I notice the terminator could sometimes becomes a sharp boundary between lit and shadow areas:</p>
+
+<p><img src="http://viclw17.github.io/images/specular1.gif" width="400" height="400" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;">Artifact of the specular shader.<br />(The terminator line gets unnatural at some angles.)</figcaption>
+<p><br /></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">float3</span> <span class="n">specularReflection</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">normalDirection</span><span class="p">,</span> <span class="n">lightDirection</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">){</span>
+  <span class="c1">// light source on the wrong side.
+</span>  <span class="n">specularReflection</span> <span class="o">=</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// no specular reflection.
+</span><span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// light source on the right side
+</span>  <span class="n">specularReflection</span> <span class="o">=</span>
+    <span class="n">attenuation</span> <span class="o">*</span>
+    <span class="n">_LightColor0</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span>
+    <span class="n">_SpecColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span>
+    <span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="n">dot</span><span class="p">(</span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDirection</span><span class="p">,</span> <span class="n">normalDirection</span><span class="p">),</span> <span class="n">viewDirection</span><span class="p">)),</span>
+    <span class="n">_Shininess</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="n">float4</span><span class="p">(</span>
+  <span class="n">ambientLighting</span> <span class="o">+</span>
+  <span class="n">diffuseReflection</span> <span class="o">+</span>
+  <span class="n">specularReflection</span><span class="p">,</span>
+  <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span></code></pre></figure>
+
+<p>The specular is calculated by the dot product of the reflect vector and the view direction vector. However, this angle can be larger than 90 degrees. According to how dot product is calculated,</p>
+
+<p><img src="https://upload.wikimedia.org/math/3/e/5/3e530da12e51ca0056ed3ef061b79312.png" width="200" height="200" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;"></figcaption>
+<p><img src="http://mathworld.wolfram.com/images/eps-gif/Cos_600.gif" width="300" height="300" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;"></figcaption>
+<p>When the angle between view direction and lighting direction is <strong>larger than 90 degrees</strong>, the cosine of it will be negative, and the dot product is also going to be negative.</p>
+
+<p>Color is in the type of float4/half4/fixed4 in Cg and can not has negative elements. The negative values are simply treated as pitch black and cause this “hard terminator” artifact.</p>
+
+<p>One of the ways to fix it is to multiply the final color result with the same dot product result again.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">specularReflection</span> <span class="o">=</span> <span class="n">attenuation</span> <span class="o">*</span> <span class="n">_LightColor0</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span> <span class="n">_SpecColor</span><span class="p">.</span><span class="n">rgb</span> <span class="o">*</span>
+  <span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="n">dot</span><span class="p">(</span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDirection</span><span class="p">,</span> <span class="n">normalDirection</span><span class="p">),</span> <span class="n">viewDirection</span><span class="p">)),</span>
+  <span class="n">_Shininess</span><span class="p">);</span>
+  <span class="o">*</span> <span class="n">dot</span><span class="p">(</span><span class="n">lightDirection</span><span class="p">,</span> <span class="n">normalDirection</span><span class="p">);</span> <span class="o">//</span> <span class="n">fixed</span><span class="o">!</span></code></pre></figure>
+
+<p>Since the length of direction vectors is always 1, so this can get rid off the negative values. And this is the optimized result:</p>
+
+<p><img src="http://viclw17.github.io/images/specular2.gif" width="400" height="400" style="display:block; margin:auto;" /></p>
+<figcaption style="text-align: center;"></figcaption>
+
+<p>Now the terminator is smooth! :D</p>
+
+<!-- The reflect vector is calculated using the Cg function -reflect()-. This function is the implement of the function  -->
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://viclw17.github.io/tags/#Unity Shader" title="Pages tagged Unity Shader" class="tag"><span class="term">Unity Shader</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2016-04-10">April 10, 2016</time></span></span>
+        <span class="author vcard"><span class="fn">Victor Li</span></span>
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://viclw17.github.io/2016/04/10/specular-shading-optimization/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://viclw17.github.io/2016/04/10/specular-shading-optimization/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://viclw17.github.io/2016/04/10/specular-shading-optimization/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://viclw17.github.io/2016/03/29/low-poly-water/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://viclw17.github.io/2016/04/19/phong-shading-model-walkthrough/" title="Phong Shading Model Walkthrough">Phong Shading Model Walkthrough</a></h3>
+      <p>Achieve a classic phong shading in Unity. <a href="http://viclw17.github.io/2016/04/19/phong-shading-model-walkthrough/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://viclw17.github.io/2016/03/29/low-poly-water/" title="Low Poly Water">Low Poly Water</a></h4>
+        <span>Published on March 29, 2016</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://viclw17.github.io/2016/03/28/water-shader-exploration-part-1/" title="Water Shader Exploration Part-1">Water Shader Exploration Part-1</a></h4>
+        <span>Published on March 28, 2016</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2016 Victor Li.
+
+  Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll.</a>
+  <!-- Theme  <a href="https://github.com/mmistakes/hpstr-jekyll-theme">available on Github.</a> -->
+</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://viclw17.github.io/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://viclw17.github.io/assets/js/scripts.min.js"></script>
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75504070-1', 'auto');  
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'viclw17'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</body>
+</html>
