@@ -5,7 +5,7 @@ description: "Achieve a classic phong shading in Unity."
 modified: 2016-04-19
 tags: [Unity Shader]
 image:
-  feature: teapot-phong.png
+  feature: phong.png
   credit:
   creditlink:
 ---
