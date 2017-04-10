@@ -27,7 +27,7 @@ owner:
   github: viclw17
   stackexchange:
   linkedin: https://ca.linkedin.com/in/viclw17
-  instagram:
+  instagram: viclw17
   flickr:
   tumblr:
   # google plus id, include the '+', eg +mmistakes
@@ -51,7 +51,7 @@ gems:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-gist
-  # - jemoji
+#  - jemoji
 sass:
   sass_dir: _sass
   style: compressed
