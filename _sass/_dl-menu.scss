@@ -12,10 +12,12 @@
 	perspective-origin: 50% 200%;
 	@media #{$medium} {
 		position: fixed;
-		max-width: 175px;
+		max-width: 225px; //175px
 		top: 25px;
 		left: 25px;
 	}
+
+	// button in _elements.scss
 	button {
 		top: 0;
 		left: 0;
@@ -37,9 +39,11 @@
 	}
 	button:hover,
 	button.dl-active,
+
 	ul {
 		background: #aaa;
 	}
+
 	button:after {
 		content: '';
 		position: absolute;
@@ -91,7 +95,7 @@
 			@include font-rem(14);
 			line-height: 20px;
 			font-weight: 400;
-			color: $white;
+			color: $victor-color;//$white;
 			outline: none;
 		}
 		&.dl-back > a {
@@ -127,7 +131,7 @@
 		width: 100%;
 		max-width: 400px;
 		overflow-y: auto;
-		max-height: 600px;
+		max-height: 600px; //600
 		opacity: 0;
 		pointer-events: none;
 		box-shadow: 0 12px 24px rgba($black,0.4);
@@ -139,7 +143,7 @@
 		backface-visibility: hidden;
 		@media #{$medium} {
 			@include border-radius(3px,3px,3px,3px);
-			max-height: 650px;
+			max-height: 800px; //650
 		}
 	}
 	.dl-menu.dl-menu-toggle {

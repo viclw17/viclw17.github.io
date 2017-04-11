@@ -8,17 +8,17 @@ disqus_shortname: viclw17
 
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
 # When testing locally leave blank or use http://localhost:4000
-# url: http://localhost:4000
-url: http://viclw17.github.io
+# url: http://localhost:4000 # do not uncomment this again! just leave blank for development!
+#url: http://viclw17.github.io
 
 
 # Owner/author information
 owner:
   name:           Victor Li
   avatar:         avatar.jpg
-  bio:            "Technical Artist,"
-  bio1:            "CG Engineer,"
-  bio2:            "Mr. Curiosity."
+  bio:            "Technical Artist"
+  bio1:            "CG Engineer"
+#  bio2:            "Mr. Curiosity."
   email:          viclw17@gmail.com
 
   # Social networking links used in footer. Update and remove as you like.
@@ -27,7 +27,7 @@ owner:
   github: viclw17
   stackexchange:
   linkedin: https://ca.linkedin.com/in/viclw17
-  instagram: viclw17
+  #instagram: viclw17
   flickr:
   tumblr:
   # google plus id, include the '+', eg +mmistakes

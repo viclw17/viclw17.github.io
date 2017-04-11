@@ -2,27 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">1000 forms of bunnies</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://viclw17.github.io/feed.xml" />
-<link rel="alternate" type="text/html" href="http://viclw17.github.io" />
-<updated>2017-04-09T23:19:08-07:00</updated>
-<id>http://viclw17.github.io/</id>
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2017-04-11T02:56:24-07:00</updated>
+<id>/</id>
 <author>
   <name>Victor Li</name>
-  <uri>http://viclw17.github.io/</uri>
+  <uri>/</uri>
   <email>viclw17@gmail.com</email>
 </author>
 
 
 <entry>
-  <title type="html"><![CDATA[MatCap Shader Showcase]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/05/01/MatCap-Shader-Showcase/" />
-  <id>http://viclw17.github.io/2016/05/01/MatCap-Shader-Showcase</id>
+  <title type="html"><![CDATA[MatCap Shader]]></title>
+ <link rel="alternate" type="text/html" href="/2016/05/01/MatCap-Shader-Showcase/" />
+  <id>/2016/05/01/MatCap-Shader-Showcase</id>
   <updated>2016-05-01T00:00:00-00:00</updated>
   <published>2016-05-01T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -43,11 +43,11 @@
   &lt;li&gt;click top arrow to review the MatCap texture panel and try different effect.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;!-- &lt;iframe src=&quot;http://viclw17.github.io/app/MatCap/MatCap.html&quot; width=&quot;600&quot; height=&quot;650&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; align=&quot;middle&quot;&gt; --&gt;
-&lt;iframe src=&quot;http://viclw17.github.io/app/MatCap_webgl/index.html&quot; width=&quot;600&quot; height=&quot;650&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; align=&quot;middle&quot;&gt;
+&lt;!-- &lt;iframe src=&quot;/app/MatCap/MatCap.html&quot; width=&quot;600&quot; height=&quot;650&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; align=&quot;middle&quot;&gt; --&gt;
+&lt;iframe src=&quot;/app/WebGL/MatCap_demo/index.html&quot; width=&quot;600&quot; height=&quot;600&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; align=&quot;middle&quot;&gt;
 &lt;/iframe&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;!-- &lt;br&gt; --&gt;
 
 &lt;p&gt;This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.&lt;/p&gt;
 
@@ -128,21 +128,21 @@
 
 &lt;p&gt;TBC&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/05/01/MatCap-Shader-Showcase/&quot;&gt;MatCap Shader Showcase&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on May 01, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/05/01/MatCap-Shader-Showcase/&quot;&gt;MatCap Shader&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on May 01, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Phong Shading Model Walkthrough]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/04/19/phong-shading-model-walkthrough/" />
-  <id>http://viclw17.github.io/2016/04/19/phong-shading-model-walkthrough</id>
+ <link rel="alternate" type="text/html" href="/2016/04/19/phong-shading-model-walkthrough/" />
+  <id>/2016/04/19/phong-shading-model-walkthrough</id>
   <updated>2016-04-19T00:00:00-00:00</updated>
   <published>2016-04-19T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -314,22 +314,22 @@ Vectors for calculating Phong (or Blinn–Phong) shading.
 
 &lt;p&gt;This is the testing effect:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/Phong/ambient.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/Phong/ambient.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;
 Ambient only.
 &lt;/figcaption&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/Phong/diffuse.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/Phong/diffuse.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;
 Diffuse only.
 &lt;/figcaption&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/Phong/specular.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/Phong/specular.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;
 Specular only.
 &lt;/figcaption&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/Phong/phong.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/Phong/phong.PNG&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;
 Final.
 &lt;/figcaption&gt;
@@ -338,21 +338,21 @@ Final.
 
 &lt;p&gt;V&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/04/19/phong-shading-model-walkthrough/&quot;&gt;Phong Shading Model Walkthrough&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on April 19, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/04/19/phong-shading-model-walkthrough/&quot;&gt;Phong Shading Model Walkthrough&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on April 19, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Specular Shading Optimization]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/04/10/specular-shading-optimization/" />
-  <id>http://viclw17.github.io/2016/04/10/specular-shading-optimization</id>
+ <link rel="alternate" type="text/html" href="/2016/04/10/specular-shading-optimization/" />
+  <id>/2016/04/10/specular-shading-optimization</id>
   <updated>2016-04-10T00:00:00-00:00</updated>
   <published>2016-04-10T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -365,7 +365,7 @@ Final.
 
 &lt;p&gt;After implementing the shading algorithm, the visual looks pretty promising. But when I rotate the light source or move the view direction I notice the terminator could sometimes becomes a sharp boundary between lit and shadow areas:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/specular1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/specular1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Artifact of the specular shader.&lt;br /&gt;(The terminator line gets unnatural at some angles.)&lt;/figcaption&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -409,34 +409,34 @@ Final.
 
 &lt;p&gt;Since the length of direction vectors is always 1, so this can get rid off the negative values. And this is the optimized result:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/specular2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/specular2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;&lt;/figcaption&gt;
 
 &lt;p&gt;Now the terminator is smooth! :D&lt;/p&gt;
 
 &lt;!-- The reflect vector is calculated using the Cg function -reflect()-. This function is the implement of the function  --&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/04/10/specular-shading-optimization/&quot;&gt;Specular Shading Optimization&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on April 10, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/04/10/specular-shading-optimization/&quot;&gt;Specular Shading Optimization&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on April 10, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Low Poly Water]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/03/29/low-poly-water/" />
-  <id>http://viclw17.github.io/2016/03/29/low-poly-water</id>
+ <link rel="alternate" type="text/html" href="/2016/03/29/low-poly-water/" />
+  <id>/2016/03/29/low-poly-water</id>
   <updated>2016-03-29T00:00:00-00:00</updated>
   <published>2016-03-29T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
     &lt;p&gt;My first water shader exploration in unity started with trying to &lt;strong&gt;make the water surface waving&lt;/strong&gt;. This required mesh manipulation through shader or scripts. By playing around it, I got to know more about what other effects I can try, and here is a little side-achievement – a nice low poly water effect:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/low_poly_water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/low_poly_water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Low poly water mesh with unity standard specular material.&lt;/figcaption&gt;
 
 &lt;p&gt;To change the shape of a plane mesh, my first idea was to play some tricks in vertex shader – how about &lt;strong&gt;moving vertexes along their corresponding normal directions and changing the move distance randomly according to a displacement texture&lt;/strong&gt; (e.g. a noise texture)? Here is the code of my vertex shader:&lt;/p&gt;
@@ -453,12 +453,12 @@ Final.
 
 &lt;p&gt;This is going to implement deformation on GPU level and the effect will come with the material assigned. And then this is the effect: (For debugging purpose I visualized the vertex normals):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/low_poly_fig0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/low_poly_fig0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Low poly water mesh assigned with the vertex shader above. (Green lines are vertex normals)&lt;/figcaption&gt;
 
 &lt;p&gt;IT IS something I want! However, as the gif shows, the drawing of the mesh is affected by the shader but the normals are not modified, which makes it impossible to achieve a beautiful low ploy flat shading style (e.g. image below). (Although the shader I wrote was unlit, since the normals are not even moved or rotated, it won’t make any difference with lighting model implemented.)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/flat_shading.png&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/flat_shading.png&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;W/ and w/o flat shading.&lt;/figcaption&gt;
 
 &lt;p&gt;Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions. This is my script:&lt;/p&gt;
@@ -525,38 +525,38 @@ Final.
 
 &lt;p&gt;Since it was only on CPU level, we can apply material with any shader we want, which is great. The effect was like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/low_poly_fig2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/low_poly_fig2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Low poly water mesh assigned with the script above. (Green lines are vertex normals)&lt;/figcaption&gt;
-&lt;!-- &lt;img src=&quot;http://viclw17.github.io/images/low_poly_fig3.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
+&lt;!-- &lt;img src=&quot;/images/low_poly_fig3.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Low poly water mesh assigned with the script above. (Green lines are vertex normals)&lt;/figcaption&gt; --&gt;
 
 &lt;p&gt;Note that the line &lt;strong&gt;mesh.RecalculateNormals ();&lt;/strong&gt; is very important. If we remove it, the vertexes are moved but the normals are not updated and they will keep pointing upward, so the shading will look like smooth. And we will lost the nice flat shading:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/low_poly_fig1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/low_poly_fig1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;W/o mesh.RecalculateNormals (); (Green lines are vertex normals, )&lt;/figcaption&gt;
 
 &lt;p&gt;However, this effect will be eventually useful when I want to implement the real water surface effect. I will show that in Water Shader Exploration Part-2.&lt;/p&gt;
 
 &lt;p&gt;Now I can simply use the powerful build-in Standard shader and tweak the smoothness and the transparency to achieve a nice low poly water effect. :D&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/low_poly_water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;/images/low_poly_water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;
 &lt;!-- &lt;figcaption style=&quot;text-align: center;&quot;&gt;W/o mesh.RecalculateNormals (); (Green lines are vertex normals, )&lt;/figcaption&gt; --&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/03/29/low-poly-water/&quot;&gt;Low Poly Water&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 29, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/03/29/low-poly-water/&quot;&gt;Low Poly Water&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 29, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Water Shader Exploration Part-1]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/03/28/water-shader-exploration-part-1/" />
-  <id>http://viclw17.github.io/2016/03/28/water-shader-exploration-part-1</id>
+ <link rel="alternate" type="text/html" href="/2016/03/28/water-shader-exploration-part-1/" />
+  <id>/2016/03/28/water-shader-exploration-part-1</id>
   <updated>2016-03-28T00:00:00-00:00</updated>
   <published>2016-03-28T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -566,7 +566,7 @@ Final.
 
 &lt;p&gt;One of my current VR projects needs a nice and light water shader. I have been working on it for a while and keep iterating the the overall effect. Here is the water effect I have achieved so far, however it’s still far away from perfect simulation:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/water0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/water0.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/o transparency.&lt;/figcaption&gt;
 
 &lt;p&gt;Water effect has been always a complicated topic in shading especially for runtime scenario. As the most usual material in our daily life, water has lots of visual features that we are very familiar with. However, all these features also got lots of physics and lighting formulas involved which are interacting with each other.&lt;/p&gt;
@@ -599,10 +599,10 @@ Final.
 
 &lt;p&gt;I firstly wrote a script to move the vertex of a plane mesh according to sine wave, and added &lt;a href=&quot;http://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html&quot;&gt;Perlin Noise&lt;/a&gt; function to add some randomness. Then I started to write my water shader to turn this waving plane into a water like surface with all the interesting lighting attributes that I can think about. In Part-2 I will go through my exploration in details.&lt;/p&gt;
 
-&lt;!-- &lt;img src=&quot;http://viclw17.github.io/images/water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
+&lt;!-- &lt;img src=&quot;/images/water1.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot;&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/o transparency.&lt;/figcaption&gt; --&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://viclw17.github.io/images/water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/water2.gif&quot; width=&quot;400&quot; height=&quot;400&quot; style=&quot;display:block; margin:auto;&quot; /&gt;&lt;/p&gt;
 &lt;figcaption style=&quot;text-align: center;&quot;&gt;Final work w/ transparency and faint tint and BUNNY!&lt;/figcaption&gt;
 
 &lt;p&gt;The current water effect is enough for the scope of my project and it’s light to implement and has decent visual features. However, this is just a very very high-level implement using Unity and for simple environment. Also, there are a lot of features that are very important in water, like refraction, that I haven’t implemented. I will keep working on my exploration on this topic in the future.&lt;/p&gt;
@@ -616,21 +616,21 @@ Final.
 
 &lt;p&gt;(TBC)&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/03/28/water-shader-exploration-part-1/&quot;&gt;Water Shader Exploration Part-1&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 28, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/03/28/water-shader-exploration-part-1/&quot;&gt;Water Shader Exploration Part-1&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 28, 2016.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[First Post!]]></title>
- <link rel="alternate" type="text/html" href="http://viclw17.github.io/2016/03/26/first-post/" />
-  <id>http://viclw17.github.io/2016/03/26/first-post</id>
+ <link rel="alternate" type="text/html" href="/2016/03/26/first-post/" />
+  <id>/2016/03/26/first-post</id>
   <updated>2016-03-26T00:00:00-00:00</updated>
   <published>2016-03-26T00:00:00-07:00</published>
   
   <author>
     <name>Victor Li</name>
-    <uri>http://viclw17.github.io</uri>
+    <uri></uri>
     <email>viclw17@gmail.com</email>
   </author>
   <content type="html">
@@ -651,7 +651,7 @@ Final.
 
 &lt;p&gt;V&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://viclw17.github.io/2016/03/26/first-post/&quot;&gt;First Post!&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;http://viclw17.github.io&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 26, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/2016/03/26/first-post/&quot;&gt;First Post!&lt;/a&gt; was originally published by Victor Li at &lt;a href=&quot;&quot;&gt;1000 forms of bunnies&lt;/a&gt; on March 26, 2016.&lt;/p&gt;
   </content>
 </entry>
 

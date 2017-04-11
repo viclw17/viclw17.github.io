@@ -1,11 +1,11 @@
 ---
 layout: post
-title: MatCap Shader Showcase
-description: "Showcasing the infinite possibility of MatCap shader."
+title: MatCap Shader
+description: "Infinite possibility of MatCap shader."
 modified: 2016-05-01
 tags: [Unity Shader]
 image:
-  feature: matcap.png
+  feature: matcap_bunnies.jpg
   credit:
   creditlink:
 ---
@@ -25,10 +25,10 @@ This is a simple MatCap shader showcasing application I made by Unity:
 * click top arrow to review the MatCap texture panel and try different effect.
 
 <!-- <iframe src="{{ site.url }}/app/MatCap/MatCap.html" width="600" height="650" scrolling="no" frameborder="0" align="middle"> -->
-<iframe src="{{ site.url }}/app/MatCap_webgl/index.html" width="600" height="650" scrolling="no" frameborder="0" align="middle">
+<iframe src="{{ site.url }}/app/WebGL/MatCap_demo/index.html" width="600" height="600" scrolling="no" frameborder="0" align="middle">
 </iframe>
 
-<br>
+<!-- <br> -->
 
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 

@@ -63,8 +63,13 @@ svg:not(:root) {
 // --------------------------------------------------
 .btn {
   display: inline-block;
-  margin-bottom: 20px;
-  padding: 8px 20px;
+
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 8px 30px;
   @include font-rem(14);
   background-color: $primary;
   color: $white;
@@ -80,6 +85,7 @@ svg:not(:root) {
     color: $white;//$primary;
   }
 }
+
 .btn-inverse {
   background-color: $white;
   color: $primary;
@@ -92,6 +98,7 @@ svg:not(:root) {
     color: $white;
   }
 }
+
 .btn-success {
   background-color: $success;
   color: $white;
