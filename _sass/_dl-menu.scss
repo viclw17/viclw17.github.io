@@ -12,7 +12,7 @@
 	perspective-origin: 50% 200%;
 	@media #{$medium} {
 		position: fixed;
-		max-width: 225px; //175px
+		max-width: 175px; //175px width of the navigation menu
 		top: 25px;
 		left: 25px;
 	}

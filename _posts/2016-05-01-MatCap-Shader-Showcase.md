@@ -24,11 +24,12 @@ This is a simple MatCap shader showcasing application I made by Unity:
 * click and drag to change view angle;
 * click top arrow to review the MatCap texture panel and try different effect.
 
-<!-- <iframe src="{{ site.url }}/app/MatCap/MatCap.html" width="600" height="650" scrolling="no" frameborder="0" align="middle"> -->
-<iframe src="{{ site.url }}/app/WebGL/MatCap_demo/index.html" width="600" height="600" scrolling="no" frameborder="0" align="middle">
-</iframe>
-
-<!-- <br> -->
+<!-- <iframe src="{{ site.url }}/app/WebGL/MatCap_demo/index.html" width="600" height="600" scrolling="no" frameborder="0" align="middle">
+</iframe> -->
+<a href="{{ site.url }}/app/WebGL/MatCap_demo/index.html" target = "_blank">
+<img src="{{ site.url }}/images/matcap_demo_image.png" width="400" height="400" style="display:block; margin:auto;">
+</a>
+<figcaption style="text-align: center;">Press image to run the demo in new page.</figcaption>
 
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
