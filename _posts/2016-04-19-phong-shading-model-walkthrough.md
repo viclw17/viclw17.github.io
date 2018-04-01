@@ -44,7 +44,8 @@ Vectors for calculating Phong (or Blinn–Phong) shading.
 </figcaption>
 
 Here is the shader script for Phong shading using Cg:
-```c
+<!-- ```c -->
+{% highlight c linenos %}
 Pass{
   Tags{ "LightMode" = "ForwardBase" }
   // pass for ambient light and first light source
@@ -150,9 +151,11 @@ Pass{
   }
   ENDCG
 } //END PASS
-```
+{% endhighlight %}
+<!-- ``` -->
 If there are more than one light source, we can add one more pass for the additional lighting effects:
-```c
+<!-- ```c -->
+{% highlight c linenos %}
 Pass{
     Tags{ "LightMode" = "ForwardAdd" }
     // pass for additional light sources
@@ -173,7 +176,8 @@ Pass{
     // same with the first pass
 
 } //END PASS
-```
+{% endhighlight %}
+<!-- ``` -->
 
 This is the testing effect:
 

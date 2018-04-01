@@ -39,7 +39,8 @@ MatCap (Material Capture) shader, for displaying objects with reflective materia
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
 
-```c
+<!-- ```c -->
+{% highlight c linenos %}
 Shader "MatCap_Victor/Plain"
 {
   Properties
@@ -114,6 +115,7 @@ Shader "MatCap_Victor/Plain"
   }
   Fallback "VertexLit"
 }
-```
+{% endhighlight %}
+<!-- ``` -->
 
 TBC
