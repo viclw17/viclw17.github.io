@@ -7,7 +7,7 @@
 title:  1000 Forms Of Bunnies
 subtitle: Victor's blog
 description: Technial Artist | VR Game Developer
-about: Everything about Computer Graphics, Computer Science, VFX practice, random thoughts and my life fragments...
+about: Everything about Computer Graphics, Computer Science, Game Dev, VFX practice, random thoughts and  life fragments...
 author: Victor Li
 
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
@@ -16,7 +16,7 @@ date_format: '%Y-%m-%d'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
-url: http://viclw17.github.io
+url: #http://viclw17.github.io
 baseurl:
 permalink: pretty
 
