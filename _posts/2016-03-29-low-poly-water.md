@@ -1,23 +1,20 @@
 ---
 layout: post
 title: Low Poly Water
-description: "Low Poly Water"
-modified: 2016-03-29
-tags: [Unity Shader]
-image:
-  feature: bg_blue.png
-  credit:
-  creditlink:
+date: 2016-03-29
+tags:
+- [Unity]
+- [Unity Script]
+- [VFX]
 ---
-
-My first water shader exploration in unity started with trying to **make the water surface waving**. This required mesh manipulation through shader or scripts. By playing around it, I got to know more about what other effects I can try, and here is a little side-achievement -- a nice low poly water effect:
-
 <img src="{{ site.url }}/images/low_poly_water1.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh with unity standard specular material.</figcaption>
+<br />
+My first water shader exploration in unity started with trying to **make the water surface waving**. This required mesh manipulation through shader or scripts. By playing around it, I got to know more about what other effects I can try, and above is a little side-achievement -- a nice low poly water effect.
 
 To change the shape of a plane mesh, my first idea was to play some tricks in vertex shader -- how about **moving vertexes along their corresponding normal directions and changing the move distance randomly according to a displacement texture** (e.g. a noise texture)? Here is the code of my vertex shader:
 
-{% highlight c %}
+```c
 v2f vert(appdata_full v) {
   v2f o;
   o.uv_DispTex = TRANSFORM_TEX(v.texcoord, _DispTex);
@@ -27,7 +24,7 @@ v2f vert(appdata_full v) {
   o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
   return o;
 }
-{% endhighlight %}
+```
 
 
 This is going to implement deformation on GPU level and the effect will come with the material assigned. And then this is the effect: (For debugging purpose I visualized the vertex normals):
@@ -42,7 +39,7 @@ IT IS something I want! However, as the gif shows, the drawing of the mesh is af
 
 Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions. This is my script:
 
-{% highlight c %}
+```c
 public class WaterPlane : MonoBehaviour
 {
   public float scale = 1.0f;
@@ -102,7 +99,7 @@ public class WaterPlane : MonoBehaviour
     }
   }
 }
-{% endhighlight %}
+```
 
 Since it was only on CPU level, we can apply material with any shader we want, which is great. The effect was like this:
 

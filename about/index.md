@@ -1,18 +1,13 @@
 ---
-layout: page
 title: About Me
-image:
-  feature: mandelbrot-zoom-more-min.png
-  credit: Mandelbrot Set
-  creditlink: #
 comments: false
-modified: 2016-03-22
+date: 2016-03-22
+modified: 2018-03-31
 ---
 
-[comment]: ---
 Hi, my name is Victor Li.
 
-I'm a [Technical Artist](http://iamvictorli.com/) and Computer Graphics Engineer based in Vancouver with a [Master's degree in Digital Media](http://thecdm.ca/) and a background of computer science. I enjoy interpreting graphics through code and using mathematics and programming as tools to discover how things work and solve problems.
+I'm a Technical Artist and Computer Graphics Engineer based in Vancouver with a [Master's degree in Digital Media](http://thecdm.ca/) and a background of computer science. I enjoy interpreting graphics through code and using mathematics and programming as tools to discover how things work and solve problems.
 
 [comment]: I have been always fascinated by the rationality in mathematics and programming, and I enjoy using them as tools to discover how things work and solve problems. I also appreciate the craftmanship and creativity in arts and design, and and I am willing to interpret visual through programming and to bridge the gap between art and technology.
 

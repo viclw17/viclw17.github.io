@@ -1,15 +1,14 @@
 ---
-layout: post
-title: MatCap Shader
-description: "Infinite possibility of MatCap shader."
-modified: 2016-05-01
-tags: [Unity Shader]
-image:
-  feature: matcap_bunnies.jpg
-  credit:
-  creditlink:
+title: Infinite possibility of MatCap shader.
+date: 2016-05-01
+modified: 2018-03-31
+tags:
+- [Unity Shader]
+- [Unity]
+- [Shader]
 ---
-
+![MatCap Bunnies]({{ site.url }}/images/matcap_bunnies.jpg)
+<br />
 MatCap (Material Capture) shader, for displaying objects with reflective materials with uniform surface colouring, like Zbrush or Mudbox can. It uses an image of a sphere as a view-space environment map. It's very cheap, and looks great when the camera doesn't rotate.
 
 **Resources:**
@@ -17,24 +16,30 @@ MatCap (Material Capture) shader, for displaying objects with reflective materia
 * [Explaination of application in Zbrush](http://docs.pixologic.com/user-guide/materials-lights-rendering/materials/matcap/matcap-basics/)
 * [Paper: The Lit Sphere: A Model for Capturing NPR Shading from Art](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.29.1869&rep=rep1&type=pdf)
 
-
-This is a simple MatCap shader showcasing application I made by Unity:
+<!-- Comment 0 -->
+<!-- This is a simple MatCap shader showcasing application I made by Unity:
 
 * Scroll mouse wheel to zoom;
 * click and drag to change view angle;
-* click top arrow to review the MatCap texture panel and try different effect.
+* click top arrow to review the MatCap texture panel and try different effect. -->
 
+<!-- Comment 1 -->
 <!-- <iframe src="{{ site.url }}/app/WebGL/MatCap_demo/index.html" width="600" height="600" scrolling="no" frameborder="0" align="middle">
 </iframe> -->
-<a href="{{ site.url }}/app/WebGL/MatCap_demo/index.html" target = "_blank">
+
+<!-- Comment 2 -->
+<!-- <a href="{{ site.url }}/app/WebGL/MatCap_demo/index.html" target = "_blank">
 <img src="{{ site.url }}/images/matcap_demo_image.png" width="400" height="400" style="display:block; margin:auto;">
 </a>
-<figcaption style="text-align: center;">Press image to run the demo in new page.</figcaption>
+<figcaption style="text-align: center;">Press image to run the demo in new page.</figcaption> -->
+
+<!-- Comment 3 -->
+<!-- Press [Here]({{ site.url }}/app/WebGL/MatCap_demo/index.html) to run the demo in new page. -->
 
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
 
-{% highlight c %}
+```c
 Shader "MatCap_Victor/Plain"
 {
   Properties
@@ -109,6 +114,6 @@ Shader "MatCap_Victor/Plain"
   }
   Fallback "VertexLit"
 }
-{% endhighlight %}
+```
 
 TBC
