@@ -1,7 +1,6 @@
 ---
 title: Infinite possibility of MatCap shader.
 date: 2016-05-01
-modified: 2018-03-31
 tags:
 - [Unity Shader]
 - [Unity]
@@ -9,7 +8,7 @@ tags:
 ---
 ![MatCap Bunnies]({{ site.url }}/images/matcap_bunnies.jpg)
 <br />
-MatCap (Material Capture) shader, for displaying objects with reflective materials with uniform surface colouring, like Zbrush or Mudbox can. It uses an image of a sphere as a view-space environment map. It's very cheap, and looks great when the camera doesn't rotate.
+MatCap (Material Capture) shader uses an image of a sphere as a view-space environment map. It's very cheap and looks great when the camera doesn't rotate. It is widely used in 3D sculpting software (like Zbrush) to preview meshes.
 
 **Resources:**
 
