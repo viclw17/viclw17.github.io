@@ -11,17 +11,17 @@ tags:
 <br />
 MatCap (Material Capture) shader, for displaying objects with reflective materials with uniform surface colouring, like Zbrush or Mudbox can. It uses an image of a sphere as a view-space environment map. It's very cheap, and looks great when the camera doesn't rotate.
 
-**Resources:**
+## Reference
 
 * [Explaination of application in Zbrush](http://docs.pixologic.com/user-guide/materials-lights-rendering/materials/matcap/matcap-basics/)
 * [Paper: The Lit Sphere: A Model for Capturing NPR Shading from Art](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.29.1869&rep=rep1&type=pdf)
 
-<!-- Comment 0 -->
-<!-- This is a simple MatCap shader showcasing application I made by Unity:
+## Demo
 
+<a href="http://viclw17.github.io/apps/WebGL/MatCap_demo/index.html" target = "_blank">This</a> is a simple MatCap shader showcasing application I made by Unity:
 * Scroll mouse wheel to zoom;
 * click and drag to change view angle;
-* click top arrow to review the MatCap texture panel and try different effect. -->
+* click top arrow to review the MatCap texture panel and try different effect.
 
 <!-- Comment 1 -->
 <!-- <iframe src="{{ site.url }}/app/WebGL/MatCap_demo/index.html" width="600" height="600" scrolling="no" frameborder="0" align="middle">
@@ -37,7 +37,6 @@ MatCap (Material Capture) shader, for displaying objects with reflective materia
 <!-- Press [Here]({{ site.url }}/app/WebGL/MatCap_demo/index.html) to run the demo in new page. -->
 
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
-
 
 <!-- ```c -->
 {% highlight c linenos %}
