@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Water Shader Exploration Part-1
 date: 2016-03-28
 tags:

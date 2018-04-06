@@ -126,7 +126,6 @@ menu:
   #sitemap: /sitemap.xml
   #commonweal: /404.html
 
-
 # Enable/Disable menu icons.
 # Icon Mapping:
 #   Map a menu item to a specific FontAwesome icon name.
@@ -144,9 +143,6 @@ menu_icons:
   # sitemap: sitemap
   # commonweal: heartbeat
 
-
-
-
 # ---------------------------------------------------------------
 # Scheme Settings
 # ---------------------------------------------------------------
@@ -155,7 +151,6 @@ menu_icons:
 scheme: Muse
 # scheme: Mist
 # scheme: Pisces
-
 
 # ---------------------------------------------------------------
 # Font Settings
@@ -203,13 +198,9 @@ font:
     family:
     size:
 
-
-
-
 # ---------------------------------------------------------------
 # Sidebar Settings
 # ---------------------------------------------------------------
-
 
 # Social Links
 # Key is the link label showing to end users.
@@ -238,11 +229,9 @@ social_icons:
   ArtStation: paint-brush
   # Weibo: weibo
 
-
 # Sidebar Avatar
 # in directory: /assets/images/avatar.gif
 avatar: /assets/images/IMG_3680.JPG
-
 
 # Table Of Contents in the Sidebar
 toc:
@@ -254,18 +243,16 @@ toc:
   # If true, all words will placed on next lines if header width longer then sidebar width.
   wrap: false
 
-
 # Creative Commons 4.0 International License.
 # http://creativecommons.org/
 # Available: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero
 #creative_commons: by-nc-sa
 #creative_commons:
 
-
 sidebar:
   # Sidebar Position, available value: left | right
-  position: left
-  # position: right
+  # position: left
+  position: right
 
   # Sidebar Display, available value:
   #  - post    expand on posts automatically. Default.
@@ -287,14 +274,12 @@ sidebar:
   # Scroll percent label in b2t button
   scrollpercent: false
 
-
 # Blog rolls
 # links_title: Links
 # links_layout: block
 #links_layout: inline
 #links:
-  #Title: http://example.com/
-
+  # Title: http://example.com/
 
 # ---------------------------------------------------------------
 # Post Settings
@@ -304,16 +289,16 @@ sidebar:
 scroll_to_more: true
 
 # Automatically saving scroll position on each post/page in cookies.
-save_scroll: false
+save_scroll: true
 
 # Automatically excerpt description in homepage as preamble text.
 excerpt_description: true
 
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
-auto_excerpt:
-  enable: false
-  length: 150
+# auto_excerpt:
+#   enable: false
+#   length: 150
 
 # Post meta display settings
 post_meta:
@@ -324,7 +309,7 @@ post_meta:
 
 # Post wordcount display settings
 post_wordcount:
-  item_text: true
+  item_text: false
   wordcount: false
   min2read: false
   separated_meta: false
@@ -337,11 +322,9 @@ post_wordcount:
 
 # Declare license on posts
 post_copyright:
-  enable: false
+  enable: true
   license: CC BY-NC-SA 3.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
-
-
 
 # ---------------------------------------------------------------
 # Misc Theme Settings
@@ -356,13 +339,11 @@ custom_logo:
   enabled: true
   image: /assets/images/favicon_bunny_72.png
 
-
 # Code Highlight theme
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
 highlight_theme: normal
-
 
 # ---------------------------------------------------------------
 # Third Party Services Settings
@@ -375,16 +356,16 @@ mathjax:
   cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
 
 # Han Support docs: https://hanzi.pro/
-han: false
+han: true
 
 # Swiftype Search API Key
-#swiftype_key:
+# swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+# baidu_analytics:
 
 # Duoshuo ShortName
-#duoshuo_shortname:
+# duoshuo_shortname:
 
 # Disqus
 disqus:
@@ -396,62 +377,62 @@ disqus:
   hide: false
 
 # Hypercomments
-#hypercomments_id:
+# hypercomments_id:
 
 # Gentie productKey
-#gentie_productKey:
+# gentie_productKey:
 
 # changyan
-changyan:
-  enable: false
-  appid:
-  appkey:
+# changyan:
+#   enable: false
+#   appid:
+#   appkey:
 
 # Support for youyan comments system.
 # You can get your uid from http://www.uyan.cc
-#youyan_uid: your uid
+# youyan_uid: your uid
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-#livere_uid: your uid
+# livere_uid: your uid
 
 # Support for gitalk comments system.
-gitalk:
-  enable: false
-  clientID: # 54730ddf7b9420460c03
-  clientSecret: # c05684701b25ff1c19ea0c01ce4d80c125e0707d
-  repo: # colingpt.github.io
-  owner: # colingpt
-  admin: # colingpt
+# gitalk:
+#   enable: false
+#   clientID: # 54730ddf7b9420460c03
+#   clientSecret: # c05684701b25ff1c19ea0c01ce4d80c125e0707d
+#   repo: # colingpt.github.io
+#   owner: # colingpt
+#   admin: # colingpt
 
 # Baidu Share
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-#baidushare:
-##  type: button
+# baidushare:
+#   type: button
 
 # Share
-#jiathis:
+# jiathis:
 # Warning: JiaThis does not support https.
-#add_this_id:
+# add_this_id:
 
 # Share
 #duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-#google_site_verification:
+# google_site_verification:
 
 # Google Analytics
 google_analytics: UA-75504070-1
 
 # Yandex Webmaster tools verification setting
 # See: https://webmaster.yandex.ru/
-#yandex_site_verification:
+# yandex_site_verification:
 
 # CNZZ count
-#cnzz_siteid:
+# cnzz_siteid:
 
 # Application Insights
 # See https://azure.microsoft.com/en-us/services/application-insights/
@@ -460,60 +441,58 @@ google_analytics: UA-75504070-1
 # Make duoshuo show UA
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
-duoshuo_info:
-  ua_enable: false
-  admin_enable: false
-  user_id: 0
-  #admin_nickname: Author
-
+# duoshuo_info:
+#   ua_enable: false
+#   admin_enable: false
+#   user_id: 0
+#   admin_nickname: Author
 
 # Facebook SDK Support.
 # https://github.com/iissnan/hexo-theme-next/pull/410
-facebook_sdk:
-  enable: false
-  app_id:       #<app_id>
-  fb_admin:     #<user_id>
-  like_button:  #true
-  webmaster:    #true
+# facebook_sdk:
+#   enable: false
+#   app_id:       #<app_id>
+#   fb_admin:     #<user_id>
+#   like_button:  #true
+#   webmaster:    #true
 
 # Facebook comments plugin
 # This plugin depends on Facebook SDK.
 # If facebook_sdk.enable is false, Facebook comments plugin is unavailable.
-facebook_comments_plugin:
-  enable: false
-  num_of_posts: 10  # min posts num is 1
-  width: 100%       # default width is 550px
-  scheme: light     # default scheme is light (light or dark)
+# facebook_comments_plugin:
+#   enable: false
+#   num_of_posts: 10  # min posts num is 1
+#   width: 100%       # default width is 550px
+#   scheme: light     # default scheme is light (light or dark)
 
-# VKontakte API Support.
+# VKontakte API Support. Russian Facebook
 # To get your AppID visit https://vk.com/editapp?act=create
-vkontakte_api:
-  enable: false
-  app_id:       #<app_id>
-  like:         true
-  comments:     true
-  num_of_posts: 10
+# vkontakte_api:
+#   enable: false
+#   app_id:       #<app_id>
+#   like:         true
+#   comments:     true
+#   num_of_posts: 10
 
 # Star rating support to each article.
 # To get your ID visit https://widgetpack.com
-rating:
-  enable: false
-  id:     #<app_id>
-  color:  fc6423
-
+# rating:
+#   enable: false
+#   id:     #<app_id>
+#   color:  fc6423
 
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
-leancloud_visitors:
-  enable: false
-  app_id: #<app_id>
-  app_key: #<app_key>
+# leancloud_visitors:
+#   enable: false
+#   app_id: #<app_id>
+#   app_key: #<app_key>
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
   # count values only if the other configs are false
-  enable: false
+  enable: ture
   # custom uv span for the whole site
   site_uv: true
   site_uv_header: <i class="fa fa-user"></i>
@@ -534,37 +513,34 @@ busuanzi_count:
 # Tencent MTA ID
 # tencent_mta:
 
-
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+# baidu_push: false
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
-#
 # API Documentation:
 # https://developers.google.com/google-apps/calendar/v3/reference/events/list
-calendar:
-  enable: false
-  calendar_id: <required>
-  api_key: <required>
-  orderBy: startTime
-  offsetMax: 24
-  offsetMin: 4
-  timeZone:
-  showDeleted: false
-  singleEvents: true
-  maxResults: 250
+# calendar:
+#   enable: false
+#   calendar_id: <required>
+#   api_key: <required>
+#   orderBy: startTime
+#   offsetMax: 24
+#   offsetMin: 4
+#   timeZone:
+#   showDeleted: false
+#   singleEvents: true
+#   maxResults: 250
 
 # Algolia Search
-algolia_search:
-  enable: false
-  hits:
-    per_page: 10
-  labels:
-    input_placeholder: Search for Posts
-    hits_empty: "We didn't find any results for the search: ${query}"
-    hits_stats: "${hits} results found in ${time} ms"
-
+# algolia_search:
+#   enable: false
+#   hits:
+#     per_page: 10
+#   labels:
+#     input_placeholder: Search for Posts
+#     hits_empty: "We didn't find any results for the search: ${query}"
+#     hits_stats: "${hits} results found in ${time} ms"
 
 # Local search
 local_search:
@@ -578,8 +554,7 @@ local_search:
 # External URL with BASE64 encrypt & decrypt
 # Usage: {% exturl text url "title" %}
 # Alias: {% extlink text url "title" %}
-exturl: false
-
+# exturl: false
 
 #! ---------------------------------------------------------------
 #! DO NOT EDIT THE FOLLOWING SETTINGS

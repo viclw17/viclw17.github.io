@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Low Poly Water
 date: 2016-03-29
 tags:
