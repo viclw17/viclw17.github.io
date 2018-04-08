@@ -1,7 +1,7 @@
 <section id="posts" class="posts-collapse" hidden>
-  <span class="archive-move-on"></span>
+  <!-- <span class="archive-move-on"></span> -->
 
-  <span class="archive-page-counter">
+  <!-- <span class="archive-page-counter">
     {% assign posts_length = site.posts.size %}
     {% if posts_length > 210 %} {% assign cheers = 'excellent' %}
       {% elsif posts_length > 130 %} {% assign cheers = 'great' %}
@@ -20,7 +20,7 @@
       {{ __.counter.archive_posts.other | replace: '%d', site.posts.size }}
     {% endif %}
     {{ __.keep_on }}
-  </span>
+  </span> -->
 
   {% assign paginate = site.archive.paginate | default: site.paginate  %}
   {% assign paginate_path = site.archive.paginate_path | default: site.paginate_path  %}
