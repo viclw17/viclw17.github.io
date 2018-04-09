@@ -1,7 +1,7 @@
 // TODO: Refactor.
-
+// Post section on home page.
 .posts-expand {
-  padding-top: 40px;
+  padding-top: 0;//40px;
 }
 
 @media (max-width: 767px) {
@@ -11,7 +11,7 @@
 
   .post-body {
     pre {
-      padding: 10px;
+      padding: 0;//10px;
       .gutter pre {
         padding-right: 10px;
       }
@@ -58,7 +58,8 @@
     box-sizing: border-box;
     margin: auto;
     padding: 3px;
-    border: 1px solid $gray-lighter;
+    // border: 1px solid $gray-lighter
+    border: none;
   }
 }
 

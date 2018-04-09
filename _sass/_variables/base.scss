@@ -91,7 +91,7 @@ $font-weight-bolder       : 700;
 
 
 // Font size
-$font-size-base           : 14px;
+$font-size-base           : 15px;//14px;
 $font-size-small          : $font-size-base - 2px;
 $font-size-smaller        : $font-size-base - 4px;
 $font-size-large          : $font-size-base + 2px;
@@ -227,7 +227,7 @@ $logo-font-size                 : 20px;
 $logo-font-size                 : if(type-of(jekyll-config('font.logo.size')) == 'number', jekyll-config('font.logo.size') + px, $logo-font-size);
 
 $site-subtitle-color            : $grey-dark;
-$subtitle-font-size             : 13px;
+$subtitle-font-size             : 15px;//13px;
 $subtitle-color                 : $grey-dark;
 
 // Menu
@@ -323,8 +323,8 @@ $full-image-margin-vertical   : 25px;
 
 //  .post-expand .post-eof
 //  In Muse scheme, margin above and below the post separator
-$post-eof-margin-top          : 80px;  //  or 160px for more white space
-$post-eof-margin-bottom       : 60px;  //  or 120px for less white space
+$post-eof-margin-top          : 50px;//80px;  //  or 160px for more white space
+$post-eof-margin-bottom       : 50px;//60px;  //  or 120px for less white space
 
 
 // Iconography
