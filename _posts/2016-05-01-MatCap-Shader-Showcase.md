@@ -35,6 +35,8 @@ MatCap (Material Capture) shader uses an image of a sphere as a view-space envir
 <!-- Comment 3 -->
 <!-- Press [Here]({{ site.url }}/app/WebGL/MatCap_demo/index.html) to run the demo in new page. -->
 
+# Shader Code
+
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
 <!-- ```c -->

@@ -12,11 +12,13 @@ tags:
 <br />
 [Phong shading model](https://en.wikipedia.org/wiki/Phong_reflection_model) is one of the most classic realistic shading models. It captures the basic features of a lit object using a very concise and straightforward theory. It matches people's observation in daily life, and also easy to describe using math. Therefore, Phong shading model is always used as the base for other artistic shading effects to be built on.
 
+# Shading Model Breakdown
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png" width="600" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">
 Visual illustration of the Phong equation.
 </figcaption>
-
+<br />
 The theory is relatively simple. The final illumination of an object is **a sum of ambient lighting and all the diffuse lighting & specular  that caused by all the light sources**. Ambient lighting and diffuse lighting are usually applied globally, and specular is for object that is not matte.
 
 <br>
@@ -42,6 +44,9 @@ The theory is relatively simple. The final illumination of an object is **a sum 
 <figcaption style="text-align: center;">
 Vectors for calculating Phong (or Blinn–Phong) shading.
 </figcaption>
+<br />
+
+# Shader code
 
 Here is the shader script for Phong shading using Cg:
 <!-- ```c -->
@@ -178,6 +183,8 @@ Pass{
 } //END PASS
 {% endhighlight %}
 <!-- ``` -->
+
+# Final Result
 
 This is the testing effect:
 
