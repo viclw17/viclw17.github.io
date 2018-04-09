@@ -11,7 +11,7 @@ Just came across [this Gem](https://www.youtube.com/watch?v=yOyaJXpAYZQ&t=0s&lis
 
 First, here is the C program for testing - the same as the testing case in the video. Save it as `fib.c`.
 
-{% highlight c linenos %}
+{% highlight c %}
 #include <stdio.h>
 int main(void)
 {
