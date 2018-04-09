@@ -32,6 +32,6 @@ Image with caption:
 ```
 ### Code Highlight
 ```
-{% highlight c linenos %} //this make the mobile display ugly tho
+{% highlight c linenos=table %}
 {% endhighlight %}
 ```
