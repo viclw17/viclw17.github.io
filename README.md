@@ -6,7 +6,11 @@
 
 [Gif Optimization](https://ezgif.com/)
 
+[Github Markdown](https://guides.github.com/features/mastering-markdown/#syntax)
+
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists)
+
+[Git Doc](https://git-scm.com/doc)
 ## Formatting Note
 ### Gif
 400px, 100 [Lossy Compression](https://kornel.ski/lossygif)
