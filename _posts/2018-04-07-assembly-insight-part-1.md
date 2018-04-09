@@ -1,5 +1,5 @@
 ---
-title: Assembly Insight - Part 1
+title: Assembly Insight Part-1
 date: 2018-04-07
 tags:
 - Computer Science

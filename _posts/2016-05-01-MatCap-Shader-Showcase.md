@@ -1,5 +1,5 @@
 ---
-title: Infinite possibility of MatCap shader.
+title: Infinite Possibility Of MatCap Shader
 date: 2016-05-01
 tags:
 - [Unity Shader]

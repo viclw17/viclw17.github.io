@@ -1,5 +1,5 @@
 ---
-title: First Post!
+title: First Post
 date: 2016-03-26
 tags: Random
 ---
