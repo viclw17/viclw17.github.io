@@ -91,6 +91,11 @@
     <!--newline-->
   {% endif %}
 
+  {% if images.size == 0 %}
+    <meta name="twitter:image" content="{{ site.url }}/images/favicon_bunny_114.png">
+    <!--newline-->
+  {% endif %}
+
   {% if twitter_id %}
     {% if twitter_id[0] != '@' %}
       {% assign twitter_id = '@' | append: twitter_id %}
