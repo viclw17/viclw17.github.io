@@ -10,12 +10,12 @@ tags:
 <br />
 MatCap (Material Capture) shader uses an image of a sphere as a view-space environment map. It's very cheap and looks great when the camera doesn't rotate. It is widely used in 3D sculpting software (like Zbrush) to preview meshes.
 
-## Reference
+# Reference
 
 * [Explaination of application in Zbrush](http://docs.pixologic.com/user-guide/materials-lights-rendering/materials/matcap/matcap-basics/)
 * [Paper: The Lit Sphere: A Model for Capturing NPR Shading from Art](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.29.1869&rep=rep1&type=pdf)
 
-## Demo
+# Demo
 
 <a href="http://viclw17.github.io/apps/WebGL/MatCap_demo/index.html" target = "_blank">This</a> is a simple MatCap shader showcasing application I made by Unity:
 * Scroll mouse wheel to zoom;

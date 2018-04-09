@@ -1,5 +1,5 @@
 ---
-title: Water Shader Exploration Part-1
+title: Water Shader Exploration - Part 1
 date: 2016-03-28
 tags:
 - [Unity Shader]
@@ -8,19 +8,18 @@ tags:
 - [Water]
 ---
 <!-- ![]({{ site.url }}/images/water2.gif) -->
-<img src="{{ site.url }}/images/water2.gif" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">Final work w/ transparency and faint tint and BUNNY!</figcaption>
-
+<img src="{{ site.url }}/images/water2_optimized.gif" width="400" height="400" style="display:block; margin:auto;">
+<figcaption style="text-align: center;">Final work w/ transparency and faint tint. </figcaption>
 <br />
-First try of water effect in Unity.
+First try of making a water effect in Unity.
 
-## Intro
+# Intro
 
 One of my current VR projects needs a nice and light water shader. I have been working on it for a while and keep iterating the the overall effect. Here is the water effect I have achieved so far, however it's still far away from perfect simulation:
 
 <img src="{{ site.url }}/images/water0.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Final work w/o transparency.</figcaption>
-
+<br />
 Water effect has been always a complicated topic in shading especially for runtime scenario. As the most usual material in our daily life, water has lots of visual features that we are very familiar with. However, all these features also got lots of physics and lighting formulas involved which are interacting with each other.
 
 I started with thinking about the most typical physical and lighting features that came into mind and got my hand dirty immediately to achieve as much as I can. Here is my **checklist**:
