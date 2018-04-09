@@ -185,22 +185,22 @@ This is the testing effect:
 <figcaption style="text-align: center;">
 Ambient only.
 </figcaption>
-
+<br />
 <img src="{{ site.url }}/images/Phong/diffuse.PNG" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">
 Diffuse only.
 </figcaption>
-
+<br />
 <img src="{{ site.url }}/images/Phong/specular.PNG" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">
 Specular only.
 </figcaption>
-
+<br />
 <img src="{{ site.url }}/images/Phong/phong.PNG" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">
 Final.
 </figcaption>
-
+<br />
 _However, **if statement** is not optimal in shader. This is because shader is running on GPU and GPU has a highly parallel structure. I will document the optimization for the shader in future post._
 
 V

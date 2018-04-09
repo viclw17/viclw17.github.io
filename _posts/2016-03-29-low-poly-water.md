@@ -24,19 +24,19 @@ v2f vert(appdata_full v) {
   o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
   return o;
 }
-<!-- ``` -->
 {% endhighlight %}
+<!-- ``` -->
 
 This is going to implement deformation on GPU level and the effect will come with the material assigned. And then this is the effect: (For debugging purpose I visualized the vertex normals):
 
 <img src="{{ site.url }}/images/low_poly_fig0.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh assigned with the vertex shader above. (Green lines are vertex normals)</figcaption>
-
+<br />
 IT IS something I want! However, as the gif shows, the drawing of the mesh is affected by the shader but the normals are not modified, which makes it impossible to achieve a beautiful low ploy flat shading style (e.g. image below). (Although the shader I wrote was unlit, since the normals are not even moved or rotated, it won't make any difference with lighting model implemented.)
 
 <img src="{{ site.url }}/images/flat_shading.png" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">W/ and w/o flat shading.</figcaption>
-
+<br />
 Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions. This is my script:
 
 <!-- ```c -->
@@ -100,24 +100,26 @@ public class WaterPlane : MonoBehaviour
     }
   }
 }
-<!-- ``` -->
 {% endhighlight %}
+<!-- ``` -->
 
 Since it was only on CPU level, we can apply material with any shader we want, which is great. The effect was like this:
 
 <img src="{{ site.url }}/images/low_poly_fig2.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh assigned with the script above. (Green lines are vertex normals)</figcaption>
+<br />
 <!-- <img src="{{ site.url }}/images/low_poly_fig3.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh assigned with the script above. (Green lines are vertex normals)</figcaption> -->
-
+<br />
 Note that the line **mesh.RecalculateNormals ();** is very important. If we remove it, the vertexes are moved but the normals are not updated and they will keep pointing upward, so the shading will look like smooth. And we will lost the nice flat shading:
 
 <img src="{{ site.url }}/images/low_poly_fig1.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">W/o mesh.RecalculateNormals (); (Green lines are vertex normals, )</figcaption>
-
+<br />
 However, this effect will be eventually useful when I want to implement the real water surface effect. I will show that in Water Shader Exploration Part-2.
 
 Now I can simply use the powerful build-in Standard shader and tweak the smoothness and the transparency to achieve a nice low poly water effect. :D
 
 <img src="{{ site.url }}/images/low_poly_water2.gif" width="400" height="400" style="display:block; margin:auto;">
 <!-- <figcaption style="text-align: center;">W/o mesh.RecalculateNormals (); (Green lines are vertex normals, )</figcaption> -->
+<br />

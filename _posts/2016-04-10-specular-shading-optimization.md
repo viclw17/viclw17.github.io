@@ -13,14 +13,14 @@ When learning and practicing shader programming for Unity, I found the [Cg Wiki]
 However, when I went through the [Specular Highlights](https://en.wikibooks.org/wiki/Cg_Programming/Unity/Specular_Highlights) tutorial trying to achieve a [Phong Shading](https://en.wikipedia.org/wiki/Phong_shading) effect from scratch, I found the code snippet that the tutorial provided has some artifacts.
 
 <img src="http://www.itchy-animation.co.uk/tutorials/01-intro-01.jpg" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">Different areas of a typical shaded sphere. <br> Note that the terminator line should be a soft gradient. </figcaption>
-
+<figcaption style="text-align: center;">Different areas of a typical shaded sphere. <br /> Note that the terminator line should be a soft gradient. </figcaption>
+<br />
 After implementing the shading algorithm, the visual looks pretty promising. But when I rotate the light source or move the view direction I notice the terminator could sometimes becomes a sharp boundary between lit and shadow areas:
 
 <img src="{{ site.url }}/images/specular1.gif" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">Artifact of the specular shader.<br>(The terminator line gets unnatural at some angles.)</figcaption>
-<br>
-
+<figcaption style="text-align: center;">Artifact of the specular shader.
+<br />(The terminator line gets unnatural at some angles.)</figcaption>
+<br />
 <!-- ```c -->
 {% highlight c linenos %}
 float3 specularReflection;
@@ -43,8 +43,8 @@ return float4(
   diffuseReflection +
   specularReflection,
   1.0);
-<!-- ``` -->
 {% endhighlight %}
+<!-- ``` -->
 
 The specular is calculated by the dot product of the reflect vector and the view direction vector. However, this angle can be larger than 90 degrees. According to how dot product is calculated,
 
@@ -64,8 +64,8 @@ specularReflection = attenuation * _LightColor0.rgb * _SpecColor.rgb *
   pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)),
   _Shininess);
   * dot(lightDirection, normalDirection); // fixed!
-<!-- ``` -->
 {% endhighlight %}
+<!-- ``` -->
 
 Since the length of direction vectors is always 1, so this can get rid off the negative values. And this is the optimized result:
 
