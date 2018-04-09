@@ -38,7 +38,7 @@ MatCap (Material Capture) shader uses an image of a sphere as a view-space envir
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
 <!-- ```c -->
-{% highlight c linenos %}
+{% highlight c %}
 Shader "MatCap_Victor/Plain"
 {
   Properties

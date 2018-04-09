@@ -1,7 +1,7 @@
 ## Blog Tools
 [1000 Forms Of Bunnies](http://viclw17.github.io/)
 
-<a href="http://Localhost:4000" target = "_blank">Localhost:4000</a> 
+<a href="http://Localhost:4000" target = "_blank">Localhost:4000</a>
 <br />
 
 [Gif Optimization](https://ezgif.com/)
@@ -18,7 +18,7 @@
 ```
 Link open in new page:
 ```
-<a href="LINK" target = "_blank">TEXT</a> 
+<a href="LINK" target = "_blank">TEXT</a>
 ```
 ### Image
 ```
@@ -32,6 +32,6 @@ Image with caption:
 ```
 ### Code Highlight
 ```
-{% highlight c linenos %}
+{% highlight c linenos %} //this make the mobile display ugly tho
 {% endhighlight %}
 ```

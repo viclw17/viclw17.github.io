@@ -22,7 +22,7 @@ After implementing the shading algorithm, the visual looks pretty promising. But
 <br />(The terminator line gets unnatural at some angles.)</figcaption>
 <br />
 <!-- ```c -->
-{% highlight c linenos %}
+{% highlight c %}
 float3 specularReflection;
 if (dot(normalDirection, lightDirection) < 0.0){
   // light source on the wrong side.
@@ -59,7 +59,7 @@ Color is in the type of float4/half4/fixed4 in Cg and can not has negative eleme
 One of the ways to fix it is to multiply the final color result with the same dot product result again.
 
 <!-- ```c -->
-{% highlight c linenos %}
+{% highlight c %}
 specularReflection = attenuation * _LightColor0.rgb * _SpecColor.rgb *
   pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)),
   _Shininess);
