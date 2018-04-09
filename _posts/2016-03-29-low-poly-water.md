@@ -14,7 +14,7 @@ My first water shader exploration in unity started with trying to **make the wat
 To change the shape of a plane mesh, my first idea was to play some tricks in vertex shader -- how about **moving vertexes along their corresponding normal directions and changing the move distance randomly according to a displacement texture** (e.g. a noise texture)? Here is the code of my vertex shader:
 
 <!-- ```c -->
-{% highlight c %}
+{% highlight c linenos=table %}
 v2f vert(appdata_full v) {
   v2f o;
   o.uv_DispTex = TRANSFORM_TEX(v.texcoord, _DispTex);
@@ -40,7 +40,7 @@ IT IS something I want! However, as the gif shows, the drawing of the mesh is af
 Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions. This is my script:
 
 <!-- ```c -->
-{% highlight c %}
+{% highlight c linenos=table %}
 public class WaterPlane : MonoBehaviour
 {
   public float scale = 1.0f;

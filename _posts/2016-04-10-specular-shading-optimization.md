@@ -7,7 +7,9 @@ tags:
 - [Shader]
 - [Optimization]
 ---
-
+<img src="{{ site.url }}/images/specular2.gif" width="400" height="400" style="display:block; margin:auto;">
+<figcaption style="text-align: center;">Low poly water mesh with unity standard specular material.</figcaption>
+<br />
 When learning and practicing shader programming for Unity, I found the [Cg Wiki](https://en.wikibooks.org/wiki/Cg_Programming/Unity) website extremely benevolent on getting a well-rounded understanding of how to shade an object step by step. Apart from the magic configuration parts(Shader Properties/Passes/Tags etc.) of a typical Unity shader, the main function-related part of the shader only lies between _CGPROGRAM_ and _ENDCG_. According to my practice, I believe [Cg Wiki](https://en.wikibooks.org/wiki/Cg_Programming/Unity) and [Unity Shader Reference](http://docs.unity3d.com/Manual/SL-Reference.html) can cover almost all the basic tricks of Unity shader programming. ;)
 
 However, when I went through the [Specular Highlights](https://en.wikibooks.org/wiki/Cg_Programming/Unity/Specular_Highlights) tutorial trying to achieve a [Phong Shading](https://en.wikipedia.org/wiki/Phong_shading) effect from scratch, I found the code snippet that the tutorial provided has some artifacts.
@@ -22,7 +24,7 @@ After implementing the shading algorithm, the visual looks pretty promising. But
 <br />(The terminator line gets unnatural at some angles.)</figcaption>
 <br />
 <!-- ```c -->
-{% highlight c %}
+{% highlight c linenos=table %}
 float3 specularReflection;
 if (dot(normalDirection, lightDirection) < 0.0){
   // light source on the wrong side.
@@ -59,7 +61,7 @@ Color is in the type of float4/half4/fixed4 in Cg and can not has negative eleme
 One of the ways to fix it is to multiply the final color result with the same dot product result again.
 
 <!-- ```c -->
-{% highlight c %}
+{% highlight c linenos=table %}
 specularReflection = attenuation * _LightColor0.rgb * _SpecColor.rgb *
   pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)),
   _Shininess);

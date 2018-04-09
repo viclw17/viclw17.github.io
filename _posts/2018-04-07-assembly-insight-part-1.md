@@ -11,7 +11,7 @@ Just came across [this Gem](https://www.youtube.com/watch?v=yOyaJXpAYZQ&t=0s&lis
 
 First, here is the C program for testing - the same as the testing case in the video. Save it as `fib.c`.
 
-{% highlight c %}
+{% highlight c linenos=table %}
 #include <stdio.h>
 int main(void)
 {
@@ -39,7 +39,7 @@ This will compile the program and generate `a.out` file. To run the executable w
 Then use command `otool -tv fib` to observe the corresponding assembly code of our compiled C program. `otool` is *object file displaying tool*, `-t` is to print the text section and `-v` is to disassemble it to make it readable.
 
 And we got:
-{% highlight shell %}
+{% highlight shell linenos=table %}
 fib:
 (__TEXT,__text) section
 _main:
