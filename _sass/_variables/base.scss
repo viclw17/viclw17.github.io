@@ -272,12 +272,12 @@ $sidebar-nav-hover-color              : $whitesmoke;
 $sidebar-highlight                    : $blue-bright;
 
 $site-author-image-padding            : 2px;
-$site-author-image-width              : 96px;
+$site-author-image-width              : 128px;//96px; // make author image bigger
 $site-author-image-height             : auto;
-$site-author-image-border-width       : 2px;
+$site-author-image-border-width       : 0px;//2px; // turn off border
 $site-author-image-border-color       : $black-dim;
 
-$site-author-name-margin              : 20px 0 0; // 5px
+$site-author-name-margin              : 20px 0 0; // 5px; // move author name away from the descriptioon
 $site-author-name-color               : $whitesmoke;
 $site-author-name-align               : center;
 $site-author-name-weight              : normal;
