@@ -6,6 +6,7 @@ tags:
 - [Unity]
 - [Shader]
 - [Optimization]
+- [Computer Graphics]
 ---
 <img src="{{ site.url }}/images/specular2.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh with unity standard specular material.</figcaption>
