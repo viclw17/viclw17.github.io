@@ -39,7 +39,7 @@ This will compile the program and generate `a.out` file. To run the executable w
 Then use command `otool -tv fib` to observe the corresponding assembly code of our compiled C program. `otool` is *object file displaying tool*, `-t` is to print the text section and `-v` is to disassemble it to make it readable.
 
 And we got:
-{% highlight shell linenos=table %}
+{% highlight bash linenos=table %}
 fib:
 (__TEXT,__text) section
 _main:
