@@ -20,7 +20,7 @@ I've been working on this famous [book](http://pbrt.org/index.html) about **phys
 <figcaption style="text-align: center;">Gave a try on the bunny model with copper material. </figcaption>
 <br />
 
-# Thoughs
+# Thoughts
 I've been always fascinated by the realistic and clean looking of the images rendered using PBR technique. It would be a great experience to be able to understand how we visually perceive the world down to the physics level, and then to try to recreate the visual result through math and programming.
 
 However, as a game developer who is mainly dealing with real-time rendering problems everyday, PBR is just a dream that far from practical application (though progress has been made to bring *some PBR technique* to video game --> [NVIDIA Reinvents the Workstation with Real-Time Ray Tracing](https://nvidianews.nvidia.com/news/nvidia-reinvents-the-workstation-with-real-time-ray-tracing)). But I believe by diving into PBR I can have a better understanding of all the related classic rendering techniques, and eventually help me understand game graphics and rendering problems.
