@@ -10,7 +10,7 @@ tags:
 <!---
 Featured image.
 -->
-<img src="{{ site.url }}/images/pbrt-sphere.jpg" height="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/pbrt-sphere.jpg" width="500"  style="display:block; margin:auto;">
 <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption>
 <br />
 I've been working on this famous [book](http://pbrt.org/index.html) about **physics based rendering technique(PBR)**. It is a huge book that covers nearly everything about PBR from theories (physics/mathematics/computer science) to code implementation of the whole system. I am going to post my reading/researching notes on the blog just for tracking progress as well as future reference.
