@@ -1,6 +1,10 @@
 _site/*
 _theme_packages/*
 
+Gemfile.lock
+.sass-cache/*
+
+
 Thumbs.db
 .DS_Store
 
