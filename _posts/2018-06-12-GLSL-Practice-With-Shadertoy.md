@@ -18,9 +18,13 @@ Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and prac
 # Watercolor blending shader
 Click play button for animation, and use mouse click to interact.
 <br>
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=false&muted=false"
+allowfullscreen style="display:block; margin:auto;">
+</iframe>
 
 # Mandelbrot fractal shader
 Click play button for zooming animation.
 <br>
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XsKBDW?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XsKBDW?gui=true&t=10&paused=true&muted=false"
+allowfullscreen style="display:block; margin:auto;">
+</iframe>
