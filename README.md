@@ -1,11 +1,9 @@
 # Victor's blog
-<img src="https://raw.githubusercontent.com/viclw17/viclw17.github.io/master/index.jpg" width="1024"/>
-## Blog Tools
 [1000 Forms Of Bunnies](http://viclw17.github.io/)
 
-<a href="http://Localhost:4000" target = "_blank">Localhost:4000</a>
-<br />
+<img src="https://raw.githubusercontent.com/viclw17/viclw17.github.io/master/index.jpg" width="640"/>
 
+## Blog Tools
 [Gif Optimization](https://ezgif.com/)
 
 [Github Markdown](https://guides.github.com/features/mastering-markdown/#syntax)
@@ -18,8 +16,6 @@
 ## Formatting Note
 ### Gif
 400px, 100 [Lossy Compression](https://kornel.ski/lossygif)
-### Title
-"title: Water Shader Exploration - Part 1"
 ### Link
 ```
 [TEXT](link)
@@ -31,6 +27,7 @@ Link open in new page:
 ### Image
 ```
 ![TEXT]({{ site.url }}/images/IMAGE.jpg)
+<img src="{{ site.url }}/images/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
 <br />
 ```
 Image with caption:
