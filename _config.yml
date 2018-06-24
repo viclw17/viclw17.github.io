@@ -7,7 +7,7 @@
 title:  1000 Forms Of Bunnies
 subtitle: Victor's blog
 description: Technial Artist | VR Game Developer
-about: Everything about Computer Graphics, Computer Science, Game Dev, VFX practice, random thoughts and  life fragments...
+about: Everything about Computer Graphics, Computer Science, Game Dev, VFX, random thoughts and  life fragments...
 author: Victor Li
 
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
@@ -587,7 +587,7 @@ pace: true
 pace_theme: pace-theme-minimal
 
 # Canvas-nest
-canvas_nest: false
+canvas_nest: true
 
 # three_waves
 three_waves: false
