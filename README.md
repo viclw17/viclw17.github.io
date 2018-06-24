@@ -1,7 +1,7 @@
 # Victor's blog
 [1000 Forms Of Bunnies](http://viclw17.github.io/)
 
-<img src="https://raw.githubusercontent.com/viclw17/viclw17.github.io/master/index.jpg" width="640"/>
+<img src="https://raw.githubusercontent.com/viclw17/viclw17.github.io/master/index.jpg" width="512"/>
 
 ## Blog Tools
 [Gif Optimization](https://ezgif.com/)
@@ -19,19 +19,13 @@
 ### Link
 ```
 [TEXT](link)
-```
-Link open in new page:
-```
 <a href="LINK" target = "_blank">TEXT</a>
 ```
 ### Image
 ```
 ![TEXT]({{ site.url }}/images/IMAGE.jpg)
 <img src="{{ site.url }}/images/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
-<br />
-```
-Image with caption:
-```<img src="{{ site.url }}/images/GIF.gif" width="400" height="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/GIF.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">CAPTION</figcaption>
 <br />
 ```
