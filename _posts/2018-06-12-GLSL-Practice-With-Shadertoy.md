@@ -19,7 +19,7 @@ Here I documented some of my exploration about the website and some best-practic
 
 # Shadertoy First Try
 ## Watercolor Blending
-Made a simple shader iterating a combination of sine and cosine functions with UV coordinate to achieve a watercolor blending effect. Shader is very simple but the final looking is very organic.
+Made a simple shader iterating a combination of sine and cosine functions with UV coordinate to achieve a watercolor blending effect. Shader is very simple but the final look is very organic.
 
 Use mouse click to interact with the motion.
 <br>
