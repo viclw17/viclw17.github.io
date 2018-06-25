@@ -13,9 +13,9 @@ Featured image. width set to 640 to align with shadertoy
 <img src="{{ site.url }}/images/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
 <!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
 <br />
-Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around - so much fun! Also got the shaders embedded in my blog page!
+Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around. Also got the shaders embedded in my blog page.
 Here I documented some of my exploration about the website and some best-practice.
-(_I also use [KodeLife](https://hexler.net/software/kodelife/) to work on my shader offline.It is an amazing live shader programming tool and I will document the basic usages of it in next blog post._)
+(_I also use [KodeLife](https://hexler.net/software/kodelife/) to work on my shader offline. It is an amazing live shader programming tool and I will document the basic usages of it in next blog post._)
 
 # Shadertoy First Try
 ## Watercolor Blending
