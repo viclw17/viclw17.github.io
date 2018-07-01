@@ -67,7 +67,7 @@ $$det=({\mathbf  {l}}\cdot ({\mathbf  {o}}-{\mathbf  {c}}))^{2}-\left\Vert {\mat
 - If $det$ = 0, the line just touches the sphere in one point (tangent);
 - If $det$ > 0, the line touches the sphere in two points (intersected).
 
-# Code
+## Code
 {% highlight c linenos=table %}
 float intersect(Sphere s, Ray r) {
     vec3 op = r.o - s.p; // (o-c), o: ray origin, c: sphere center position
@@ -75,7 +75,7 @@ float intersect(Sphere s, Ray r) {
     float det = half_b * half_b - dot(op, op) + s.r * s.r;
     // determinant, det=(b/2)^2-(o-c)^2+r^2, simplified because l is unit vector
     float sqrt_det;
-    float t; // for solutions
+    float t;
     float epsilon = 1e-3; // maximum error value
     if (det < 0.)
         // ray missed sphere
@@ -85,11 +85,11 @@ float intersect(Sphere s, Ray r) {
         // interseted or tangent
         sqrt_det = sqrt(det);
 
-    // calculate final solution
+    // calculate final t
     // t=-b/2+sqrt(det) or t=-b/2-sqrt(det)
     t = -half_b - sqrt_det;
 
-    // return smaller positive solution
+    // return smaller positive t, see note
     // 1. if-else style
     if(t>epsilon){
         return t;
@@ -100,10 +100,18 @@ float intersect(Sphere s, Ray r) {
             return t;
         }
         else{
-            return 0.; // if both solutions are negative, the sphere is behind the ray
+            return 0.;
         }
     }
     // 2. more concise ternary operator style
     // return (t = b - det) > epsilon ? t : ((t = b + det) > epsilon ? t : 0.);
 }
 {% endhighlight %}
+
+## Note
+![](https://www.scratchapixel.com/images/upload/ray-simple-shapes/rayspherecases.png)
+- If both $t$ are positive, ray is facing the sphere
+- If one positive one negative, ray is shooting from inside
+- If both $t$ are negative, ray is shooting away from the sphere
+
+So we have to return smaller positive $t$ as the intersecting distance for the ray.
