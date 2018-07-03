@@ -6,7 +6,7 @@ tags:
 - Raytracing
 - PBR
 ---
-<img src="{{ site.url }}/images/glsl-smallpt-1.png" width="320"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/glsl-smallpt-1.png" width="480"  style="display:block; margin:auto;">
 In [Smallpt](http://www.kevinbeason.com/smallpt/) we only implemented [ray-sphere intersection](https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection) for simplicity purpose. The [Cornell Box](http://www.graphics.cornell.edu/online/box/) floor ceiling and walls in this case are actually extremely big [spheres](https://en.wikipedia.org/wiki/Sphere).
 
 # Line–sphere intersection
@@ -108,11 +108,10 @@ float intersect(Sphere s, Ray r) {
 {% endhighlight %}
 
 ## Note
-<a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">
 <img src="https://www.scratchapixel.com/images/upload/ray-simple-shapes/rayspherecases.png" width="640"  style="display:block; margin:auto;">
-</a>
-<figcaption style="text-align: center;">click image for  source</figcaption>
-
+<div style="text-align:center">
+<a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">click for source</a>
+</div>
 <br>
 
 - If both $t$ are positive, ray is facing the sphere
