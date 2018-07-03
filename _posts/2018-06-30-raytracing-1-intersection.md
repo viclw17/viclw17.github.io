@@ -6,7 +6,7 @@ tags:
 - Raytracing
 - PBR
 ---
-<img src="{{ site.url }}/images/glsl-smallpt.jpg" width="320"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/glsl-smallpt-1.png" width="320"  style="display:block; margin:auto;">
 In [Smallpt](http://www.kevinbeason.com/smallpt/) we only implemented [ray-sphere intersection](https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection) for simplicity purpose. The [Cornell Box](http://www.graphics.cornell.edu/online/box/) floor ceiling and walls in this case are actually extremely big [spheres](https://en.wikipedia.org/wiki/Sphere).
 
 # Line–sphere intersection
