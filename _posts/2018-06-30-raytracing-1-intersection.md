@@ -67,7 +67,8 @@ $$det=({\mathbf  {l}}\cdot ({\mathbf  {o}}-{\mathbf  {c}}))^{2}-\left\Vert {\mat
 - If $det$ > 0, the line touches the sphere in two points (intersected).
 
 ## Code
-{% highlight c linenos=table %}
+```c
+// Ray–sphere intersection
 float intersect(Sphere s, Ray r) {
     vec3 op = r.o - s.p; // (o-c), o: ray origin, c: sphere center position
     float half_b = dot(r.d, op); // b/2=l(o-c), l: ray direction
@@ -105,7 +106,7 @@ float intersect(Sphere s, Ray r) {
     // 2. more concise ternary operator style
     // return (t = b - det) > epsilon ? t : ((t = b + det) > epsilon ? t : 0.);
 }
-{% endhighlight %}
+```
 
 ## Note
 <img src="https://www.scratchapixel.com/images/upload/ray-simple-shapes/rayspherecases.png" width="640"  style="display:block; margin:auto;">
