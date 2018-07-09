@@ -1,9 +1,10 @@
 ---
-title: Raytracer Case Study - Part 1 - Intersection
+title: Raytracing - Sphere Intersection
 date: 2018-06-30
 tags:
 - Computer Graphics
 - Raytracing
+- Math
 - PBR
 ---
 <img src="{{ site.url }}/images/glsl-smallpt-1.png" width="480"  style="display:block; margin:auto;">
@@ -121,8 +122,7 @@ float intersect(Sphere s, Ray r) {
 
 So we have to return smaller positive $t$ as the intersecting distance for the ray.
 
-
-# Line–plane intersection
+<!-- # Line–plane intersection
 [TBC](https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection)
 # Line-box intersection
-[TBC](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection)
+[TBC](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection) -->
