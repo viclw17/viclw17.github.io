@@ -14,7 +14,9 @@ There is two kind of sampling, uniform and non-uniform. Uniform sampling guarant
 - In glossy materials, incident rays are generated on the unit Hemisphere with the reflection direction.
 - In pure diffuse conditions, incident rays are sampled uniformly on the unit sphere.
 - Pure diffuse surfaces are only theoretical, but they makes a good approximations of what we can find in the real world.
-## Hemisphere: Spherical Coordinates
+
+
+<!-- ## Hemisphere: Spherical Coordinates
 The Cartesian coordinates may be retrieved from the spherical coordinates (radius $r$, inclination $θ$, azimuth $φ$), where $r ∈ [0, ∞)$, $θ ∈ [0, π]$, $φ ∈ [0, 2π)$, by:
 
 $$\begin{aligned}x&=r\,\sin \theta \,\cos \varphi \\y&=r\,\sin \theta \,\sin \varphi \\z&=r\,\cos \theta \end{aligned}$$
@@ -53,4 +55,4 @@ The raw moments are therefore given by
 
  mu_n^'=2/(2+n), 	
 
-giving a mean distance of d^_=2/3.
+giving a mean distance of d^_=2/3. -->
