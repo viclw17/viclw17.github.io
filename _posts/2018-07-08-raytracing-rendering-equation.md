@@ -37,7 +37,7 @@ The above equation is a simplified version, and here is the a more extended expl
 
 Here is another nice illustrated explanation:
 
-<img src="https://i.redd.it/802mndge03t01.png" width="640" style="display:block; margin:auto;">
+<img src="https://i.redd.it/802mndge03t01.png" width="480" style="display:block; margin:auto;">
 <div style="text-align:center">
 <a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">click for source</a>
 </div>
