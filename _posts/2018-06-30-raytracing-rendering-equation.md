@@ -1,6 +1,6 @@
 ---
 title: Raytracing - Rendering Equation
-date: 2018-07-08
+date: 2018-06-30
 tags:
 - Computer Graphics
 - Raytracing
