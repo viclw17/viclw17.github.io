@@ -38,14 +38,7 @@ The above equation is a simplified version, and here is the a more extended expl
 <a href="https://twitter.com/levork/status/609603797258600448" style="color:lightgrey">source</a>
 </div>
 <br>
-
-Here is another nice illustrated explanation:
-
-<<<<<<< HEAD:_posts/2018-06-30-raytracing-rendering-equation.md
 <img src="https://i.redd.it/802mndge03t01.png" width="500" style="display:block; margin:auto;">
-=======
-<img src="https://i.redd.it/802mndge03t01.png" width="640" style="display:block; margin:auto;">
->>>>>>> parent of 206ae8b... Merge branch 'master' of https://github.com/viclw17/viclw17.github.io:_posts/2018-07-08-raytracing-rendering-equation.md
 <div style="text-align:center">
 <a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">source</a>
 </div>
