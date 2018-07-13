@@ -1,6 +1,6 @@
 ---
-title: Raytracing - Rendering Equation
-date: 2018-07-08
+title: Raytracing - Rendering Equation Insight
+date: 2018-06-30
 tags:
 - Computer Graphics
 - Raytracing
@@ -8,6 +8,10 @@ tags:
 - PBR
 ---
 <img src="/images/pbr-equation.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+Where the journey of physically based rendering begins.
+</div>
+<br>
 
 # The Rendering Equation
 The physical basis for the rendering equation is the **law of conservation of energy**. Assuming that L denotes radiance, we have that at each particular position and direction, the outgoing light (Lo) is the sum of the emitted light (Le) and the reflected light. The reflected light itself is the sum from all directions of the incoming light (Li) multiplied by the surface reflection and cosine of the incident angle.
@@ -31,14 +35,16 @@ The above equation is a simplified version, and here is the a more extended expl
 
 <img src="https://pbs.twimg.com/media/CHW_bGCUwAAIS1r.png" width="640" style="display:block; margin:auto;">
 <div style="text-align:center">
-<a href="https://twitter.com/levork/status/609603797258600448" style="color:lightgrey">click for source</a>
+<a href="https://twitter.com/levork/status/609603797258600448" style="color:lightgrey">source</a>
 </div>
 <br>
 
 Here is another nice illustrated explanation:
 
-<img src="https://i.redd.it/802mndge03t01.png" width="480" style="display:block; margin:auto;">
+<img src="https://i.redd.it/802mndge03t01.png" width="500" style="display:block; margin:auto;">
 <div style="text-align:center">
-<a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">click for source</a>
+<a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">source</a>
 </div>
 <br>
+
+TBC
