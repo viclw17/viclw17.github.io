@@ -16,8 +16,8 @@ Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/
 https://blog.csdn.net/libing_zeng/article/details/72599041
 https://blog.csdn.net/libing_zeng/article/details/54428306
 -->
-# Diffuse Material
-Object with a diffuse material doesn't emit light but take on the colors from the surroundings(background/sky light), and **modulate** _(alter the amplitude or frequency of (an electromagnetic wave or other oscillation) in accordance with the variations of a second signal, typically one of a lower frequency)_ the colors with its own intrinsic color.
+# Diffuse Material and Diffuse Reflection
+Object with a diffuse material doesn't emit light but take on the colors from the surroundings(background/sky light), and **modulate** _(alter the amplitude or frequency of an electromagnetic wave or other oscillation in accordance with the variations of a second signal, typically one of a lower frequency)_ the colors with its own intrinsic color.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg" width="320"  style="display:block; margin:auto;">
 
@@ -27,13 +27,13 @@ The light that reflects off a diffuse surface has its direction randomized, and 
 
 > Diffuse reflection is the reflection of light from a surface such that a ray incident on the surface is scattered at many angles rather than at just one angle as in the case of specular reflection.
 
+> An ideal diffuse reflecting surface is said to exhibit [Lambertian reflection](https://en.wikipedia.org/wiki/Lambertian_reflectance), meaning that there is equal luminance when viewed from all directions lying in the half-space adjacent to the surface.
+
+In RTIOW we are using a simple algorithm to approximate mathematically ideal Lambertian reflection.
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Lambert2.gif
 " width="320"  style="display:block; margin:auto;">
 >Figure: The rays represent luminous intensity, which varies according to Lambert's cosine law for an ideal diffuse reflector.
-
-In RTIOW we are using a simple algorithm to approximate mathematically ideal [Lambertian reflection](https://en.wikipedia.org/wiki/Lambertian_reflectance).
-
-> An ideal diffuse reflecting surface is said to exhibit , meaning that there is equal luminance when viewed from all directions lying in the half-space adjacent to the surface.
 
 _* Note that in RTIOW, we separates geometry from material and treat them as 2 unlinked classes._
 
@@ -43,9 +43,10 @@ Now with all the rays that are generated from the origin shooting onto the objec
 The solution is to add a small random vector onto the normal vector.
 
 ## Algorithm Breakdown
+### Build Reflecting Ray
 From the point $P$ where ray hit on the sphere, we form a unit sphere that is tangent to this hitpoint. $\vec{N}$ is the surface normal at $P$.
 
-<img src="{{ site.url }}/images/rtiow-diffuse-fig1.png" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/rtiow-diffuse-fig1.png" width="720"  style="display:block; margin:auto;">
 
 Next we need to form another unit sphere centered at ray/view origin (simple on calculation, also will prevent reflecting direction from pointing into the sphere), and pick a random point $S$ in this unit sphere to build the small random vector $\vec{E}$. With all of them we can calculate the point $R$ (```vec3 target```) which is on the random reflecting direction:
 
@@ -67,6 +68,7 @@ vec3 color(const ray& r, hitable *world){
 }
 ```
 
+### Light Bouncing Rate
 Note that every time the ray reflect, we multiply a value 0.5 (bounce rate) to the color to simulate the absorption of the light when bounces around diffuse materials.
 
 <img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.1.jpg" width="500"  style="display:block; margin:auto;">
@@ -84,11 +86,11 @@ Note that every time the ray reflect, we multiply a value 0.5 (bounce rate) to t
 ## Rejection Sampling In Unit Sphere
 To find this random point $S$ in a unit sphere, we are using the easiest algorithm **rejection method**.
 
-For each x, y, z coordinates, choose a random value of a uniform distribution between [-1, 1]. If the length of the resulting vector is greater than one, reject it and try again.
-
 An [example](https://en.wikipedia.org/wiki/Rejection_sampling#Examples) in 2D case:
 > As a simple geometric example, suppose it is desired to generate a random point within the unit circle. Generate a candidate point $(x,y)$ where $x$ and $y$ are independent uniformly distributed between −1 and 1. If it happens that $x^{2}+y^{2}\leq 1$ then the point is within the unit circle and should be accepted. If not then this point should be rejected and another candidate should be generated.
 <img src="https://upload.wikimedia.org/wikipedia/en/6/66/Circle_sampling.png" width="200"  style="display:block; margin:auto;">
+
+For each x, y, z coordinates, choose a random value of a uniform distribution between [-1, 1]. If the length of the resulting vector is greater than one, reject it and try again.
 
 ``` c
 vec3 random_in_unit_sphere(){
