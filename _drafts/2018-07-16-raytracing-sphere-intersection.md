@@ -1,9 +1,10 @@
 ---
 title: Raytracing - Sphere Intersection
-date: 2018-06-30
+date: 2018-07-16
 tags:
 - Computer Graphics
 - Raytracing
+- Ray Tracing in One Weekend
 - Math
 - PBR
 ---
