@@ -8,14 +8,14 @@ tags:
 <!---
 Featured image.
 -->
-<img src="{{ site.url }}/images/github-corner.jpg" width="500"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/github-corner.jpg" width="640"  style="display:block; margin:auto;">
+<br>
 <!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
-<br />
 Note for setting up [GitHub Corners](http://tholman.com/github-corners/) gadget on the web page to link to github repository, and for  formatting my [WebGL page](http://viclw17.github.io/apps/WebGL/MatCap_demo/index.html) with nice loading effect.
 
 For GitHub Corners, big thanks to the author [tholman](https://github.com/tholman/github-corners) . And about the loading effect I am using [PACE](http://github.hubspot.com/pace/docs/welcome/). Here is the code for modifying my WebGL html page to setup those gadgets:
 
-{% highlight html linenos=table %}
+``` html
 <html>
 ...
   <head>
@@ -34,7 +34,7 @@ For GitHub Corners, big thanks to the author [tholman](https://github.com/tholma
     <a href="https://github.com/viclw17/Matcap_Unity" class="github-corner" ...
   </body>
 </html>
-{% endhighlight %}
+```
 
 
 Here is the code to modify the layout to center my WebGL app in the very center of the whole page. Here we have to
@@ -44,7 +44,7 @@ Here is the code to modify the layout to center my WebGL app in the very center 
 - **set the left, right, top and bottom properties to 0**
 - let the browser fill the remaining space with the **auto margins**
 
-{% highlight html linenos=table %}
+``` html
 <canvas height="600px" width="600px"
     style="
         padding: 0;
@@ -56,4 +56,4 @@ Here is the code to modify the layout to center my WebGL app in the very center 
         left: 0;
         right: 0;"
 ></canvas>
-{% endhighlight %}
+```

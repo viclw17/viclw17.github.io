@@ -7,6 +7,8 @@ tags:
 - PBR
 ---
 <img src="{{ site.url }}/images/rtiow-diffuse-final.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+<!-- ![]({{ site.url }}/images/rtiow-diffuse-final.jpg) -->
 Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW) Chapter 7. Worked through the algorithm of simulating diffuse material with raytracing. Breakdown topics of diffuse reflection, random reflecting ray generation and rejection sampling in unit sphere.
 <!-- <div style="text-align:center">
 </div> -->

@@ -6,8 +6,9 @@ tags:
 - [Unity]
 - [Shader]
 ---
-![MatCap Bunnies]({{ site.url }}/images/matcap_bunnies.jpg)
-<br />
+<img src="{{ site.url }}/images/matcap_bunnies.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+<!-- ![MatCap Bunnies]({{ site.url }}/images/matcap_bunnies.jpg) -->
 MatCap (Material Capture) shader uses an image of a sphere as a view-space environment map. It's very cheap and looks great when the camera doesn't rotate. It is widely used in 3D sculpting software (like Zbrush) to preview meshes.
 
 # Reference
@@ -39,8 +40,7 @@ MatCap (Material Capture) shader uses an image of a sphere as a view-space envir
 
 This is the shader code of a typical MatCap shader. It is extremely straightforward on the theory and easy to implement.
 
-<!-- ```c -->
-{% highlight c linenos=table %}
+```c
 Shader "MatCap_Victor/Plain"
 {
   Properties
@@ -115,7 +115,6 @@ Shader "MatCap_Victor/Plain"
   }
   Fallback "VertexLit"
 }
-{% endhighlight %}
-<!-- ``` -->
+```
 
 TBC

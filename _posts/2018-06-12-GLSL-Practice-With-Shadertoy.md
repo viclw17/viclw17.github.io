@@ -11,8 +11,9 @@ tags:
 Featured image. width set to 640 to align with shadertoy
 -->
 <img src="{{ site.url }}/images/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+<!-- ![]({{ site.url }}/images/glsl-jupiter.jpg) -->
 <!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
-<br />
 Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around. Also got the shaders embedded in my blog page.
 Here I documented some of my exploration about the website and some best-practice.
 (_I also use [KodeLife](https://hexler.net/software/kodelife/) to work on my shader offline. It is an amazing live shader programming tool and I will document the basic usages of it in next blog post._)
@@ -25,7 +26,7 @@ _* Use mouse click and drag to interact with the motion._
 <br>
 <iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
-{% highlight c linenos=table %}
+```c
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {   
     float speed = .1;
@@ -41,7 +42,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 color = vec3(r,g,b);
     fragColor = vec4(color,1);
 }
-{% endhighlight %}
+```
 
 ## Jupiter
 I then take the watercolor blending shader to the next level - mapping the final color output onto a UV sphere and added scrolling and stretching motion. The final looking is just like a Jupiter planet.

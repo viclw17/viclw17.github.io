@@ -24,8 +24,8 @@ After implementing the shading algorithm, the visual looks pretty promising. But
 <figcaption style="text-align: center;">Artifact of the specular shader.
 <br />(The terminator line gets unnatural at some angles.)</figcaption>
 <br />
-<!-- ```c -->
-{% highlight c linenos=table %}
+
+```c
 float3 specularReflection;
 if (dot(normalDirection, lightDirection) < 0.0){
   // light source on the wrong side.
@@ -46,8 +46,7 @@ return float4(
   diffuseReflection +
   specularReflection,
   1.0);
-{% endhighlight %}
-<!-- ``` -->
+```
 
 The specular is calculated by the dot product of the reflect vector and the view direction vector. However, this angle can be larger than 90 degrees. According to how dot product is calculated,
 
@@ -61,14 +60,12 @@ Color is in the type of float4/half4/fixed4 in Cg and can not has negative eleme
 
 One of the ways to fix it is to multiply the final color result with the same dot product result again.
 
-<!-- ```c -->
-{% highlight c linenos=table %}
+```c
 specularReflection = attenuation * _LightColor0.rgb * _SpecColor.rgb *
   pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)),
   _Shininess);
   * dot(lightDirection, normalDirection); // fixed!
-{% endhighlight %}
-<!-- ``` -->
+```
 
 Since the length of direction vectors is always 1, so this can get rid off the negative values. And this is the optimized result:
 

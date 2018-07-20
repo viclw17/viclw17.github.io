@@ -10,7 +10,7 @@ tags:
 <!---
 Featured image.
 -->
-<img src="{{ site.url }}/images/pbrt-sphere.jpg" width="500"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/pbrt-sphere.jpg" width="640"  style="display:block; margin:auto;">
 <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption>
 <br />
 I've been working on this famous [book](http://pbrt.org/index.html) about **physics based rendering technique(PBR)**. It is a huge book that covers nearly everything about PBR from theories (physics/mathematics/computer science) to code implementation of the whole system. I am going to post my reading/researching notes on the blog just for tracking progress as well as future reference.
@@ -29,16 +29,17 @@ However, as a game developer who is mainly dealing with real-time rendering prob
 Here is the notes of how to setup the repository and build the source of PBRT, and eventually render an image with it.
 ## Repository
 Get the git repository from [here](https://github.com/mmp/pbrt-v3). Readme file is great on explaining how to set everything up, but here is a simpler note.
-{% highlight bash linenos=table %}
+
+``` bash
 git clone --recursive https://github.com/mmp/pbrt-v3/
 # or
 git clone https://github.com/mmp/pbrt-v3/
 git submodule update --init --recursive
-{% endhighlight %}
+```
 
 ## Build
 I am building on my MacBook Pro.
-{% highlight bash linenos=table %}
+``` bash
 # install cmake command line tool
 brew install cmake
 # make a directory for the build, and change to that directory
@@ -47,10 +48,10 @@ cd pbrt-build
 # build
 cmake [path to pbrt-v3 repository]
 make -j8
-{% endhighlight %}
+```
 
 and the final build folder will be like
-{% highlight bash linenos=table %}
+``` bash
 .
 ├── CMakeCache.txt
 ├── CMakeFiles
@@ -67,12 +68,12 @@ and the final build folder will be like
 ├── pbrt
 ├── pbrt_test
 └── src
-{% endhighlight %}
+```
 
 ## Render
 Configurate your `.pbrt` scene file following this [documentation](http://pbrt.org/fileformat-v3.html#example). Then make sure current directory is the build folder, and run:
-{% highlight bash linenos=table %}
+``` bash
 ./pbrt [path to .pbrt scene file]
-{% endhighlight %}
+```
 
 Your image will generate after a while in the build folder.

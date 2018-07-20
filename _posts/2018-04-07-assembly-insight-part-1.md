@@ -11,7 +11,7 @@ Just came across [this Gem](https://www.youtube.com/watch?v=yOyaJXpAYZQ&t=0s&lis
 
 First, here is the C program for testing - the same as the testing case in the video. Save it as `fib.c`.
 
-{% highlight c linenos=table %}
+``` c
 #include <stdio.h>
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
         y = z;
     } while (x < 255);
 }
-{% endhighlight %}
+```
 
 Secondly, use `gcc` to compile the .c program - type command `gcc fib.c`. GCC is *GNU Compiler Collection, a compiler system produced by the GNU Project supporting various programming languages*. Also we can use `clang` - type command `clang fib.c`. Clang is *a compiler front end for the programming languages C, C++, Objective-C, Objective-C++, OpenMP, OpenCL, and CUDA, designed to act as a drop-in replacement for the GNU Compiler Collection.*
 
@@ -39,7 +39,7 @@ This will compile the program and generate `a.out` file. To run the executable w
 Then use command `otool -tv fib` to observe the corresponding assembly code of our compiled C program. `otool` is *object file displaying tool*, `-t` is to print the text section and `-v` is to disassemble it to make it readable.
 
 And we got:
-{% highlight bash linenos=table %}
+``` bash
 fib:
 (__TEXT,__text) section
 _main:
@@ -81,7 +81,7 @@ _main:
 0000000100000f86        addq    $0x20, %rsp
 0000000100000f8a        popq    %rbp
 0000000100000f8b        retq
-{% endhighlight %}
+```
 
 # Assembly Syntax Explanation
 

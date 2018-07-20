@@ -6,10 +6,10 @@ tags:
 - [Unity]
 - [Shader]
 ---
-![]({{ site.url }}/images/phong.png)
-<!-- <img src="{{ site.url }}/images/phong.png" width="400" height="400" style="display:block; margin:auto;"> -->
+<img src="{{ site.url }}/images/phong.png" width="640"  style="display:block; margin:auto;">
+<br>
+<!-- ![]({{ site.url }}/images/phong.png) -->
 <!-- <figcaption style="text-align: center;">Final work w/ transparency and faint tint and BUNNY!</figcaption> -->
-<br />
 [Phong shading model](https://en.wikipedia.org/wiki/Phong_reflection_model) is one of the most classic realistic shading models. It captures the basic features of a lit object using a very concise and straightforward theory. It matches people's observation in daily life, and also easy to describe using math. Therefore, Phong shading model is always used as the base for other artistic shading effects to be built on.
 
 # Shading Model Breakdown
@@ -49,8 +49,8 @@ Vectors for calculating Phong (or Blinn–Phong) shading.
 # Shader code
 
 Here is the shader script for Phong shading using Cg:
-<!-- ```c -->
-{% highlight c linenos=table %}
+
+```c
 Pass{
   Tags{ "LightMode" = "ForwardBase" }
   // pass for ambient light and first light source
@@ -156,11 +156,11 @@ Pass{
   }
   ENDCG
 } //END PASS
-{% endhighlight %}
-<!-- ``` -->
+```
+
 If there are more than one light source, we can add one more pass for the additional lighting effects:
-<!-- ```c -->
-{% highlight c linenos=table %}
+
+```c
 Pass{
     Tags{ "LightMode" = "ForwardAdd" }
     // pass for additional light sources
@@ -181,8 +181,7 @@ Pass{
     // same with the first pass
 
 } //END PASS
-{% endhighlight %}
-<!-- ``` -->
+```
 
 # Final Result
 
