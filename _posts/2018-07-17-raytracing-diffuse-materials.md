@@ -17,25 +17,30 @@ https://blog.csdn.net/libing_zeng/article/details/72599041
 https://blog.csdn.net/libing_zeng/article/details/54428306
 -->
 # Diffuse Material and Diffuse Reflection
-Object with a diffuse material doesn't emit light but take on the colors from the surroundings(background/sky light), and **modulate** _(alter the amplitude or frequency of an electromagnetic wave or other oscillation in accordance with the variations of a second signal, typically one of a lower frequency)_ the colors with its own intrinsic color.
+Object with a diffuse material **doesn't emit light** but take on the colors from the surroundings(background/sky light), and **modulate** _(alter the amplitude or frequency of an electromagnetic wave or other oscillation in accordance with the variations of a second signal, typically one of a lower frequency)_ the colors with its own intrinsic color.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg" width="320"  style="display:block; margin:auto;">
 
-> The visibility of objects, excluding light-emitting ones, is primarily caused by diffuse reflection of light: it is diffusely-scattered light that forms the image of the object in the observer's eye.
+> The visibility of objects, excluding light-emitting ones, is primarily caused by **diffuse reflection** of light: it is diffusely-scattered light that forms the image of the object in the observer's eye. Another term commonly used for this type of reflection is "**light scattering**".
 
-The light that reflects off a diffuse surface has its direction randomized, and also got absorbed a lot rather than reflected. The darker the surface is the more light-absorption (eg. [Vantablack](https://en.wikipedia.org/wiki/Vantablack)).
+The light that reflects off a diffuse surface has its direction randomized.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Diffuse_reflection.PNG
+" width="320"  style="display:block; margin:auto;">
 
 > Diffuse reflection is the reflection of light from a surface such that a ray incident on the surface is scattered at many angles rather than at just one angle as in the case of specular reflection.
 
-> An ideal diffuse reflecting surface is said to exhibit [Lambertian reflection](https://en.wikipedia.org/wiki/Lambertian_reflectance), meaning that there is equal luminance when viewed from all directions lying in the half-space adjacent to the surface.
+> An ideal diffuse reflecting surface is said to exhibit [Lambertian reflection](https://en.wikipedia.org/wiki/Lambertian_reflectance), meaning that there is equal luminance when viewed from all directions lying in the half-space adjacent to the surface. More technically, the surface's luminance is **isotropic**, and the luminous intensity obeys [Lambert's cosine law](https://en.wikipedia.org/wiki/Lambert%27s_cosine_law).
 
-In RTIOW we are using a simple algorithm to approximate mathematically ideal Lambertian reflection.
+In RTIOW we are using a simple algorithm to approximate mathematically ideal **Lambertian reflection**.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Lambert2.gif
 " width="320"  style="display:block; margin:auto;">
 >Figure: The rays represent luminous intensity, which varies according to Lambert's cosine law for an ideal diffuse reflector.
 
-_* Note that in RTIOW, we separates geometry from material and treat them as 2 unlinked classes._
+Also the light got absorbed a lot rather than reflected, and this is called **attenuation** that caused by light scattering. The darker the surface is the more light-absorption (eg. [Vantablack](https://en.wikipedia.org/wiki/Vantablack) is the darkest artificial substance known, absorbing up to 99.965% of radiation in the visible spectrum).
+
+<!-- _* Note that in RTIOW, we separates geometry from material and treat them as 2 unlinked classes._ -->
 
 # Simulating Diffuse Material With Raytracing
 Now with all the rays that are generated from the origin shooting onto the object, how can we calculate the reflected rays? Since the reflected light direction on diffuse surface is randomized, now we need to generate this random direction to build the reflecting ray.
@@ -43,7 +48,7 @@ Now with all the rays that are generated from the origin shooting onto the objec
 The solution is to add a small random vector onto the normal vector.
 
 ## Algorithm Breakdown
-### Build Reflecting Ray
+### Build Random Reflecting Ray
 From the point $P$ where ray hit on the sphere, we form a unit sphere that is tangent to this hitpoint. $\vec{N}$ is the surface normal at $P$.
 
 <img src="{{ site.url }}/images/rtiow-diffuse-fig1.png" width="720"  style="display:block; margin:auto;">
@@ -68,19 +73,19 @@ vec3 color(const ray& r, hitable *world){
 }
 ```
 
-### Light Bouncing Rate
-Note that every time the ray reflect, we multiply a value 0.5 (bounce rate) to the color to simulate the absorption of the light when bounces around diffuse materials.
+### Light Attenuation
+Note that every time the ray reflect, we multiply a value 0.5 (light bouncing rate) to the color to simulate the absorption of the light when it bounces around diffuse materials.
 
 <img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.1.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bounce rate 0.1 (90% absorption)</figcaption>
+<figcaption style="text-align: center;">bouncing rate 0.1 (90% attenuation)</figcaption>
 <br>
 
 <img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.5.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bounce rate 0.5 (50% absorption)</figcaption>
+<figcaption style="text-align: center;">bouncing rate 0.5 (50% attenuation)</figcaption>
 <br>
 
 <img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.9.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bounce rate 0.9 (10% absorption)</figcaption>
+<figcaption style="text-align: center;">bouncing rate 0.9 (10% attenuation)</figcaption>
 <br>
 
 ## Rejection Sampling In Unit Sphere
