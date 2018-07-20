@@ -24,7 +24,7 @@ Made a simple shader iterating a combination of sine and cosine functions with U
 
 _* Use mouse click and drag to interact with the motion._
 <br>
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 ```c
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
@@ -48,11 +48,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 I then take the watercolor blending shader to the next level - mapping the final color output onto a UV sphere and added scrolling and stretching motion. The final looking is just like a Jupiter planet.
 <!-- I decide to keep pushing this Jupiter shader and add lighting model and fresnel shading etc. in the future to make it more close to the real look of the planet. -->
 <br>
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MdyfWw?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MdyfWw?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 Later I added lighting model and background to make it more realistic. It is amazing to see how much a simple uv distortion can achieve.
 <br>
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XsVBWG?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XsVBWG?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 
 # Shadertoy Basics

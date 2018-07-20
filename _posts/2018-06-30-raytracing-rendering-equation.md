@@ -32,7 +32,7 @@ $$L_o( \omega_o)= L_e(\omega_o)+\int_{\Omega}{f(\omega_i, \omega_o)L_i(\omega_i)
 - $n$ - the surface normal
 - $\omega_i\cdot n$ - the weakening factor of outward irradiance due to incident angle $\cos \theta_{i}$ ([Lambert’s Cosine Law](https://en.wikipedia.org/wiki/Lambert%27s_cosine_law))
 
-The above equation is a simplified version, and here is the a more extended explanation:
+The above equation is one type of simplified versions, and here is the a more extended explanation:
 
 <img src="https://pbs.twimg.com/media/CHW_bGCUwAAIS1r.png" width="640" style="display:block; margin:auto;">
 <div style="text-align:center">

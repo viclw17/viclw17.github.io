@@ -4,6 +4,7 @@ date: 2018-07-17
 tags:
 - Computer Graphics
 - Raytracing
+- Ray Tracing in One Weekend
 - PBR
 ---
 <img src="{{ site.url }}/images/rtiow-diffuse-final.jpg" width="640"  style="display:block; margin:auto;">
@@ -76,18 +77,22 @@ vec3 color(const ray& r, hitable *world){
 ```
 
 ### Light Attenuation
-Note that every time the ray reflect, we multiply a value 0.5 (light bouncing rate) to the color to simulate the absorption of the light when it bounces around diffuse materials.
+Note that every time the ray reflect, we multiply a value 0.5 (light bouncing rate) to the color to simulate the absorption of the light (light attenuation) when it bounces around diffuse materials.
 
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.1.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bouncing rate 0.1 (90% attenuation)</figcaption>
+<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.1.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+bouncing rate 10%
+</div>
 <br>
-
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.5.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bouncing rate 0.5 (50% attenuation)</figcaption>
+<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.5.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+bouncing rate 50%
+</div>
 <br>
-
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.9.jpg" width="500"  style="display:block; margin:auto;">
-<figcaption style="text-align: center;">bouncing rate 0.9 (10% attenuation)</figcaption>
+<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.9.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+bouncing rate 90%
+</div>
 <br>
 
 ## Rejection Sampling In Unit Sphere
