@@ -35,7 +35,7 @@ IT IS something I want! However, as the gif shows, the drawing of the mesh is af
 <img src="{{ site.url }}/images/flat_shading.png" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">W/ and w/o flat shading.</figcaption>
 <br />
-Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions. This is my script:
+Then I decided to go for scripting approach. This is my script to move the vertex and randomize the movement using Sine and Perlin Noise functions.
 
 ```c
 public class WaterPlane : MonoBehaviour
@@ -103,14 +103,13 @@ Since it was only on CPU level, we can apply material with any shader we want, w
 
 <img src="{{ site.url }}/images/low_poly_fig2.gif" width="400" height="400" style="display:block; margin:auto;">
 <figcaption style="text-align: center;">Low poly water mesh assigned with the script above. (Green lines are vertex normals)</figcaption>
-<br />
-<!-- <img src="{{ site.url }}/images/low_poly_fig3.gif" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">Low poly water mesh assigned with the script above. (Green lines are vertex normals)</figcaption> -->
-<br />
-Note that the line **mesh.RecalculateNormals ();** is very important. If we remove it, the vertexes are moved but the normals are not updated and they will keep pointing upward, so the shading will look like smooth. And we will lost the nice flat shading:
+<br>
+<img src="{{ site.url }}/images/low_poly_fig3.gif" width="400" height="400" style="display:block; margin:auto;">
+<br>
+Note that the line ```mesh.RecalculateNormals ();``` is very important. If we remove it, the vertexes are moved but the normals are not updated and they will keep pointing upward, so the shading will look smooth. And we will lost the nice flat shading:
 
 <img src="{{ site.url }}/images/low_poly_fig1.gif" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">W/o mesh.RecalculateNormals (); (Green lines are vertex normals, )</figcaption>
+<figcaption style="text-align: center;">W/o mesh.RecalculateNormals (); (Green lines are vertex normals)</figcaption>
 <br />
 However, this effect will be eventually useful when I want to implement the real water surface effect. I will show that in Water Shader Exploration Part-2.
 

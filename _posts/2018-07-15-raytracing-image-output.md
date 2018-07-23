@@ -7,7 +7,7 @@ tags:
 - Ray Tracing in One Weekend
 - PBR
 ---
-<img src="{{ site.url }}/images/raytracing-antialiasing-1.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-image-output-1.jpg" width="640"  style="display:block; margin:auto;">
 <figcaption style="text-align: center;">The "Hello World!" of Computer Graphics.</figcaption>
 <br />
 Kickstarter of book [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW). PPM image format, C++ file output, and resources.

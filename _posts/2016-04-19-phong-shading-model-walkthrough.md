@@ -208,5 +208,3 @@ Final.
 </figcaption>
 <br />
 _However, **if statement** is not optimal in shader. This is because shader is running on GPU and GPU has a highly parallel structure. I will document the optimization for the shader in future post._
-
-V

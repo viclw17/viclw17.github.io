@@ -36,4 +36,4 @@ Currently working on VR game <a href="https://evasionvrgame.com/" target="_blank
 
 
 
-##### I also like painting, singing, filmmaking, playing piano and solving Rubik's cube. <3
+##### I also like painting, singing, travelling and playing piano. <3

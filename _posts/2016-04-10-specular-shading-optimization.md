@@ -56,7 +56,7 @@ The specular is calculated by the dot product of the reflect vector and the view
 <figcaption style="text-align: center;"></figcaption>
 When the angle between view direction and lighting direction is **larger than 90 degrees**, the cosine of it will be negative, and the dot product is also going to be negative.
 
-Color is in the type of float4/half4/fixed4 in Cg and can not has negative elements. The negative values are simply treated as pitch black and cause this "hard terminator" artifact.
+Color is in the type of ```float4``` / ```half4``` / ```fixed4``` in Cg and can not has negative elements. The negative values are simply treated as pitch black and cause this "hard terminator" artifact.
 
 One of the ways to fix it is to multiply the final color result with the same dot product result again.
 
