@@ -8,7 +8,9 @@ tags:
 - Math
 - PBR
 ---
-<img src="https://farm5.staticflickr.com/4342/36550535442_3b9da55913_z.jpg" width="640" height="427" style="display:block; margin:auto;">
+<!-- <img src="https://farm5.staticflickr.com/4342/36550535442_3b9da55913_z.jpg" width="640" hight="480" style="display:block; margin:auto;"> -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Recursive_raytrace_of_a_sphere.png" width="480" hight="480" style="display:block; margin:auto;">
+<!-- Ray class definition, ray-sphere intersection math breakdown, and code implementation. -->
 
 # Ray
 A ray has an origin (light source) and a direction (light direction). Ray can be described mathematically as

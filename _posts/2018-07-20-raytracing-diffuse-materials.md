@@ -1,6 +1,6 @@
 ---
 title: Raytracing - Diffuse Materials
-date: 2018-07-17
+date: 2018-07-20
 tags:
 - Computer Graphics
 - Raytracing
