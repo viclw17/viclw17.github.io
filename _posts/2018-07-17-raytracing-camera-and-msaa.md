@@ -9,9 +9,9 @@ tags:
 ---
 <!-- <img src="https://ichef.bbci.co.uk/images/ic/976x549_b/p02vk68y.jpg" width="640"  style="display:block; margin:auto;">
 <br> -->
-<!-- <img src="{{ site.url }}/images/raytracing-camera-msaa-4-0.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW) Chapter 2, 3 and 4. Reviewed the raytracing theory and break down camera setup and how to implement MSAA to increase image quality.
+<img src="{{ site.url }}/images/raytracing-camera-msaa-0.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW) Chapter 2, 3 and 4. Raytracing analogy, simple camera model and MSAA implementation.
 
 
 # Raytracing Overview
@@ -156,7 +156,7 @@ Draw a sphere with raytracing and color it blue, along with background gradient.
 # Multisampling Antialiasing
 We have been assigning **single color** value for every single pixel. This causes bad aliasing effect in the final image.
 
-Solution is to randomly shoot multiple camera rays per pixel and get multiple hit result for coloration. The amount of these multiple random rays is called **Sample Rate**. Then we add up all the various color values for this pixel and divide it by sample rate to average the final color.
+Solution is to randomly shoot multiple camera rays per pixel and get multiple hit result for coloration. The amount of random rays is **Sample Rate**. Then we add up all the various color values for this pixel and divide it by sample rate to average the final color. This color would be much more representative than the color provided by only one ray.
 
 <!--
 之前的图是每个像素点设置一个颜色值，相当于将像素中心位置的颜色设置给了整个像素。所以，如果两个像素点中心位置的颜色值相差比较大时，这两个像素点就会产生清晰的边界。那么问题来了，怎么使得两个像素点的边界模糊呢？
@@ -167,6 +167,10 @@ Solution is to randomly shoot multiple camera rays per pixel and get multiple hi
 <br>
 
 ``` c
+int nx = 200;
+int ny = 100;
+int ns = 100;
+
 camera cam;
 
 for(int j=ny-1; j>=0; j--){
