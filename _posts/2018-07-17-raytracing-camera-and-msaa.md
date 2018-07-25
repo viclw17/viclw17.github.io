@@ -67,6 +67,9 @@ public:
 ```
 And we can build the camera rays with **camera position** and the **pixel positions** on the clipping plane. After we have the rays, we can use it to trace the scene and produce color values to draw the final image.
 
+<img src="{{ site.url }}/images/raytracing-camera-msaa-figure.PNG" width="720"  style="display:block; margin:auto;">
+<br>
+
 ```c
 // pixel amount on x and y axis
 int nx = 200;
