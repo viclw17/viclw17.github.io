@@ -3,9 +3,7 @@ title: Raytracing - Image Output
 date: 2018-07-15
 tags:
 - Computer Graphics
-- Raytracing
 - Ray Tracing in One Weekend
-- PBR
 ---
 <img src="{{ site.url }}/images/raytracing-image-output-1.jpg" width="640"  style="display:block; margin:auto;">
 <figcaption style="text-align: center;">The "Hello World!" of Computer Graphics.</figcaption>

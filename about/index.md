@@ -34,6 +34,4 @@ Currently working on VR game <a href="https://evasionvrgame.com/" target="_blank
 * Mobile -> IOS/Android
 * PC/Console
 
-
-
-##### I also like painting, singing, travelling and playing piano. <3
+<!-- ##### I also like painting, singing, travelling and playing piano. <3 -->

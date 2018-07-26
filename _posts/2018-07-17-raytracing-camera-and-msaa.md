@@ -18,6 +18,8 @@ Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/
 
 To reverse-engineer this, imaging from view origin (camera/eye position) we are shooting(emitting) **View Rays** through **every pixel** to "scan" the objects we are trying to render, and then gather the **hit points** to color the corresponding pixels.
 
+<!-- the core of a raytracer is to send rays through pixels and compute what color is seen in the direction of those rays. This is of the form calculate which ray goes from the eye to a pixel, compute what that ray intersects, and compute a color for that intersection point. -->
+
 <img src="http://www.scratchapixel.com/images/upload/ray-tracing-refresher/rt-setup2.png" width="480"  style="display:block; margin:auto;">
 <br>
 
