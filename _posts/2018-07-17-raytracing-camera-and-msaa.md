@@ -10,8 +10,6 @@ tags:
 <img src="{{ site.url }}/images/raytracing-camera-msaa-01.jpg" width="480"  style="display:block; margin:auto;">
 <br>
 Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW) Chapter 2, 3 and 4. Raytracing analogy, simple camera model and MSAA implementation.
-<!-- <img src="https://ichef.bbci.co.uk/images/ic/976x549_b/p02vk68y.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
 
 # Raytracing Overview
 **Light Rays** (photons) are emitted from/bounced by/passing through the objects, and some of them made their way to arrive our eye retina/camera film to form the image we see/capture.
@@ -202,16 +200,16 @@ w/o and w/ MSAA
 <br>
 <img src="{{ site.url }}/images/raytracing-camera-msaa-4-0.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
-Sample 1 (MSAA off)
+MSAA off, 1 sample per pixel
 </div>
 <br>
 <img src="{{ site.url }}/images/raytracing-camera-msaa-4-10.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
-Sample 10
+MSAA on, 10 sample per pixel
 </div>
 <br>
 <img src="{{ site.url }}/images/raytracing-camera-msaa-4-50.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
-Sample 50
+MSAA on, 50 sample per pixel
 </div>
 <br>
