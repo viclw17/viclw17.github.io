@@ -8,7 +8,9 @@ Hi, my name is Victor Li.
 
 I am a Technical Artist and CG Engineer based in Vancouver, Canada. I develop video games and Virtual Reality (VR) games and applications.
 
-I enjoy creating and optimizing shaders, game VFX and art tools for my project, and working in collaboration with both artists and engineers in my team. I also specialize in general GPU profiling and optimization of my VR project, and work with art team to push for a better game performance.
+<!-- I enjoy creating and optimizing shaders, game VFX and art tools for my project, and working in collaboration with both artists and engineers in my team. I also specialize in general GPU profiling and optimization of my VR project, and work with art team to push for a better game performance. -->
+I enjoy creating and optimizing shaders, visual effects and art/pipeline tools for games and general computer graphics applications. I also specialize in general GPU profiling and contents optimization for VR/AR project in Unity and Unreal. In the team, I work in collaboration with both artists and engineers to implement assets and push for a better game performance.
+
 <!-- I also keep the art pipeline clean and efficient in order to maximize performance. -->
 <!-- I'm a Technical Artist and Computer Graphics Engineer based in Vancouver with a [Master's degree in Digital Media](http://thecdm.ca/) and a background of computer science. I enjoy interpreting graphics through code and using mathematics and programming as tools to discover how things work and solve problems. -->
 

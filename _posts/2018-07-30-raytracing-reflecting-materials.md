@@ -8,23 +8,27 @@ tags:
 - PBR
 ---
 <img src="{{ site.url }}/images/raytracing-reflecting3.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+Polished reflection, diffuse reflection and blurry reflection.
+</div>
+<br>
 <!-- ![](https://ichef.bbci.co.uk/images/ic/976x549_b/p02vk68y.jpg) -->
 
 # Material Base Class
-Objects with different materials scatter the lights in different ways. So material tells how rays interact with the surface.
+Objects with different materials scatter the lights in different ways. It tells how rays interact with the surface.
 
 When abstracting materials as a class, it should include functionalities like:
-- taking the received ray ```ray& r_in``` and output reflected ray ```ray& scattered```;
+- taking the incoming ray ```ray& r_in``` and output reflected ray ```ray& scattered```;
 - calculating how much the ray should be attenuated - ```vec3& attenuation```;
-- gathering the hit point info and save into a ```hit_record``` struct ```rec```.
+- gathering the info related to hit point and save into a ```hit_record``` struct ```rec```.
 
-And for ```struct hit_record```, it records
-- parameter ```t``` of the intersected ray;
+And for ```struct hit_record```, it packs up info like:
+- parameter ```t``` of the ray that locates the intersection point;
 - position of intersection point ```p```;
 - surface normal of intersection point ```normal```;
-- and includes a reference to the material of the hit surface.
+- and also includes a reference to the material of the hit surface.
 
-So we create an abstract class ```material``` with a definition of a pure virtual function ```scatter()``` that take care of all the material specific functionalities mentioned above. Note that an abstract class constructs no objects but works as a template for its children.
+So we create an abstract class ```material``` with a definition of a pure virtual function ```scatter()``` that take care of all the functionalities mentioned above. Note that an abstract class constructs no objects but works as a template for its children.
 ```c
 #include "hitable.h"
 
@@ -47,8 +51,7 @@ public:
 };
 ```
 
-Here we create ```lambertian``` (diffuse material) and ```metal``` (reflecting material) material classes that inherited from ```material``` class. **Note that the children have to implement the pure virtual function of their base class.**
-
+Here we create ```lambertian``` (diffuse material) and ```metal``` (reflecting material) material classes that inherited from ```material``` class. The children of an abstract class have to implement the pure virtual function.
 
 # Lambertian Material
 Lambertian Material is an alternative technical name of **diffuse material**. Here we refractor the code about diffuse material from previous post.
@@ -89,19 +92,31 @@ public:
 - **Polished** - A polished reflection is an undisturbed reflection, like a mirror or chrome.
 - **Blurry** - A blurry reflection means that tiny random bumps on the surface of the material cause the reflection to be blurry.
 - **Metallic** - A reflection is metallic if the highlights and reflections retain the color of the reflective object.
-- **Glossy** - This term can be misused. Sometimes, it is a setting which is the opposite of blurry (e.g. when "glossiness" has a low value, the reflection is blurry). However, some people use the term "glossy reflection" as a synonym for "blurred reflection". Glossy used in this context means that the reflection is actually blurred.
+- **_Glossy_** - This term can be misused. Sometimes, it is a setting which is the opposite of blurry (e.g. when "glossiness" has a low value, the reflection is blurry). However, some people use the term "glossy reflection" as a synonym for "blurred reflection". Glossy used in this context means that the reflection is actually blurred. (More later.)
 
 # Polished Reflecting Material
-<br>
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Reflection_angles.svg" width="200"  style="display:block; margin:auto;">
-<br>
+## Reflection Vector
+<img src="{{ site.url }}/images/raytracing-reflecting4.png" width="480"  style="display:block; margin:auto;">
+
+From the figure above, we get
+
+$$\vec r = \vec v - (-2 * \vert \vec a\vert  * \vec n)$$
+
+where $\vert \vec a\vert  = \vert \vec v\vert  * cos(\theta)$.
+
+Since $dot(\vec v, \vec n) = \vert \vec v\vert \vert \vec n\vert cos(\pi - \theta) = -\vert \vec v\vert cos(\theta)$, so $\vert \vec a\vert  = -dot(\vec v, \vec n)$, and
+
+$$\vec r = \vec v - (2 * dot(\vec v, \vec n) * \vec n)$$
 
 ```c
-#include "material.h"
-
 vec3 reflect(const vec3& v, const vec3& n) {
     return v - 2 * dot(v,n) * n;
 }
+```
+And the rest of code for metal material subclass is
+
+```c
+#include "material.h"
 
 class metal : public material {
 public:
@@ -126,6 +141,8 @@ public:
 <img src="{{ site.url }}/images/raytracing-reflecting1.jpg" width="640"  style="display:block; margin:auto;">
 
 # Blurry Reflecting Material
+To render a blurry reflecting look, we just need to add a little random vector ```random_in_unit_sphere()``` when calculating the directions of the reflected rays. Here we scale the random vector with a (0,1) float ```fuzz```.
+
 ```c
 #include "lambertian.h" // random_in_unit_sphere()
 
