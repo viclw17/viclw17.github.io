@@ -19,7 +19,7 @@ Dielectric material can reflect light and at the same time let the light pass th
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/F%C3%A9nyt%C3%B6r%C3%A9s.jpg" width="480"  style="display:block; margin:auto;">
 
-# Refraction
+# Refraction of Dielectric Material
 ## Refractive Index
 Refractive index describes how light propagates through that medium. It is defined as
 
@@ -80,6 +80,7 @@ The largest possible angle of incidence which still results in a refracted ray i
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/RefractionReflextion.svg" width="560"  style="display:block; margin:auto;">
 
 # Refraction Vector
+## Calculation
 With all the knowledge above, we can calculate refraction vector. First we can model the vectors relationship within a **unit circle** to simplify the vector calculation.
 
 <img src="{{ site.url }}/images/raytracing-dielectric-1.png" width="560"  style="display:block; margin:auto;">
@@ -124,7 +125,8 @@ So $cos^2\theta_{2} = 1 - \frac {n_{1}^2}{n_{2}^2} \cdot (1 - dot(\vec v, \vec n
 - when $discriminat < 0$, we will encounter **total reflection** and have no refraction ray - ray will be reflected back into the object.
 - _note that $discriminat = 0$ is the boundary of total reflection when refracted ray is perpendicular to the surface normal - no reflection nor refraction._
 
-Now define $\frac {n_{1}}{n_{2}}$ as ```ni_over_nt```, ```v``` is incidence ray direction, ```n``` is surface normal, ```refracted``` is the refracted ray direction.
+## Code
+Define $\frac {n_{1}}{n_{2}}$ as ```ni_over_nt```, ```v``` is incidence ray direction, ```n``` is surface normal, ```refracted``` is the refracted ray direction.
 
 ```c
 bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted) {
@@ -140,69 +142,107 @@ bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted) {
 }
 ```
 
+# Reflection of Dielectric Material
+## Fresnel Equations
+When light strikes the interface of a medium of a given refractive index, n1 and a second medium with refractive index, n2, **both reflection and refraction of the light may occur**.
+
+<img src="https://images.pexels.com/photos/831889/pexels-photo-831889.jpeg" width="400"  style="display:block; margin:auto;">
+
+>Notice there are both light reflection and refraction observable on the glass sphere.
+
+<img src="https://uploads2.wikiart.org/images/m-c-escher/three-worlds.jpg" width="400"  style="display:block; margin:auto;">
+<div style="text-align:center">
+Three Worlds (Escher)
+</div>
+
+>For example in Escher's this painting, we can see the water is more transparent close by (bigger viewing angle, more light transmission and refraction) and more reflective far away (smaller viewing angle, more light reflection).
+
+The [Fresnel equations](https://en.wikipedia.org/wiki/Fresnel_equations) (or Fresnel coefficients) describe the ratio of reflection and transmission of light.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Partial_transmittance.gif" width="400"  style="display:block; margin:auto;">
+
+> A wave experiences partial transmittance and partial reflectance when the medium through which it travels suddenly changes. The reflection coefficient determines the ratio of the reflected wave amplitude to the incident wave amplitude.
+
+However for low-precision applications involving unpolarized light, such as computer graphics, rather than rigorously computing the effective reflection coefficient for each angle, [**Schlick's approximation**](https://en.wikipedia.org/wiki/Schlick%27s_approximation) is often used.
+
+## Schlick's Approximation
+In 3D computer graphics, Schlick's approximation is a formula for approximating the contribution of the Fresnel factor.
+
+According to Schlick's model, the specular reflection coefficient R can be approximated by:
+
+$$R(\theta )=R_{0}+(1-R_{0})(1-\cos \theta )^{5}$$
+
+$$R_{0}=\left({\frac {n_{1}-n_{2}}{n_{1}+n_{2}}}\right)^{2}$$
+
+where $\theta$ is the angle between the direction from which the incident light is coming and the normal of the interface between the two media, hence $\cos \theta =(N\cdot V)$. And $n_{1},\,n_{2}$ are the refractive indices of the two media at the interface and $R_{0}$ is the reflection coefficient for light incoming parallel to the normal (i.e., the value of the Fresnel term when $\theta =0$ or minimal reflection). In computer graphics, one of the interfaces is usually vacuum, meaning that $n_{1}$ can be approximated as 1.
+
+Recall that ```ref_idx``` is ${n_{dielectric}}$ and when ray shoots into object,
+
+$$\frac {n_{1}}{n_{2}} = \frac {1}{n_{dielectric}} \Rightarrow {n_{dielectric}} = \frac {n_{2}}{n_{1}}$$
+
+```c
+float schlick(float cosine, float ref_idx) {
+    float r0 = (1 - ref_idx) / (1 + ref_idx); // ref_idx = n2/n1
+    r0 = r0*r0;
+    return r0 + (1-r0)*pow((1-cosine),5);
+}
+```
+<!-- In microfacet models it is assumed that there is always a perfect reflection, but the normal changes according to a certain distribution, resulting in a non-perfect overall reflection. When using Schlicks's approximation, the normal in the above computation is replaced by the halfway vector. Either the viewing or light direction can be used as the second vector. -->
+
 TBC.
 
 <!--
 ```c
-class dielectric : public material {
-public:
-    // 注意，ref_idx是指光密介质的折射指数和光疏介质的折射指数的比值
-    dielectric(float ri) : ref_idx(ri) {}
+bool scatter(const ray& r_in,
+             const hit_record& rec,
+             vec3& attenuation,
+             ray& scattered
+             ) const {
 
-    bool scatter(const ray& r_in,
-                 const hit_record& rec,
-                 vec3& attenuation,
-                 ray& scattered
-                 ) const {
+    vec3 outward_normal;
+    vec3 reflected = reflect(r_in.direction(), rec.normal);
+    attenuation = vec3(1.0,1.0,1.0);
+    vec3 refracted;
 
-        vec3 outward_normal;
-        vec3 reflected = reflect(r_in.direction(), rec.normal);
-
-        attenuation = vec3(1.0,1.0,1.0);
-
-        vec3 refracted;
-        // ni_over_nt为入射介质的折射指数和折射介质的折射指数的比值
-        float ni_over_nt;
-        float reflect_prob;
-        float cosine;
-        // 光线是从球体内部射入空气
-        // 所以，入射时的法向量和球的法向量方向相反；
-        // 此时入射介质是光密介质，折射介质是光疏介质，所以ni_over_nt = ref_idx
-        if (dot(r_in.direction(), rec.normal) > 0){
-            outward_normal = -rec.normal;
-            ni_over_nt = ref_idx;
-            cosine = ref_idx * dot(r_in.direction(), rec.normal) /r_in.direction().length();
-        }
-        // 光线是从空气射入球体气
-        // 所以，入射时的法向量和球的法向量方向同向；
-        // 注意，ref_idx是指光密介质的折射指数和光疏介质的折射指数的比值，
-        // 此时入射介质是光疏介质，折射介质是光密介质，所以ni_over_nt = 1.0/ref_idx
-        else{
-            outward_normal = rec.normal;
-            ni_over_nt = 1.0 / ref_idx;
-            cosine = -dot(r_in.direction(), rec.normal) / r_in.direction().length();
-        }
-
-        if(refract(r_in.direction(), outward_normal, ni_over_nt, refracted)){
-            // scattered = ray(rec.p, refracted); // refracted
-            reflect_prob = schlick(cosine, ref_idx);
-        }
-        // 出现全反射
-        else{
-            scattered = ray(rec.p, reflected); // reflected
-            // return false;
-            reflect_prob = 1.0;
-        }
-
-        if(drand48() < reflect_prob) {
-            scattered = ray(rec.p, reflected);
-        }
-        else {
-            scattered = ray(rec.p, refracted);
-        }
-        return true;
+    float ni_over_nt;
+    float reflect_prob;
+    float cosine;
+    // 光线是从球体内部射入空气
+    // 所以，入射时的法向量和球的法向量方向相反；
+    // 此时入射介质是光密介质，折射介质是光疏介质，所以ni_over_nt = ref_idx
+    if (dot(r_in.direction(), rec.normal) > 0){
+        outward_normal = -rec.normal;
+        ni_over_nt = ref_idx;
+        cosine = ref_idx * dot(r_in.direction(), rec.normal) /r_in.direction().length();
+    }
+    // 光线是从空气射入球体气
+    // 所以，入射时的法向量和球的法向量方向同向；
+    // 注意，ref_idx是指光密介质的折射指数和光疏介质的折射指数的比值，
+    // 此时入射介质是光疏介质，折射介质是光密介质，所以ni_over_nt = 1.0/ref_idx
+    else{
+        outward_normal = rec.normal;
+        ni_over_nt = 1.0 / ref_idx;
+        cosine = -dot(r_in.direction(), rec.normal) / r_in.direction().length();
     }
 
-    float ref_idx;
-};
-``` -->
+    if(refract(r_in.direction(), outward_normal, ni_over_nt, refracted)){
+        // scattered = ray(rec.p, refracted); // refracted
+        reflect_prob = schlick(cosine, ref_idx);
+    }
+    // 出现全反射
+    else{
+        scattered = ray(rec.p, reflected); // reflected
+        // return false;
+        reflect_prob = 1.0;
+    }
+
+    if(drand48() < reflect_prob) {
+        scattered = ray(rec.p, reflected);
+    }
+    else {
+        scattered = ray(rec.p, refracted);
+    }
+    return true;
+}
+```
+-->
