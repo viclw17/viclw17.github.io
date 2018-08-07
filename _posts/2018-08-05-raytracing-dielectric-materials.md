@@ -1,6 +1,6 @@
 ---
 title: Raytracing - Dielectric Materials
-date: 2018-08-01
+date: 2018-08-05
 tags:
 - Computer Graphics
 - Raytracing
