@@ -7,11 +7,12 @@ tags:
 - Ray Tracing in One Weekend
 - PBR
 ---
-<img src="{{ site.url }}/images/raytracing-reflecting3.jpg" width="640"  style="display:block; margin:auto;">
-<div style="text-align:center">
+<img src="{{ site.url }}/images/raytracing-reflecting-0.jpg" width="640"  style="display:block; margin:auto;">
+Chapter 8. Breakdown topics of Material base class, reflection types, vector maths about calculating mirror reflection ray.
+<!-- <div style="text-align:center">
 Polished reflection, diffuse reflection and blurry reflection.
 </div>
-<br>
+<br> -->
 <!-- ![](https://ichef.bbci.co.uk/images/ic/976x549_b/p02vk68y.jpg) -->
 
 # Material Base Class
@@ -96,7 +97,7 @@ public:
 
 # Polished Reflecting Material
 ## Reflection Vector
-<img src="{{ site.url }}/images/raytracing-reflecting4.png" width="480"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-reflecting-4.png" width="480"  style="display:block; margin:auto;">
 
 From the figure above, we get
 
@@ -138,7 +139,7 @@ public:
 };
 ```
 
-<img src="{{ site.url }}/images/raytracing-reflecting1.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-reflecting-1.jpg" width="640"  style="display:block; margin:auto;">
 
 # Blurry Reflecting Material
 To render a blurry reflecting look, we just need to add a little random vector ```random_in_unit_sphere()``` when calculating the directions of the reflected rays. Here we scale the random vector with a (0,1) float ```fuzz```.
@@ -168,4 +169,4 @@ metal(const vec3& a, float f) : albedo(a) {
     float fuzz; // random intensity
 };
 ```
-<img src="{{ site.url }}/images/raytracing-reflecting2.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-reflecting-2.jpg" width="640"  style="display:block; margin:auto;">

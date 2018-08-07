@@ -7,9 +7,9 @@ tags:
 - Ray Tracing in One Weekend
 - PBR
 ---
-<img src="{{ site.url }}/images/rtiow-diffuse-final.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-diffuse-final.jpg" width="640"  style="display:block; margin:auto;">
 <br>
-<!-- ![]({{ site.url }}/images/rtiow-diffuse-final.jpg) -->
+<!-- ![]({{ site.url }}/images/raytracing-diffuse-final.jpg) -->
 Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) (RTIOW) Chapter 7. Worked through the algorithm of simulating diffuse material with raytracing. Breakdown topics of diffuse reflection, random reflecting ray generation and rejection sampling in unit sphere.
 <!-- <div style="text-align:center">
 </div> -->
@@ -54,7 +54,7 @@ The solution is to add a small random vector onto the normal vector.
 ### Build Random Reflecting Ray
 From the point $P$ where ray hit on the sphere, we form a unit sphere that is tangent to this hitpoint. $\vec{N}$ is the surface normal at $P$.
 
-<img src="{{ site.url }}/images/rtiow-diffuse-fig1.png" width="720"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-diffuse-fig1.png" width="720"  style="display:block; margin:auto;">
 
 Next we need to form another unit sphere centered at ray/view origin (simple on calculation, also will prevent reflecting direction from pointing into the sphere), and pick a random point $S$ in this unit sphere to build the small random vector $\vec{E}$. With all of them we can calculate the point $R$ (```vec3 target```) which is on the random reflecting direction:
 
@@ -79,17 +79,17 @@ vec3 color(const ray& r, hitable *world){
 ### Light Attenuation
 Note that every time the ray reflect, we multiply a value 0.5 (light bouncing rate) to the color to simulate the absorption of the light (light attenuation) when it bounces around diffuse materials.
 
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.1.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-diffuse-sample 100-bounce 0.1.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
 bouncing rate 10%
 </div>
 <br>
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.5.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-diffuse-sample 100-bounce 0.5.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
 bouncing rate 50%
 </div>
 <br>
-<img src="{{ site.url }}/images/rtiow-sample 100-bounce 0.9.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/raytracing-diffuse-sample 100-bounce 0.9.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
 bouncing rate 90%
 </div>
