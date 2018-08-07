@@ -15,7 +15,7 @@ Chapter 9. Breakdown topics of refraction optic physics (refractive index, Snell
 <!-- ![](https://ichef.bbci.co.uk/images/ic/976x549_b/p02vk68y.jpg) -->
 
 # Dielectric Transparent Material
-Dielectric material can reflect light and at the same time let the light pass through.
+Dielectric material can reflect light and at the same time let the light pass through - refract.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/F%C3%A9nyt%C3%B6r%C3%A9s.jpg" width="480"  style="display:block; margin:auto;">
 
@@ -27,6 +27,8 @@ $$ n={\frac {c}{v}}$$
 
 where $c$ is the speed of light in vacuum and $v$ is the speed of light in the medium.
 
+Refractive index $n$ in some common materials:
+
 - Vacuum 1
 - Air 1.000293
 - Water 1.333
@@ -34,11 +36,10 @@ where $c$ is the speed of light in vacuum and $v$ is the speed of light in the m
 - Window glass 1.52
 - Diamond	2.42
 
-The refractive index determines how much the path of light is bent, or refracted, when entering a material. This is the first documented use of refractive indices and is described by **Snell's law of refraction**.
+The refractive index determines **how much the path of light is bent**, or refracted, when entering a material. This can be described by **Snell's law of refraction**.
 
 ## Snell's Law of Refraction
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Refraction_at_interface.svg" width="200"  style="display:block; margin:auto;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Refraction_at_interface.svg" width="240"  style="display:block; margin:auto;">
 
 > [Snell's law](https://en.wikipedia.org/wiki/Snell%27s_law) states that the ratio of the sines of the angles of incidence and refraction is equivalent to the ratio of phase velocities in the two media, or equivalent to the reciprocal of the ratio of the indices of refraction:
 
@@ -52,7 +53,7 @@ when ray shoots into object,
 
 $$\frac {n_{1}}{n_{2}} = \frac {1}{n_{dielectric}}$$
 
-when ray shoot through object back into vacuum,
+and when ray shoot through object back into vacuum,
 
 $$\frac {n_{1}}{n_{2}} = {n_{dielectric}}$$
 
@@ -79,7 +80,7 @@ The largest possible angle of incidence which still results in a refracted ray i
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/RefractionReflextion.svg" width="560"  style="display:block; margin:auto;">
 
 # Refraction Vector
-With all the knowledge above, we can calculate refraction vector. Now we can model the vectors relationship within a **unit circle** to simplify the calculation.
+With all the knowledge above, we can calculate refraction vector. First we can model the vectors relationship within a **unit circle** to simplify the vector calculation.
 
 <img src="{{ site.url }}/images/raytracing-dielectric-1.png" width="560"  style="display:block; margin:auto;">
 
@@ -114,15 +115,16 @@ $$cos^2\theta_{2} = 1 - sin^2\theta_{2} = 1 - \frac {n_{1}^2}{n_{2}^2} \cdot sin
 
 <!-- If $\theta_{2}$ is larger than 90 degree, we will encounter **total reflection** and have no refraction ray - ray will be reflected back into the object.  -->
 
-So the equation becomes:
+And the equation becomes:
 
 $$\vec r = \frac {n_{1}}{n_{2}} \cdot (\vec v - dot(\vec v, \vec n) \cdot \vec N) - \sqrt{1 - \frac {n_{1}^2}{n_{2}^2} \cdot (1 - dot(\vec v, \vec n))} \cdot \vec N$$
 
-So we can use $cos^2\theta_{2} = 1 - \frac {n_{1}^2}{n_{2}^2} \cdot (1 - dot(\vec v, \vec n))$ as **discriminat**:
+So $cos^2\theta_{2} = 1 - \frac {n_{1}^2}{n_{2}^2} \cdot (1 - dot(\vec v, \vec n))$ is the **discriminat** of the equation:
 - when $discriminat > 0$, we have refracted ray $\vec r$;
-- when $discriminat \leq 0$, we will encounter **total reflection** and have no refraction ray - ray will be reflected back into the object.
+- when $discriminat < 0$, we will encounter **total reflection** and have no refraction ray - ray will be reflected back into the object.
+- _note that $discriminat = 0$ is the boundary of total reflection when refracted ray is perpendicular to the surface normal - no reflection nor refraction._
 
-Define $\frac {n_{1}}{n_{2}}$ as ```ni_over_nt```, ```v``` is incidence ray direction, ```n``` is surface normal, ```refracted``` is the refracted ray direction.
+Now define $\frac {n_{1}}{n_{2}}$ as ```ni_over_nt```, ```v``` is incidence ray direction, ```n``` is surface normal, ```refracted``` is the refracted ray direction.
 
 ```c
 bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted) {
