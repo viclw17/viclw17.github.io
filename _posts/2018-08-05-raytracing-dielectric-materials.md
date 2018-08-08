@@ -180,13 +180,13 @@ where
 - $n_{1},\,n_{2}$ are the **refractive indices** of the two media at the interface and
 - $R_{0}$ is the **reflection coefficient** for light incoming parallel to the normal (i.e., the value of the Fresnel term when $\theta_{1} =0$ or minimal reflection).
 
-In computer graphics, one of the interfaces is usually vacuum (or air, since $n_{air} = 1.000293$), meaning that $n_{1}$ can be approximated as 1.
+In computer graphics, one of the interfaces is usually air ($n_{air} = 1.000293$), meaning that $n_{1}$ can be approximated as 1.
 
 Recall that ```ref_idx``` is ${n_{dielectric}}$ and when ray shoots into object,
 
 $$\frac {n_{1}}{n_{2}} = \frac {1}{n_{dielectric}} \Rightarrow {n_{dielectric}} = \frac {n_{2}}{n_{1}}$$
 
-$$dot(\vec v, \vec n) = \vert \vec v\vert \vert \vec n\vert cos\theta_{1} = cos\theta_{1}$$
+$$cos\theta_{1} = dot(\vec v, \vec n)$$
 
 ```c
 float schlick(float cosine, float ref_idx) {
@@ -242,6 +242,9 @@ else{
 ```
 
 ## Dealing with Ray Reflection/Refraction (Fresnel)
+<!-- /*产生一个（0，1）的随机数，如果随机数小于反射系数，则设置为反射光线，反之，设置为折射光线。也就是只有反射光线或折射光线中的一个咯，为什么？不是说好反射光线和折射光线都有吗？考虑到一个像素点被设置为采样100次，这100次中反射光线的条数基本和reflect_prob的值正相关，所以，100次的平均值也就是该像素点出反射光线和折射光线的叠加*/ -->
+If the traced ray produce a refraction ray (```refract()``` returns true, and record refracted ray direction in ```vec3& refracted```), we are going to calculate the reflective coefficient ```reflect_prob```. If not, this means the ray encounters total reflection and the reflective coefficient should be 1.
+
 ```c
 // refracted ray exists
 if(refract(r_in.direction(), outward_normal, ni_over_nt, refracted)){
@@ -252,7 +255,21 @@ else{
     // total reflection
     reflect_prob = 1.0;
 }
+```
 
+<img src="https://media3.giphy.com/media/zw5eV7Ndylila/giphy.gif" width="400"  style="display:block; margin:auto;">
+<br>
+
+Both reflection and refraction of the light occur for dielectric material, but we can only pick 1 scattered ray for next iteration of ray tracing. Since we are shooting multiple rays per pixel (multi-sampling) and average the traced color as final pixel color, we can use the same idea to get the averaged result through both reflectiona and refraction.
+
+Now we generate a random number between 0.0 and 1.0.
+If it's smaller than reflective coefficient, the scattered ray is recorded as reflected;
+If it's bigger than reflective coefficient, the scattered ray is recorded as refracted.
+
+Note that when total reflection happens, with reflective coefficient = 1, the random number will be always smaller than it and we only record the reflected ray.
+
+Hence we get the code here:
+```c
 if(drand48() < reflect_prob) {
     scattered = ray(rec.p, reflected);
 }
@@ -260,3 +277,14 @@ else {
     scattered = ray(rec.p, refracted);
 }
 ```
+
+<img src="{{ site.url }}/images/raytracing-dielectric-2.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+Without Frenel implemented.
+</div>
+<br>
+<img src="{{ site.url }}/images/raytracing-dielectric-3.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+With Frenel implemented. Notice both reflection and refraction exist.
+</div>
+<br>
