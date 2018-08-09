@@ -278,9 +278,14 @@ else {
 }
 ```
 
+<img src="{{ site.url }}/images/raytracing-dielectric-4.jpg" width="640"  style="display:block; margin:auto;">
+<div style="text-align:center">
+Render all reflected ray, same to reflecting material.
+</div>
+<br>
 <img src="{{ site.url }}/images/raytracing-dielectric-2.jpg" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
-Without Frenel implemented.
+Without Frenel implemented. Render all refracted ray,
 </div>
 <br>
 <img src="{{ site.url }}/images/raytracing-dielectric-3.jpg" width="640"  style="display:block; margin:auto;">
