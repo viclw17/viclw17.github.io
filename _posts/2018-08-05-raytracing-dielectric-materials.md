@@ -8,7 +8,7 @@ tags:
 - PBR
 ---
 <img src="{{ site.url }}/images/raytracing-dielectric-0.jpg" width="640"  style="display:block; margin:auto;">
-Chapter 9. Breakdown topics of refraction optic physics (refractive index, Snell's Law, total reflection, Fresnel coefficients, Schlick's approximation) and vector maths about calculating refraction ray. TBC.
+Chapter 9 study note. Breakdown topics of refraction optic physics (refractive index, Snell's Law, total reflection, Fresnel coefficients, Schlick's approximation) and vector maths about calculating refraction ray.
 <!-- <div style="text-align:center">
 </div>
 <br> -->
@@ -292,4 +292,35 @@ Without Frenel implemented. Render all refracted ray,
 <div style="text-align:center">
 With Frenel implemented. Notice both reflection and refraction exist.
 </div>
+<br>
+
+# Additional Tricks
+I edit the dielectric material class to make the transparent material have color as well.
+```c
+// class definition
+class dielectric : public material {
+public:
+    dielectric(const vec3& a, float ri) : albedo(a), ref_idx(ri) {}
+
+    bool scatter(const ray& r_in,
+                const hit_record& rec,
+                vec3& attenuation,
+                ray& scattered
+                ) const {
+                    attenuation = albedo;
+                    // ...
+                }
+
+    vec3 albedo;
+    // ...
+};
+```
+<img src="{{ site.url }}/images/raytracing-dielectric-5.jpg" width="640"  style="display:block; margin:auto;">
+
+Also if we add an extra sphere with negative (and slightly smaller) radius inside the glass sphere, we will achieve a hollow glass look.
+
+<img src="{{ site.url }}/images/raytracing-dielectric-7.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+
+<img src="{{ site.url }}/images/raytracing-dielectric-6.jpg" width="640"  style="display:block; margin:auto;">
 <br>
