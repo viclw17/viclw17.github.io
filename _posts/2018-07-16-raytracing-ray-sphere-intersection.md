@@ -9,8 +9,8 @@ tags:
 - PBR
 ---
 <!-- <img src="https://farm5.staticflickr.com/4342/36550535442_3b9da55913_z.jpg" width="640" hight="480" style="display:block; margin:auto;"> -->
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Recursive_raytrace_of_a_sphere.png" width="480" hight="480" style="display:block; margin:auto;">
-<!-- Ray class definition, ray-sphere intersection math breakdown, and code implementation. -->
+<!-- <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Recursive_raytrace_of_a_sphere.png" width="480" hight="480" style="display:block; margin:auto;"> -->
+In raytracer, calculating ray - object intersection is very important on locating the hit point and producing correct color for the corresponding pixel. Sphere is always the best geometrical shape to start with as it is one of the simplest shape to describe mathematically. In this post I documented typical ```Ray``` class definition, ray-sphere intersection math breakdown, and code implementation. I will keep updating the post for solutions of other types of shapes.
 
 # Ray
 A ray has an origin (light source) and a direction (light direction). Ray can be described mathematically as
@@ -105,7 +105,7 @@ But ray has origin and direction, so there are more spacific scenarios:
 
 <img src="https://www.scratchapixel.com/images/upload/ray-simple-shapes/rayspherecases.png" width="640"  style="display:block; margin:auto;">
 <div style="text-align:center">
-<a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">click for source</a>
+<a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">source</a>
 </div>
 <br>
 

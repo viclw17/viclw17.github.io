@@ -8,7 +8,7 @@ tags:
 - PBR
 ---
 <img src="{{ site.url }}/images/raytracing-reflecting-0.jpg" width="640"  style="display:block; margin:auto;">
-Chapter 8. Breakdown topics of Material base class, reflection types, vector maths about calculating mirror reflection ray.
+Chapter 8 study note. Breakdown topics about ```Material``` base class, types of reflection, vector maths for calculating mirror reflection ray and blurry reflection implementation.
 <!-- <div style="text-align:center">
 Polished reflection, diffuse reflection and blurry reflection.
 </div>

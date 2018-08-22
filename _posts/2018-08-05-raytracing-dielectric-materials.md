@@ -8,7 +8,7 @@ tags:
 - PBR
 ---
 <img src="{{ site.url }}/images/raytracing-dielectric-0.jpg" width="640"  style="display:block; margin:auto;">
-Chapter 9 study note. Breakdown topics of refraction optic physics (refractive index, Snell's Law, total reflection, Fresnel coefficients, Schlick's approximation) and vector maths about calculating refraction ray.
+Chapter 9 study note. Breakdown topics about basic optic physics (refractive index, Snell's Law, total reflection, Fresnel coefficients, Schlick's approximation) and vector maths for calculating refraction ray.
 <!-- <div style="text-align:center">
 </div>
 <br> -->
