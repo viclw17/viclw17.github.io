@@ -1,3 +1,9 @@
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="name" content="{{ site.author }}">
+  <meta itemprop="description" content="{{ site.signature }}">
+  <meta itemprop="image" content="{{ site.url }}/index.jpg">
+</span>
+
 {% assign posts = site.posts %}
 {% if site.paginate > 0 %}{% assign posts = paginator.posts %}{% endif %}
 
