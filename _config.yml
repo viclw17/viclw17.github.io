@@ -6,7 +6,7 @@
 # Site
 title:  1000 Forms Of Bunnies
 subtitle: Victor's blog
-description: Technial Artist | VR Game Developer
+description: Technial Artist | CG Engineer
 about: Everything about Computer Graphics, Computer Science, Game Dev, VFX, random thoughts and  life fragments...
 author: Victor Li
 
@@ -84,7 +84,7 @@ favicon: assets/images/favicon_bunny_72.png # /assets/favicon.ico
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss: 
+rss:
 
 # Specify the date when the site was setup
 #since: 2015
