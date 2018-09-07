@@ -22,8 +22,8 @@ Currently working on VR game <a href="https://evasionvrgame.com/" target="_blank
 
 * Unreal Engine -> Blueprint/Shader&Material/Particles/Physics Destruction
 * Unity -> C# Scripting/ShaderLab
-* Shader Programming -> Cg/GLSL/HLSL
-* Maya -> 3D Modeling/MEL/Python
+* Shader -> Cg/GLSL/HLSL
+* Maya -> 3D Modeling/ MEL/Python Scripting
 * Graphics API -> OpenGL/Vuforia(AR)/DirectX
 * Programming Languages -> C++/C#/Python
 * Dev Tools -> Visual Studio/Perforce/Git/Linux/RenderDoc/Intel GPA
