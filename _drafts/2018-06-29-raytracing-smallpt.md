@@ -25,9 +25,6 @@ In the following few posts I want to dive deep into a [GLSL shader implementatio
 - Russian roulette and splitting for selecting reflection and/or refraction for glass BRDF
 
 ## Code
-{% highlight c linenos=table %}
-
-{% endhighlight %}
 
 # System Breakdown
 Source is a [GLSL shader implementation](https://www.shadertoy.com/view/4sfGDB) of [Smallpt](http://www.kevinbeason.com/smallpt/) .
