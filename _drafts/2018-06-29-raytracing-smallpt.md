@@ -23,8 +23,3 @@ In the following few posts I want to dive deep into a [GLSL shader implementatio
 - Cosine importance sampling of the hemisphere for diffuse reflection
 - Russian roulette for path termination
 - Russian roulette and splitting for selecting reflection and/or refraction for glass BRDF
-
-## Code
-
-# System Breakdown
-Source is a [GLSL shader implementation](https://www.shadertoy.com/view/4sfGDB) of [Smallpt](http://www.kevinbeason.com/smallpt/) .
