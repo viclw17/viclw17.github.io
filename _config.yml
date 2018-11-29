@@ -3,6 +3,8 @@
 ## Docs: https://jekyllrb.com/docs/configuration/
 # ---------------------------------------------------------------
 
+port: 5001
+
 # Site
 title:  1000 Forms Of Bunnies
 subtitle: Victor's blog
