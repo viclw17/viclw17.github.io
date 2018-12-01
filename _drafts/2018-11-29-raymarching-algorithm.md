@@ -10,12 +10,20 @@ Shadertoy is an amazing place to see all sorts of creative shader demos and get 
 # Raytracing & Raymarching
 At first the algorithm sounds kind of magical, and the similarity of its name comparing with raytracing algorithm keeps me wondering. This time I want to dig deeper about it and get it documented for future reference.
 
-Fisrt of all, both raymarching and raytracing are algorithms for rendering 3D objects. No matter how, to render a certain 3D object we need to firstly define its shape.
+---
 
-In raytracing, the geometries are difined **explicitly** with vertices. Those vertices forms into triangles and then got connected edge by edge to form the final geometries - just like this kind of **low poly crafts**. Each vertex provides position information and each formed triangles provides suface normal etc.
+Both raymarching and raytracing are **algorithms for rendering 3D objects**, and no matter how, to render a certain 3D object we need to firstly define its shape.
 
-![](https://pbs.twimg.com/media/Docd7meXoAA7b2J.jpg)
+Raytracing is used mainly in PBR. In raytracing pipeline, geometries are usually prepared in **DCC(Digital Content Creation)** software and are defined **explicitly** with vertices. These vertices form into triangles and then got connected edge by edge to create the final geometries - just like this kind of **low poly crafts**.
 
-However in raymarching, 3D geometries are defined implicitly with mathmatical equations. For example, if plug a vertex position coordinates $(x, y, z)$ into this function
+<img src="https://pbs.twimg.com/media/Docd7meXoAA7b2J.jpg" width="320"  style="display:block; margin:auto;">
+
+Each vertex provides position information and each formed triangle provides suface normal etc. Geometries are loaded into the pipeline specifically and ray-geometry intersection are calculated for the final rendering.
+
+---
+
+However when writing shader(GLSL), the geometries have to be defined within the shader. So a different approach is used. In raymarching pipeline, 3D geometries are defined **implicitly** with mathmatical equations.
+
+For example, any 3D point that satisfies this equation is on the surface of a sphere with radius of 1 unit and origin at $(0, 0, 0)$.
 
 $$f(x, y, z) = \sqrt{x^2 + y^2 + z^2} - 1$$
