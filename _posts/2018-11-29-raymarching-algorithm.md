@@ -12,13 +12,15 @@ tags:
 
 At first the algorithm sounds kind of magical, and the similarity of its name comparing with raytracing algorithm keeps me wondering. This time I want to dig deeper about it and get it documented for future reference.
 
+---
+
 # Geometry Construction
 Both raymarching and raytracing are **algorithms for rendering 3D objects**, and no matter how, to render a certain 3D object we need to firstly construct/define its shape.
 
 In raytracing pipeline, geometries are usually prepared in **DCC(Digital Content Creation)** software and are defined **explicitly** with vertices. These vertices form into triangles and then got connected edge by edge to create the final geometries - just like this kind of **low poly crafts**.
 
 <img src="https://pbs.twimg.com/media/Docd7meXoAA7b2J.jpg" width="320"  style="display:block; margin:auto;">
-</br>
+
 <!-- Each vertex provides position information and each formed triangle provides surface normal etc. Geometries are loaded into the pipeline specifically and ray-geometry intersection are calculated for the final rendering. -->
 
 However when writing shader with GLSL, the geometries have to be defined within the shader. So a different approach is used. In raymarching pipeline, 3D geometries are defined **implicitly** with **mathematical equations**.
@@ -36,6 +38,9 @@ because the result $f(x, y, z)$ is also the **distance** between the point and t
 
 ### Sphere
 Code for previous sphere example.
+
+>The ```length``` function returns the length of a vector defined by the Euclidean norm, i.e. the square root of the sum of the squared components. The input parameter can be a floating scalar or a float vector. In case of a floating scalar the ```length``` function is trivial and returns the absolute value.
+
 ```c
 // for sphere with radius r
 float sphereSDF(vec3 p, float r) {
@@ -55,8 +60,7 @@ float boxSDF(vec3 p, vec3 b)
 ```  
 If ```d.x < 0```, then ```-d.x < p.x < d.x``` which means p has coordinate that smaller than the box extend on X axis. Same explanation for y and z coordinates. So if ```vec3 d``` has all xyz coordinates less than 0, then p is inside the box.
 
-> Reference: [GLSL BUILT-IN FUNCTIONS](http://www.shaderific.com/glsl-functions/).
-The max function returns the larger of the two arguments. The input parameters can be floating scalars or float vectors. In case of float vectors the operation is done **component-wise**.
+> The ```max``` function returns the larger of the two arguments. The input parameters can be floating scalars or float vectors. In case of float vectors the operation is done **component-wise**.
 
 For the first part of the return, ```max(d,0)``` returns coordinates of d and they will be either bigger than or equal to 0 - which tells that p is outside or on the surface of the box. Then ```length()``` calculates how far it is to the surface.
 
@@ -102,9 +106,7 @@ Now we can describe 3D objects using SDF which returns signed distance between a
 
 >We could just step along a very small increment of the view ray every time, but we can do much better than this (both in terms of speed and in terms of accuracy) using “**sphere tracing**”.
 
-</br>
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/4dKyRz?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
-</br>
 
 ```c
 /**
@@ -152,7 +154,7 @@ To finally render:
 ```c
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-	vec3 dir = rayDirection(45.0, iResolution.xy, fragCoord);
+    vec3 dir = rayDirection(45.0, iResolution.xy, fragCoord);
     vec3 eye = vec3(0.0, 0.0, 5.0);
     float dist = shortestDistanceToSurface(eye, dir, MIN_DIST, MAX_DIST);
 
@@ -164,6 +166,55 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     // Hit on the surface
     fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+```
+# Put all together
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XtGfWG?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+```c
+const int MAX_MARCHING_STEPS = 255;
+const float MIN_DIST = 0.0;
+const float MAX_DIST = 100.0;
+float EPSILON = 0.0001;
+
+float sphereSDF(vec3 samplePoint) {
+    return length(samplePoint) - 1.;
+}
+
+float shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
+    float depth = start;
+    for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
+        float dist = sphereSDF(eye + depth * marchingDirection);
+        if (dist < EPSILON) {
+            return depth;
+        }
+        depth += dist;
+        if (depth >= end) {
+            return end;
+        }
+    }
+    return end;
+}
+
+vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
+    vec2 xy = fragCoord - size / 2.0; // translate screenspace to centre
+    float z = size.y / tan(radians(fieldOfView) / 2.0);
+    return normalize(vec3(xy, -z));
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec3 dir = rayDirection(45.0, iResolution.xy, fragCoord);
+    vec3 eye = vec3(0.0, 0.0, 10.0);
+    float dist = shortestDistanceToSurface(eye, dir, MIN_DIST, MAX_DIST);
+
+    // Didn't hit anything
+    if (dist > MAX_DIST - EPSILON) {
+        fragColor = vec4(0.0, 0.0, 0.0, 0.0);
+		return;
+    }
+
+    // Hit on the surface
+    fragColor = vec4(1.0);
 }
 ```
 
