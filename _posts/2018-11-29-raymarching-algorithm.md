@@ -3,6 +3,10 @@ title: Raymarching Algorithm
 date: 2018-11-29
 tags:
 - Algorithm
+- GLSL
+- Shader
+- Shadertoy
+- Math
 - Computer Graphics
 ---
 <img src="{{ site.url }}/images/raymarching-0.png" width="640"  style="display:block; margin:auto;">
