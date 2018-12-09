@@ -116,7 +116,7 @@ But ray has origin and direction, so there are more spacific scenarios:
     - If one $t$ positive one $t$ negative, ray is shooting from inside.
     - If both $t$ are negative, ray is shooting away from the sphere, and techinically ray-sphere intersection is actually impossible.
 
-So we have to return **smaller** and **positive** $t$ as the intersecting distance for the ray.
+So we have to return the **smaller** and **positive** $t$ as the intersecting distance for the ray.
 
 ``` c
 float hit_sphere(const vec3& center, float radius, const ray& r){
