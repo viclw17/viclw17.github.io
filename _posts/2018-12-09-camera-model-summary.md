@@ -8,7 +8,7 @@ tags:
 ---
 <img src="{{ site.url }}/images/camera-model-summary-1.jpg" width="640"  style="display:block; margin:auto;">
 <br>
-During raytracing study and GLSL practice on Shadertoy, I have seen lots of different ways to implement camera model for final rendering. Here is my summary for most of the solutions.
+During studying raytracing and practice GLSL on Shadertoy, I have seen lots of different ways of implementing camera models for final rendering. Here is my summary for most of the solutions.
 
 # Camera Model in _Raytracing in One Weekend_
 The previous post [Raytracing - Camera and Multisampling Antialiasing](http://viclw17.github.io/2018/07/17/raytracing-camera-and-msaa/) documented the **simplest** camera setup for raytracing rendering. This camera model has fixed world position at origin, fixed image plane (or near clipping plane) size and position at (0,0,-1), pointing to the negative Z axis.
