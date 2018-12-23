@@ -22,15 +22,23 @@ At first the algorithm sounds kind of magical, and the similarity of its name co
 Both raymarching and raytracing are **algorithms for rendering 3D objects**, and no matter how, to render a certain 3D object we need to firstly construct/define its shape.
 
 ## Explicitly
-In raytracing pipeline, geometries are usually prepared in **DCC(Digital Content Creation)** software and are defined **explicitly** with vertices. These vertices form into triangles and then got connected edge by edge to create the final geometries - just like this kind of **low poly crafts**.
+Generally speaking an explicit geometry is defined with a range of parameterization functions.
+
+For example, for a sphere with center at $(x_0,y_0,z_0)$ and radius $r$:
+
+$${\begin{aligned}f(x)&=x_{0}+r\sin \varphi \;\cos \theta \\f(y)&=y_{0}+r\sin \varphi \;\sin \theta \qquad (0\leq \varphi \leq \pi ,\;0\leq \theta <2\pi )\\f(z)&=z_{0}+r\cos \varphi \,\end{aligned}}$$
+
+However, in raytracing pipeline, geometries are usually <!-- prepared in **DCC(Digital Content Creation)** software and are--> defined **explicitly** with **vertices**. These vertices form into triangles and then got connected edge by edge to create the final geometries - just like this kind of **low poly crafts**. This is called geometry **polygonization**.
 
 <img src="https://pbs.twimg.com/media/Docd7meXoAA7b2J.jpg" width="320"  style="display:block; margin:auto;">
 
-<!-- Each vertex provides position information and each formed triangle provides surface normal etc. Geometries are loaded into the pipeline specifically and ray-geometry intersection are calculated for the final rendering. -->
+<!-- Each vertex provides position information and each formed triangle provides surface normal etc. Geometries are loaded into the pipeline specifically and ray-geometry intersection are calculated for the final rendering.
 
-However when writing shader with GLSL, the geometries have to be defined within the shader. So a different approach is used. In raymarching pipeline, 3D geometries are defined **implicitly** with **mathematical equations**.
+However when writing shader with GLSL, the geometries have to be defined within the shader. So a different approach is used. In raymarching pipeline, 3D geometries are defined **implicitly** with **mathematical equations**.-->
 
 ## Implicitly - SDF
+A different approach is to define 3D geometries **implicitly** with mathematical equations.
+
 For example, any 3D point that satisfies this equation is on the surface of a sphere with radius of 1 unit and origin at $(0, 0, 0)$:
 
 $$f(x, y, z) = \sqrt{x^2 + y^2 + z^2} - 1$$
@@ -47,6 +55,10 @@ Code for previous sphere SDF example.
 // for sphere with radius r
 float sphereSDF(vec3 p, float r) {
     return length(p) - r;
+}
+// for unit sphere with radius r = 1
+float sphereSDF(vec3 p) {
+    return length(p) - 1;
 }
 ```
 >Note: The ```length``` function returns the length of a vector defined by the Euclidean norm, i.e. the square root of the sum of the squared components. The input parameter can be a **float scalar** or a **float vector**. In case of a floating scalar the ```length``` function is trivial and returns the **absolute value**.
@@ -102,7 +114,7 @@ Now we can describe 3D objects using SDF which returns signed distance between a
 <figcaption style="text-align: center;">Image from - <a href="https://en.wikipedia.org/wiki/Ray_tracing_(graphics)">Wikipedia</a></figcaption>
 <br>
 
->In raymarching, to find the intersection between the view ray and the scene, we start at the camera, and move a point along the view ray, bit by bit. At each step, we ask “Is this point inside the scene surface?”, or alternately phrased, “Does the SDF evaluate to a negative number at this point?“. If it does, we’re done! We hit something. If it’s not, we keep going up to some maximum number of steps along the ray.
+>In raymarching, to find the intersection between the view ray and the scene, we start at the camera, and move a point along the view ray, bit by bit. At each step, we ask “Is this point inside the scene surface?”, or alternately phrased, **"Does the SDF evaluate to a negative number at this point?"**. If it does, we’re done! We hit something. If it’s not, we keep going up to some maximum number of steps along the ray.
 
 >We could just step along a very small increment of the view ray every time, but we can do much better than this (both in terms of speed and in terms of accuracy) using “**sphere tracing**”.
 
@@ -116,6 +128,7 @@ GLSL code implementation for raymartching algorithm:
 - ```marchingDirection```: the normalized ray direction to march in
 - ```start```: the starting distance away from the eye/camera
 - ```end```: the max distance away from the eye/camera to march before giving up
+
 ```c
 /**
  * Return the shortest distance from the eyepoint to the scene surface along
