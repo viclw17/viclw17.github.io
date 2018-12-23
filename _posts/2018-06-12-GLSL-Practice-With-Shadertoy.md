@@ -14,9 +14,7 @@ Featured image. width set to 640 to align with shadertoy
 <br>
 <!-- ![]({{ site.url }}/images/glsl-jupiter.jpg) -->
 <!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
-Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around. Also got the shaders embedded in my blog page.
-Here I documented some of my exploration about the website and some best-practice.
-(_I also use [KodeLife](https://hexler.net/software/kodelife/) to work on my shader offline. It is an amazing live shader programming tool and I will document the basic usages of it in next blog post._)
+Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around. Also got the shaders embedded in my blog page. Here I documented some of my exploration about the website and some best-practice.
 
 # Shadertoy First Try
 ## Watercolor Blending
@@ -26,6 +24,7 @@ _* Use mouse click and drag to interact with the motion._
 <br>
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lsyfWD?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
+
 ```c
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {   
@@ -48,10 +47,13 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 I then take the watercolor blending shader to the next level - mapping the final color output onto a UV sphere and added scrolling and stretching motion. The final looking is just like a Jupiter planet.
 <!-- I decide to keep pushing this Jupiter shader and add lighting model and fresnel shading etc. in the future to make it more close to the real look of the planet. -->
 <br>
+
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MdyfWw?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
+
 Later I added lighting model and background to make it more realistic. It is amazing to see how much a simple uv distortion can achieve.
 <br>
+
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XsVBWG?gui=true&t=10&paused=false&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 
@@ -63,7 +65,7 @@ Later I added lighting model and background to make it more realistic. It is ama
 - [Fabrice's SHADERTOY – UNOFFICIAL - Usual tricks in Shadertoy / GLSL](https://shadertoyunofficial.wordpress.com/2016/07/21/usual-tricks-in-shadertoyglsl/)
 - [Official How-To](https://www.shadertoy.com/howto)
 
-## Boilerplacte Code
+## Boilerplate Code
 ```c
 // Shader Inputs, uniforms
 uniform vec3      iResolution;           // viewport resolution (in pixels)
@@ -91,17 +93,72 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 ```
 ## Tutorial Notes
 ### mainImage()
-Image shaders implement the mainImage() function in order to generate the procedural images by computing a color for each pixel. This function is expected to be called once per pixel, and it is responsability of the host application to provide the right inputs to it and get the output color from it and assign it to the screen pixel.
+Image shaders implement the ```mainImage()``` function in order to generate the procedural images by computing a color for each pixel. This function is **called once per pixel**, and it is responsability of the host application to provide the right inputs to it and get the output color from it and assign it to the screen pixel.
 
 ### fragCoord
-where fragCoord contains the pixel coordinates for which the shader needs to compute a color. The coordinates are in pixel units, ranging from 0.5 to resolution-0.5, over the rendering surface, where the resolution is passed to the shader through the iResolution uniform.
+```fragCoord``` contains the **pixel coordinates** for which the shader needs to compute a color. The coordinates are in **pixel units**, ranging from _0.5_ to _(resolution-0.5)_, over the rendering surface, where the resolution is passed to the shader through the ```iResolution``` **uniform**.
+
+### iResolution Uniform and fragCoord Remapping
+```iResolution``` is a ```vec2``` that provides the amount of pixels on x and y dimension of the display. Usually we use it to **normalized** the pixel coordinates:
+
+```c
+vec2 xy = fragCoord / iResolution.xy;
+```
+
+so that the coordinates range:
+
+$$[0.0, iResolution.x] \Rightarrow [0.0, 1.0]$$
+
+$$[0.0, iResolution.y] \Rightarrow [0.0, 1.0]$$
+
+And then, sometimes(eg. **when building camera models**), we also want to scale-offset it:
+
+```c
+xy = xy * 2.- vec2(1.);
+```
+
+so that
+
+$$[0.0, 1.0] \Rightarrow [-1.0, 1.0]$$
+
+And finally, because the display is rectangular with the width-height ratio ```iResolution.x/iResolution.y```, we may always want to make the coordinates uniform with width-height ratio as 1:1:
+
+```c
+xy.x *= iResolution.x/iResolution.y;
+// or
+xy.y *= iResolution.y/iResolution.x;
+```
+
+We can pack up all of them together to make a function like this:
+
+```c
+vec2 arrangeCoords(vec2 p)
+{
+    vec2 q = p.xy/iResolution.xy;
+    vec2 r = -1.0+2.0*q;
+	r.x *= iResolution.x/iResolution.y;
+    return r;
+}
+
+// Call in right away in mainImage
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec2 p = arrangeCoords(fragCoord);
+    //...
+}
+```
 
 ### fragColor
-The resulting color is gathered in fragColor as a four component vector, the last of which is ignored by the client. The result is gathered as an "out" variable in prevision of future addition of multiple render targets.
+The resulting color is gathered in ```fragColor``` as a four component vector, the last of which is ignored by the client. The result is gathered as an "```out```" variable in prevision of future addition of **multiple render targets**.
 
 # Code Compatibility
+Sometimes I copy the Shadertoy GLSL source code offline to play around in **Atom Editor** or **Kodelife**. Here are some of the minor changes needed to make sure the shader compiling fine of all kinds of IDE.
+
 ## Kodelife
-Make sure creating new project from Shadertoy Template. It comes with these kind of code. Simply copy-paste Shadertoy code under all of them to run the shader in KodeLife.
+[KodeLife](https://hexler.net/software/kodelife/) is an amazing live shader programming tool and sometimes I use it to work offline.
+
+To start with, make sure creating new project from **Shadertoy Template**. It comes with these boilerplate code.
+
 ```c
 #version 150
 
@@ -135,4 +192,34 @@ void main(void) { mainImage(fragColor,inData.v_texcoord * iResolution.xy); }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ```
-_To-Do: GLSL Sandbox, Atom Editor Compatibility._
+
+Simply copy-paste Shadertoy code under all of them to run the shader in KodeLife.
+
+## Atom Editor
+I'm using plugin [GLSL Preview package](https://atom.io/packages/glsl-preview) for live GLSL programming.
+
+<img src="https://i.github-camo.com/4e74a7c1455cafb29e5c1f69b42da93b7a445bf6/68747470733a2f2f63646e2e7261776769742e636f6d2f666f72646875726c65792f61746f6d2d676c736c2d707265766965772f6d61737465722f6173736574732f73637265656e73686f742e6a7067" width="640"  style="display:block; margin:auto;">
+<br>
+
+The following default uniforms are available.
+
+```c
+uniform vec2 u_resolution; // size of the preview
+uniform vec2 u_mouse; // cursor in normalized coordinates [0, 1)
+uniform float u_time; // clock in seconds
+```
+
+The variants iResolution, iMouse and iGlobalTime can also be used for legacy reasons. So, after paste the Shadertoy code, add the following code at the beginning to setup the basic uniforms:
+
+```c
+uniform vec2 iResolution;
+uniform vec2 iMouse;
+uniform float iGlobalTime;
+float iTime = iGlobalTime;
+```
+
+Then change function ```void mainImage( out vec4 fragColor, in vec2 fragCoord )``` to ```void main()```, and for the whole shader:
+- change ```fragColor``` to ```gl_FragColor```
+- change ```fragCoord``` to ```gl_FragCoord```
+
+END
