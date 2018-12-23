@@ -156,7 +156,7 @@ GLSL code implementation for raymartching algorithm:
 <figcaption style="text-align: center;"><a href="https://www.shadertoy.com/view/4dSfRc">[SH17C] Raymarching tutorial</a> by reinder</figcaption>
 
 # Rendering
-To finally render, we need to set up camera model and cast rays. Conventionally, we put camera at origin (0,0,0) in the world space pointing to the negative Z axis. Now we need ```fieldOfView``` and ```size``` to define the camera model where:
+<!-- To finally render, we need to set up camera model and cast rays. Conventionally, we put camera at origin (0,0,0) in the world space pointing to the negative Z axis. Now we need ```fieldOfView``` and ```size``` to define the camera model where:
 - ```fieldOfView```: vertical field of view, in degrees
 - ```size```: resolution of the output image, in ```vec2```
 
@@ -194,9 +194,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
 ```
-# Put all together
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XtGfWG?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
-<br>
+ -->
 
 ```c
 const int MAX_MARCHING_STEPS = 255;
@@ -204,14 +202,19 @@ const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
 float EPSILON = 0.0001;
 
-float sphereSDF(vec3 samplePoint) {
+struct Ray{
+	vec3 origin;
+    vec3 direction;
+};
+
+float SphereSDF(vec3 samplePoint) {
     return length(samplePoint) - 1.;
 }
 
-float shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
+float ShortestDistanceToSurface(Ray ray, float start, float end) {
     float depth = start;
     for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
-        float dist = sphereSDF(eye + depth * marchingDirection);
+        float dist = SphereSDF(ray.origin + depth * ray.direction);
         if (dist < EPSILON) {
             return depth;
         }
@@ -223,19 +226,22 @@ float shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, f
     return end;
 }
 
-vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
-    vec2 xy = fragCoord - size / 2.0; // translate screenspace to centre
-    float theta = radians(fieldOfView) / 2.0;
-    float halfHeight = size.y / 2.0;
-    float z = halfHeight / tan(theta);
-    return normalize(vec3(xy, -z));
-}
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    vec3 dir = rayDirection(45.0, iResolution.xy, fragCoord);
-    vec3 eye = vec3(0.0, 0.0, 5.0);
-    float dist = shortestDistanceToSurface(eye, dir, MIN_DIST, MAX_DIST);
+    // Scale and bias uv
+    // [0.0, iResolution.x] -> [0.0, 1.0]
+    // [0.0, 1.0] 			-> [-1.0, 1.0]
+    vec2 xy = fragCoord / iResolution.xy;
+	xy = xy * 2.- vec2(1.);
+	xy.x *= iResolution.x/iResolution.y;
+
+    // SphereSDF position at (0,0,0)
+
+    vec3 pixelPos = vec3(xy, 2.); // Image plane at (0,0,2)
+    vec3 eyePos = vec3(0.,0.,5.); // Camera position at (0,0,5)
+    vec3 rayDir = normalize(pixelPos - eyePos);
+
+    float dist = shortestDistanceToSurface(eyePos, rayDir, MIN_DIST, MAX_DIST);
 
     // Didn't hit anything
     if (dist > MAX_DIST - EPSILON) {
@@ -246,9 +252,63 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Hit on the surface
     fragColor = vec4(1.0);
 }
-
 ```
 
-<!-- # Surface Normals and Lighting -->
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XtGfWG?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<br>
 
-TBC
+# Raymartching vs Raytracing
+The main difference is the function ```float RaySphereIntersection(Ray ray, Sphere sphere)```. Explanation see previous post --> [Raytracing - Ray Sphere Intersection](http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/)
+```c
+struct Ray{
+	vec3 origin;
+    vec3 direction;
+};
+
+struct Sphere{
+	vec3 center;
+    float radius;
+};
+
+float RaySphereIntersection(Ray ray, Sphere sphere){
+    vec3 oc = ray.origin - sphere.center;
+    float a = dot(ray.direction, ray.direction);
+    float b = 2.*dot(oc,ray.direction);
+    float c = dot(oc,oc)-sphere.radius*sphere.radius;
+    float discriminant = b*b-4.*a*c;
+
+    if(discriminant<0.)
+        return -1.;
+    else
+        return (-b-sqrt(discriminant))/(2.*a);
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Scale and bias uv
+    // [0.0, iResolution.x] -> [0.0, 1.0]
+    // [0.0, 1.0] 			-> [-1.0, 1.0]
+    vec2 xy = fragCoord / iResolution.xy;
+	xy = xy * 2.- vec2(1.);
+	xy.x *= iResolution.x/iResolution.y;
+
+    Sphere sphere = Sphere(vec3(0.), 1.0); // Sphere position at (0,0,0)
+
+	vec3 pixelPos = vec3(xy, 2.); // Image plane at (0,0,2)
+    vec3 eyePos = vec3(0.,0.,5.); // Camera position at (0,0,5)
+    vec3 rayDir = normalize(pixelPos - eyePos);
+
+    float dist = RaySphereIntersection(Ray(eyePos, rayDir), sphere);
+
+    // Didn't hit anything
+    if (dist < 0.) {
+        fragColor = vec4(0.);
+		return;
+    }
+
+    // Hit on the surface
+    fragColor = vec4(1.,0.,0.,1.);
+}
+```
+
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/wdsGR7?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
