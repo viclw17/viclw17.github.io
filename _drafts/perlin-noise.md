@@ -1,6 +1,6 @@
 # Smoothstep
 https://en.wikipedia.org/wiki/Smoothstep
-<!-- <iframe src="https://www.desmos.com/calculator/xszqzoandu?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder=0></iframe> -->
+<iframe src="https://www.desmos.com/calculator/xszqzoandu?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder=0></iframe>
 
 In HLSL and GLSL, smoothstep implements the ${S} _{1}(x)$, the cubic Hermite interpolation after clamping:
 
