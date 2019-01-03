@@ -10,7 +10,7 @@ tags:
 <br>
 Study of raytracing has been progressing into the second book [Ray Tracing: the Next Week](http://in1weekend.blogspot.com/2016/01/ray-tracing-second-weekend.html), which is a little bit more advanced. This post gonna focus on some notes about Perlin Noise implementation.
 
-# Book Implementation and Debug
+# Book Implementation Debug
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">50 shades of perlin noise... <a href="https://t.co/IIWrVVsPAV">pic.twitter.com/IIWrVVsPAV</a></p>&mdash; ビクター (@viclw17) <a href="https://twitter.com/viclw17/status/1076021689538904064?ref_src=twsrc%5Etfw">December 21, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br>
@@ -226,4 +226,9 @@ This somehow makes the PGM decoder confused with all those float values and prod
 <br>
 
 ## More resource
-Solarian Programmer 's post [Perlin noise in C++11](https://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/) helped me a lot on debugging and also offered a cool setup to generate wooden-looking noise pattern as noted in the code above.
+1. Solarian Programmer 's post [Perlin noise in C++11](https://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/) helped me a lot on debugging and also offered a cool setup to generate wooden-looking noise pattern as noted in the code above.
+2. Also here is the clearest explanation I found so far:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MJ3bvCkHJtE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+END
