@@ -5,6 +5,7 @@ tags:
 - Computer Graphics
 - C++
 - Math
+- Noise
 ---
 <img src="{{ site.url }}/images/perlin0.jpg" width="640"  style="display:block; margin:auto;">
 <br>
