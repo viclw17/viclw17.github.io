@@ -187,7 +187,8 @@ int main() {
 	ofstream outfile("render.pgm", ios_base::out);
 	outfile << "P2\n" << dimension << " " << dimension << "\n255\n";
 
-	int space = 50; // how many grid cells
+	int lattice = 20; // how many grid cells
+	int space = dimension / float(lattice);
 	for (int j = 0; j < dimension; j++) {
 		float y = (float)j / ((float)space); // cast to float!!!
 		for (int i = 0; i < dimension; i++) {
