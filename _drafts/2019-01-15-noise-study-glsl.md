@@ -36,3 +36,8 @@ The conclusion of this experiment is that to create **a smooth random pattern**,
 4. Aliasing is related to the topic of **sampling** which is a very large and very important topic in computer graphics.
 5. We mentioned that noise uses **a smooth function to blur random values** generated at lattice points. Functions in mathematics have properties. Two of them are of particular interest in the context of this lesson: **continuity** and **differentiability**. If the function is not continuous, computing this derivative is not possible (a function can also be continuous but not differentiable everywhere, as shown in figure 5 on the right). For reasons we will be explaining later, computing derivatives of the noise function will be needed in some places and it is **best to choose a smooth function which is both continuous and differentiable**. The original implementation of the noise function by Ken Perlin used a function which wasn't continuous and he suggested another one a few years later to correct this problem.
 6. Ideally what you want is an invisible transition from tile to tile so you can cover an infinitely large area without ever seeing a seam. In CG when a 2D texture is seamless, it is said to be **periodic** in both direction (x and y). The word tileable is also sometimes used but is confusing. Any texture is tileable only it might not be seamless. Ideally your noise function should be designed so that the pattern is periodic.
+
+https://www.scratchapixel.com/lessons/procedural-generation-virtual-worlds/procedural-patterns-noise-part-1/creating-simple-1D-noise
+more notes...
+
+https://www.scratchapixel.com/lessons/procedural-generation-virtual-worlds/procedural-patterns-noise-part-1/creating-simple-2D-noise
