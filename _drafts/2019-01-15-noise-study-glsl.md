@@ -41,3 +41,8 @@ https://www.scratchapixel.com/lessons/procedural-generation-virtual-worlds/proce
 more notes...
 
 https://www.scratchapixel.com/lessons/procedural-generation-virtual-worlds/procedural-patterns-noise-part-1/creating-simple-2D-noise
+Remember that all noise functions return a float but that its input can be a float, a 2D point or a 3D point. The name given to the noise function is related to the dimension of its input value. A 2D noise is therefore a noise function that takes a 2D point as input. A 3D noise takes a 3D point and we even mentioned a 4D noise in the first chapter of this lesson where the fourth dimension accounts in fact for time (it will produce a noise pattern based on a 3D point but animated through time).
+
+If we use the same technique for the 3D version, we will need to allocate a 256x256x256 array of floats which starts to be quite a significant chunk of memory for a function that is supposed to use very little of it.
+
+# Introducing the Concept of Permutation
