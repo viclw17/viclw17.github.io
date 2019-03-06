@@ -9,13 +9,13 @@ tags:
 ---
 <img src="{{ site.url }}/images/perlin0.jpg" width="640"  style="display:block; margin:auto;">
 <br>
-Study of raytracing has been progressing into the second book [Ray Tracing: the Next Week](http://in1weekend.blogspot.com/2016/01/ray-tracing-second-weekend.html), which is a little bit more advanced. This post gonna focus on some notes about Perlin Noise implementation.
+Study of raytracing has been progressing into the second book [Ray Tracing: the Next Week](http://in1weekend.blogspot.com/2016/01/ray-tracing-second-weekend.html), which is a little bit more advanced. This post is going to focus on some notes about Perlin Noise implementation.
 
 # Book Implementation Debug
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">50 shades of perlin noise... <a href="https://t.co/IIWrVVsPAV">pic.twitter.com/IIWrVVsPAV</a></p>&mdash; ビクター (@viclw17) <a href="https://twitter.com/viclw17/status/1076021689538904064?ref_src=twsrc%5Etfw">December 21, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br>
-Follow the book I finally got the code working and render the correct images as shown above. One of the most annoying bugs I encountered was at some point the code failed to produce a valid ```.ppm``` image that can be opened by [XnViewer](https://www.xnview.com/en/) (more details about image output see previous post: [Raytracing - Image Output](http://viclw17.github.io/2018/07/15/raytracing-image-output/)). I opened the image with text editor and notice there are lots of RGB values with all 3 elements as -2147483648. This made me wondering if the output of the noise function sometimes was negative that leads to the **negative color value**. I modified the ```noise_texture.h``` to output the noise value and that proved my speculation:
+Follow the book I finally got the code working and render the correct images as shown above. One of the most annoying bugs I encountered was at some point the code failed to produce a valid ```.ppm``` image that can be opened by [XnViewer](https://www.xnview.com/en/) (more details about image output see previous post: [Raytracing - Image Output](http://viclw17.github.io/2018/07/15/raytracing-image-output/)). I opened the image with text editor and notice there are lots of RGB values with all 3 elements as -2147483648. This made me wonder if the output of the noise function produced negative values that leads to the **negative color value bug**. I modified the ```noise_texture.h``` to output the noise value and that proved my speculation:
 
 ```c
 #ifndef NOISE_TEXTURE_H
@@ -55,7 +55,7 @@ Image outputing ...
 ...
 ```
 
-Solution is to scale and bias the noise to remap it from (-1,1) to (0,1):
+Solution is to **scale and bias** the noise to remap it from (-1,1) to (0,1):
 
 ```c
 // bug!
@@ -69,9 +69,9 @@ float noise = 0.5 * (1 + perlin_noise.noise(scale * p));
 ---
 
 # Building Up Perlin Noise
-The implementation in the book is kinda overwhelming for me to figure out at once, so I decide to revisit later (after some emergency reading to refresh my C++ and basic math...)
+The implementation in the book is kinda overwhelming for me, so I decided to revisit later (after some emergency reading to refresh my C++ and basic math...)
 
-As recommended by the book I digress a little to the post - [Building Up Perlin Noise](http://eastfarthing.com/blog/2015-04-21-noise/) by Andrew Kensler. After a long-time testing and debugging I finally get the code working.
+As recommended by the book I digress a bit to read the post - [Building Up Perlin Noise](http://eastfarthing.com/blog/2015-04-21-noise/) by Andrew Kensler. After a long-time debugging I finally get the code working.
 
 ## Breakdown
 ### Smoothstep
