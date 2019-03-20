@@ -100,7 +100,7 @@ To fix the translucent material lighting problem, just change the **translucency
 
 Now the lighting is correct but we still have ugly self-sorting bug. To fix this problem, we need to use a little trick with **custom depth buffer**. Basically you can label certain mesh components to be written into custom depth buffer and later to be accessed in material editor through ```SceneTexture:CustomDepth``` node.
 
-Since the engine itself cannot handle self-sorting for translucent objects, we can calculate by ourselves. Just create a duplicated dummy mesh and set it to be written into custom depth buffer but **not rendered in the main pass**.
+Since the engine itself cannot handle self-sorting for translucent objects, we can calculate by ourselves. Just create a duplicated dummy mesh and set it to be **rendered in custom depth buffer** but **not rendered in the main pass**. Note that because we want the custom depth to have the correct sorting, we have to **assign a opaque material to the dummy mesh**.
 
 > I also tend to parent the dummy mesh under the original mesh and name it "DepthFix".
 
@@ -113,7 +113,11 @@ You can visualize the custom buffer in the editor, and then you will see the dum
 <br>
 <img src="{{ site.url }}/images/Work/custom_depth2.jpg" width="480" style="display:block; margin:auto;">
 
-Next, in the material, calculate transparency based on ```PixelDepth``` and ```CustomDepth``` and output into ```Opacity```.
+Next, in the material, calculate transparency based on ```PixelDepth``` and ```CustomDepth``` and output into ```Opacity```. The idea is to compare the pixel depth of the wrong-sorted geometry with the custom depth of the dummy geometry. Because the custom depth right now provides the correct sorting information thanks to our opaque dummy mesh, we can:
+
+- set the final opacity 1 when ```PixelDepth``` <= ```CustomDepth```, meaning the rendered pixel belongs to the surface that is closer to the camera and should not be discared because of the occlusion.
+- set the final opacity 0 when ```PixelDepth``` > ```CustomDepth```, meaning the rendered pixel actually is farther than its depth value and should be blocked by the front surface of the mesh.
+
 <img src="{{ site.url }}/images/Work/depth_fade_fix.jpg" width="480" style="display:block; margin:auto;">
 <br>
 <img src="{{ site.url }}/images/Work/depth_bug2.gif" width="480" style="display:block; margin:auto;">
