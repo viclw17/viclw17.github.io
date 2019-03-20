@@ -50,10 +50,10 @@ The ```SceneDepth``` expression outputs the existing scene depth. This is simila
 
 If an object has material outputing ```SceneDepth``` as color (after scaling and clamping), because of this feature, the output can show the objects that occluded. Also because it's accessing the scene depth, the material using this expression should use translucent as its blend mode to avoid itself writing the depth buffer.
 
-> Only translucent materials may utilize ```SceneDepth```!
+> Only translucent materials may utilize SceneDepth!
 
 <img src="{{ site.url }}/images/Work/depth_visualization2.gif" width="480" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">Sphere in the front assigned with material that outputs ```SceneDepth``` as color; sphere in the upper back is in translucent blend mode, which is not written into scene depth buffer.</figcaption>
+<figcaption style="text-align: center;">Sphere in the front assigned with material that outputs SceneDepth as color; sphere in the upper back is in translucent blend mode, which is not written into scene depth buffer.</figcaption>
 <br>
 
 ### Depth Fade
