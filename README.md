@@ -13,24 +13,3 @@
 [Google Analysis](https://analytics.google.com/analytics/web/#/embed/report-home/a75504070w113930148p119022570)
 
 [Git Doc](https://git-scm.com/doc)
-## Formatting Note
-### Gif
-400px, 100 [Lossy Compression](https://kornel.ski/lossygif)
-### Link
-```
-[TEXT](link)
-<a href="LINK" target = "_blank">TEXT</a>
-```
-### Image
-```
-![TEXT]({{ site.url }}/images/IMAGE.jpg)
-<img src="{{ site.url }}/images/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
-<img src="{{ site.url }}/images/GIF.gif" width="400" height="400" style="display:block; margin:auto;">
-<figcaption style="text-align: center;">CAPTION</figcaption>
-<br />
-```
-### Code Highlight
-```
-{% highlight c linenos=table %}
-{% endhighlight %}
-```
