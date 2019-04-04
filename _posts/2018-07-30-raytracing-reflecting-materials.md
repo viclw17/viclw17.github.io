@@ -114,6 +114,9 @@ vec3 reflect(const vec3& v, const vec3& n) {
     return v - 2 * dot(v,n) * n;
 }
 ```
+
+> Note that here I'm deriving the calculation of the reflection vector according to the code from the book. Conventionally the direction of the incident vector is defined pointing toward the light source!
+
 And the rest of code for metal material subclass is
 
 ```c
