@@ -6,6 +6,7 @@ tags:
 - C++
 - Math
 - Noise
+- Ray Tracing in One Weekend
 ---
 <img src="{{ site.url }}/images/perlin0.jpg" width="640"  style="display:block; margin:auto;">
 <br>
