@@ -1,6 +1,6 @@
 ---
-title: Exploring Interaction Effect in VR
-date: 2019-04-06
+title: Raytracing - UV Mapping and Texturing
+date: 2019-04-12
 tags:
 - Computer Graphics
 - Raytracing
