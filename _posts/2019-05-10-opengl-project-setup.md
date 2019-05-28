@@ -17,7 +17,7 @@ The tutorial I've been following is https://github.com/tomdalling/opengl-series 
 The website http://learnopengl.com is however by far the most well-rounded one for me, and I will constantly referring to it.
 
 # Xcode
-## Code Breakdown
+## Project Setting
 ### Includes
 ```c
 #include "platform.hpp"
@@ -35,7 +35,12 @@ The website http://learnopengl.com is however by far the most well-rounded one f
 
 #include "Program.h"
 ```
-#### Third Party
+To get the includes working properly in Xcode project, we have to set the path in Project Setting - Search Paths:
+
+<img src="{{ site.url }}/images/OpenGL/search-paths.jpg" width="640"  style="display:block; margin:auto;">
+<br>
+
+### Third Party
 The code is using third-party tools including
 
 - [GLEW](http://glew.sourceforge.net/) (Graphics Library Extension Wrangler),
@@ -51,22 +56,17 @@ Note that,
 1. In the tutorial code of http://learnopengl.com , instead of GLEW it is now using [GLAD](https://glad.dav1d.de/) as an alternative.
 2. GLFW has an alternative GLUT. Current available version is called [FreeGLUT](http://freeglut.sourceforge.net/)
 
-#### Build Library Binary
+### Build Library Binary
 Among them, GLFW(or FreeGLUT if you choose to use that) has to be built for the corresponding OS. This can be done with [CMake](https://cmake.org/) and details can be found [here](https://learnopengl.com/Getting-started/Creating-a-window). A ```libglfw3.a``` file will be generated if on MacOS (or ```glfw3.lib``` if on Windows).
 
 To include all of them into project, best practice is to group GLEW/GLFW/GLM header files into a folder **Includes**, and put ```libglfw3.a``` into a folder **Libs**.
 
-#### Project Setup
-To get the includes working properly in Xcode project, we have to set the path in Project Setting - Search Paths:
-
-<img src="{{ site.url }}/images/OpenGL/search-paths.jpg" width="640"  style="display:block; margin:auto;">
-<br>
-
-#### Other Files
+### Other Files
 In 01_project_skeleton, ```platform.hpp``` contains declaration of ```std::string ResourcePath(std::string fileName);```, an extra function used to get the path of shader files on MacOS. The corresponding ```platformosx.mm``` contains its defination in objective-c.
 
 The code puts functionalities of shader loading/compiling into the **Shader.h/Shader.cpp** and shader program linking into **Program.h/Program.cpp**. Hence we include ```Program.h``` here.
 
+## Code Breakdown
 ### main.cpp
 Here I removed most of error-checking code to get a minimal look of the whole setup code, just for future reference. However they are very important in practice to help locating problems.
 
