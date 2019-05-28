@@ -35,26 +35,37 @@ The website http://learnopengl.com is however by far the most well-rounded one f
 
 #include "Program.h"
 ```
-The code is using third-party libraries including
+#### Third Party
+The code is using third-party tools including
 
 - [GLEW](http://glew.sourceforge.net/) (Graphics Library Extension Wrangler),
 - [GLFW](https://www.glfw.org/) (Graphics Library FrameWork), and
 - [GLM](https://glm.g-truc.net/0.9.9/index.html) (OpenGL Mathematics).
 
-Note that in the tutorial code of http://learnopengl.com , instead of GLEW it is now using [GLAD](https://glad.dav1d.de/) as an alternative.
+They have different roles:
+1. **GLEW** is used to **access the modern OpenGL API functions**. In modern OpenGL, the API functions are **determined at run time, not compile time**. GLEW will handle the run time loading of the OpenGL API.
+2. **GLFW** will allow us to** create a window, and receive mouse and keyboard input in a cross-platform way**. OpenGL does not handle those so we have to use library to do so.
+3. **GLM** is a mathematics library that handles vectors and matrices etc. Older versions of OpenGL provided functions like glRotate, glTranslate, glScale. But in modern OpenGL, these functions do not exist, and we must do all of the math ourselves. GLM will help us on that.
 
-Among them, GLFW has to be built for the corresponding OS. This can be done with [CMake](https://cmake.org/) and details can be found [here](https://learnopengl.com/Getting-started/Creating-a-window). A ```libglfw3.a``` file will be generated if on MacOS (and ```glfw3.lib``` if on Windows).
+Note that,
+1. In the tutorial code of http://learnopengl.com , instead of GLEW it is now using [GLAD](https://glad.dav1d.de/) as an alternative.
+2. GLFW has an alternative GLUT. Current available version is called [FreeGLUT](http://freeglut.sourceforge.net/)
+
+#### Build Library Binary
+Among them, GLFW(or FreeGLUT if you choose to use that) has to be built for the corresponding OS. This can be done with [CMake](https://cmake.org/) and details can be found [here](https://learnopengl.com/Getting-started/Creating-a-window). A ```libglfw3.a``` file will be generated if on MacOS (or ```glfw3.lib``` if on Windows).
 
 To include all of them into project, best practice is to group GLEW/GLFW/GLM header files into a folder **Includes**, and put ```libglfw3.a``` into a folder **Libs**.
 
-```platform.hpp``` contains declaration of ```std::string ResourcePath(std::string fileName);```, an extra function used to get the path of shader files on MacOS. The corresponding ```platform_osx.mm``` contains its defination in objective-c.
-
-The code puts functionalities of shader loading/compiling into the **Shader.h/Shader.cpp** and shader program linking into **Program.h/Program.cpp**. Hence we include ```Program.h``` here.
-
+#### Project Setup
 To get the includes working properly in Xcode project, we have to set the path in Project Setting - Search Paths:
 
 <img src="{{ site.url }}/images/OpenGL/search-paths.jpg" width="640"  style="display:block; margin:auto;">
 <br>
+
+#### Other Files
+In 01_project_skeleton, ```platform.hpp``` contains declaration of ```std::string ResourcePath(std::string fileName);```, an extra function used to get the path of shader files on MacOS. The corresponding ```platformosx.mm``` contains its defination in objective-c.
+
+The code puts functionalities of shader loading/compiling into the **Shader.h/Shader.cpp** and shader program linking into **Program.h/Program.cpp**. Hence we include ```Program.h``` here.
 
 ### main.cpp
 Here I removed most of error-checking code to get a minimal look of the whole setup code, just for future reference. However they are very important in practice to help locating problems.
@@ -121,6 +132,7 @@ static void Render(){
 ```
 
 Main function to
+
 - initialize GLFW and GLEW
 - create window
 - load shader program
@@ -183,6 +195,10 @@ namespace tdogl {
 }
 ```
 Source:
+- create the shader object: ```glCreateShader```
+- load shader files with ```std::ifstream```
+- setup shader code: ```glShaderSource```
+- compile the shader: ```glCompileShader```
 
 ```c
 #include "Shader.h"
@@ -271,6 +287,10 @@ namespace tdogl {
 ```
 
 Source:
+- create the program object: ```glCreateProgram```
+- attach all the shaders: ```glAttachShader```
+- link the shaders together: ```glLinkProgram```
+- detach all the shaders: ```glDetachShader```
 
 ```c
 #include "Program.h"
@@ -321,6 +341,7 @@ GLint Program::attrib(const GLchar* attribName) const {
 ```
 
 ### Shader Files
+These are very minimal functional shaders.
 #### Vertex Shader
 ```c
 #version 150
@@ -368,7 +389,7 @@ Another option is to just include it in ```main.cpp```
 ### Thread 1: signal SIGABRT
 At this point I can pass the compiling but still failed on running the build.
 
-The program broke at function ```Shader::shaderFromFile()```, and I found the path where the program reading my shader files is actually to the wrong folder(thanks to breakpoint). So I set the new ```DerivedData``` folder and put shader files right by the executable inside ```DerivedDate/.../Build/Products```.
+The program broke at function ```Shader::shaderFromFile()```, and I found the path where the program reading my shader files is actually to the wrong folder(thanks to breakpoint). So I set the new ```DerivedData``` folder and put shader files **right by the executable** inside ```DerivedDate/.../Build/Products```.
 
 <img src="{{ site.url }}/images/OpenGL/folder.jpg" width="320"  style="display:block; margin:auto;">
 <br>
