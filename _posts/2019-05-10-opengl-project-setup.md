@@ -411,4 +411,11 @@ Finally it compiled and ran successfully!
 <br>
 
 # Visual Studios
-TBC
+Make sure using **32-bit** binaries.
+
+## Update paths to the includes and libraries
+1. Right click on the project -> Properties -> VC++ Directories
+2. Include Directories: C:\...\includes;$(IncludePath)
+3. Library Directories: C:\...\libs;$(LibraryPath)
+## Update libraries dependencies
+Linker -> Input -> Additional Dependencies add ```glfw3.lib``` and ```opengl32.lib```
