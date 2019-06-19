@@ -1,11 +1,12 @@
 ---
-title: OpenGL Project Setup
+title: OpenGL Project Setup and Boilerplate Code
 date: 2019-05-10
 tags:
 - OpenGL
+- C++
 ---
-<!-- <img src="{{ site.url }}/images/raytracing-texture.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
+<img src="{{ site.url }}/images/OpenGL/test.png" width="400"  style="display:block; margin:auto;">
+<br>
 I had quite a journey setting up the environment for OpenGL development. Lots of research was done while I was solving all the problems and here I documented my version of approach.
 
 # Resources
@@ -66,7 +67,7 @@ In 01_project_skeleton, ```platform.hpp``` contains declaration of ```std::strin
 
 The code puts functionalities of shader loading/compiling into the **Shader.h/Shader.cpp** and shader program linking into **Program.h/Program.cpp**. Hence we include ```Program.h``` here.
 
-## Code Breakdown
+## Boilerplate Code Breakdown
 ### main.cpp
 Here I removed most of error-checking code to get a minimal look of the whole setup code, just for future reference. However they are very important in practice to help locating problems.
 
@@ -419,3 +420,9 @@ Make sure using **32-bit** binaries.
 3. Library Directories: C:\...\libs;$(LibraryPath)
 ## Update libraries dependencies
 Linker -> Input -> Additional Dependencies add ```glfw3.lib``` and ```opengl32.lib```
+
+END
+
+# Reference
+1. [Learnopengl.com - PBR - Theory](https://learnopengl.com/PBR/Theory)
+2. [Modern OpenGL 01 - Getting Started in Xcode, Visual C++, and Linux](https://www.tomdalling.com/blog/modern-opengl/01-getting-started-in-xcode-and-visual-cpp/)
