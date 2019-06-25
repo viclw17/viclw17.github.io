@@ -1,14 +1,31 @@
 ---
-title: Unreal Frame Breakdown - Part 1, WIP
+title: Unreal Frame Breakdown - Part 1
 date: 2019-06-20
 tags:
 - Unreal
 ---
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/frame.jpg" width="640"  style="display:block; margin:auto;">
 <br>
-<!-- My scene umap is called NewWorld. --> This is my version of investigation on [how unreal render one frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/). Still work in progress.
+<!-- My scene umap is called NewWorld. --> This is my version of investigation on [how unreal render one frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/).
+
+I build this testing scene following the post. The ```umap``` is named as NewWorld. It has
+
+1. 1 directional light, from left-up to right-down
+2. 1 static light, white
+3. 2 stationary lights, both blue
+4. 2 movable lights, one green one red
+5. rock mesh lablled as movable
+6. all the rest of meshes are static
+7. all meshes with shadows on
+8. 1 fire particle system
+9. volumetric lighting on
+10. skybox
 
 # Particle PreRender
+Particle simulation on the GPU (only of **GPU Sprites particle** type). It seems 2 drawcalls here are because we have 2 gpu emitters in the particle system.
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particleGPU.jpg" width="600"  style="display:block; margin:auto;">
+
 ```c
  EID  | Event                                                                        | Draw # | Duration (Microseconds)
       |   - GPUParticles_PreRender                                                   | 2      | 36.864
@@ -30,7 +47,7 @@ This pass takes input textures:
 3. texture3 ParticleAttributes
 4. etc.
 
-and outputs 2 render target(RT):
+and outputs following 2 render target(RT):
 
 1. RT0 Particle State Position
 2. RT1 Particle State Velocity
@@ -38,7 +55,7 @@ and outputs 2 render target(RT):
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particle.jpg" width="400"  style="display:block; margin:auto;">
 
 # PrePass
-PrePass take all opaque meshes and output a **depth** pass - Z-PrePass:
+PrePass takes all non-translucent meshes and outputs a **depth Z pass** (Z-prepass). Its results are required by **DBuffer** hence "Forced by DBuffer". It could also be forced by **Forward Shading**. The pre-pass may also be used by **occlusion culling**.
 ```c
  EID  | Event                                                                        | Draw # | Duration (Microseconds)
       |   - PrePass DDM_AllOpaque (Forced by DBuffer)                                | 7      | 239.616
@@ -77,6 +94,8 @@ platforms that actually need “resolving” a rendertarget before using it as a
 <!-- (the PC doesn’t). -->
 
 # ComputeLightGrid*
+> Responsible for optimizing lighting in forward shading. According to the comment in Unreal’s source code, this pass “culls local lights to a grid in frustum space. Needed for forward shading or translucency using the Surface lighting mode”. In other words: it assigns lights to cells in a grid (shaped like a pyramid along camera view). This operation has a cost of its own but it pays off later, making it faster to determine which lights affect which meshes. [source](https://unrealartoptimization.github.io/book/profiling/passes-lighting/#computelightgrid)
+
 ```c
       |   - ComputeLightGrid                                                         | 17     | 174.08
       |    \- CullLights 30x16x32 NumLights 13 NumCaptures 1                         | 17     | 123.872
@@ -90,23 +109,21 @@ platforms that actually need “resolving” a rendertarget before using it as a
 276   |       - API Calls                                                            | 23     | 0.032
 ```
 
-> Responsible for optimizing lighting in forward shading. According to the comment in Unreal’s source code, this pass “culls local lights to a grid in frustum space. Needed for forward shading or translucency using the Surface lighting mode”. In other words: it assigns lights to cells in a grid (shaped like a pyramid along camera view). This operation has a cost of its own but it pays off later, making it faster to determine which lights affect which meshes. [source](https://unrealartoptimization.github.io/book/profiling/passes-lighting/#computelightgrid)
-
-
 # BeginOcclusionTests
-The term occlusion culling refers to a method that tries to reduce the rendering load on the graphics system by eliminating (that is, culling) objects from the rendering pipeline if they are hidden (that is, occluded) by other objects. There are several methods for doing this.
+The term occlusion culling refers to a method that tries to reduce the rendering load on the graphics system by eliminating objects from the rendering pipeline if they are occluded by other objects. There are several methods for doing this.
 
-- Initiate an occlusion query.
-- Turn off writing to the frame and depth buffer, and disable any superfluous state. Modern graphics hardware is thus able to rasterize at a much higher speed (NVIDIA 2004).
-- Render a simple but conservative approximation of the complex object—usually a bounding box: the GPU counts the number of fragments that would actually have passed the depth test.
-- Terminate the occlusion query.
-- Ask for the result of the query (that is, the number of visible pixels of the approximate geometry).
-- If the number of pixels drawn is greater than some threshold (typically zero), render the complex object.
+1. Initiate an **occlusion query**.
+2. Turn off writing to the frame and depth buffer, and disable any superfluous state. Modern graphics hardware is thus able to rasterize at a much higher speed (NVIDIA 2004).
+3. Render a simple but conservative approximation of the complex object—usually **a bounding box**: the GPU counts the number of fragments that would actually have passed the depth test.
+4. Terminate the occlusion query.
+5. Ask for the result of the query (that is, the number of visible pixels of the approximate geometry).
+6. If the number of pixels drawn is greater than some threshold (typically zero), render the complex object.
 
 [Source](https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter06.html)
 
+<!-- https://forums.unrealengine.com/development-discussion/vr-ar-development/107536-beginocclusiontests-is-this-something-that-could-take-advantage-of-instanced-stereo -->
+
 ```c
-// 278   |   - ShadowFrustumQueries                                                     | 24     |
       |   - BeginOcclusionTests                                                      | 24     | 249.856
       |    \- ViewOcclusionTests 0                                                   | 24     | 249.856
       |      \- ShadowFrustumQueries                                                 | 24     | 28.672
@@ -150,7 +167,7 @@ The first group of 2 ShadowFrustumQueries is for 2 movable point lights, so the 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowFrustumQueries.gif" width="400"  style="display:block; margin:auto;">
 
 ## GroupedQueries
-This is for occluded objects. In my scene there is a table mesh behind everything.
+This is for occluded objects. In my scene there is a table mesh behind the wall.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/GroupedQueries.jpg" width="400"  style="display:block; margin:auto;">
 
@@ -160,37 +177,27 @@ This is for all the other objects, and notice occlusion testing is done on bound
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/IndividualQueries.gif" width="400"  style="display:block; margin:auto;">
 
 # BuildHZB
-Unreal creates a Hi-Z buffer (passes HZB SetupMipXX) stored as a 16 floating point number (texture format R16_Float). This takes the depth buffer produced during the Z-prepass as in input and creates a mip chain (i.e. downsamples it successively) of depths.
+Generating the Hierarchical Z-Buffer. This takes the depth buffer produced during the Z-prepass as in input and creates a mip chain (i.e. downsamples it successively) of depths.
 
 ```c
       |   - BuildHZB(ViewId=0)                                                       | 49     | 207.904
       |    \- HZB(mip=0) 1024x512                                                    | 49     | 100.384
-418   |      \- DrawIndexed(3)                                                       | 49     | 100.384
       |     - HZB(mip=1) 512x256                                                     | 50     | 41.984
-432   |      \- DrawIndexed(3)                                                       | 50     | 41.984
       |     - HZB(mip=2) 256x128                                                     | 51     | 10.24
-445   |      \- DrawIndexed(3)                                                       | 51     | 10.24
       |     - HZB(mip=3) 128x64                                                      | 52     | 8.192
-458   |      \- DrawIndexed(3)                                                       | 52     | 8.192
       |     - HZB(mip=4) 64x32                                                       | 53     | 8.192
-471   |      \- DrawIndexed(3)                                                       | 53     | 8.192
       |     - HZB(mip=5) 32x16                                                       | 54     | 7.168
-484   |      \- DrawIndexed(3)                                                       | 54     | 7.168
       |     - HZB(mip=6) 16x8                                                        | 55     | 8.192
-497   |      \- DrawIndexed(3)                                                       | 55     | 8.192
       |     - HZB(mip=7) 8x4                                                         | 56     | 7.168
-510   |      \- DrawIndexed(3)                                                       | 56     | 7.168
       |     - HZB(mip=8) 4x2                                                         | 57     | 8.192
-523   |      \- DrawIndexed(3)                                                       | 57     | 8.192
       |     - HZB(mip=9) 2x1                                                         | 58     | 8.192
-536   |      \- DrawIndexed(3)                                                       | 58     | 8.192
-541   |       - API Calls                                                            | 59     | 0.00
 ```
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/BuildHZB.gif" width="400"  style="display:block; margin:auto;">
 
 
 # ShadowDepths
+This pass is **only for movable objects** as their shadowing situation should be calculated in realtime. For all the static objects shadows are supposed to be baked in advance to save performance. In this case all the following calculations are done for the rock mesh which is lablled as movable object.
 ```c
       |   - ShadowDepths                                                             | 60     | 997.376
       |    \- Atlas0 2048x2048                                                       | 60     | 112.64
@@ -233,11 +240,21 @@ Unreal creates a Hi-Z buffer (passes HZB SetupMipXX) stored as a 16 floating poi
 745   |           - API Calls                                                        | 73     | 0.00
 748   |     - PreshadowCache                                                         | 74     |
 ```
+For 1 directional and 2 stationary lights, the shadow depths are written into Atlas0, one for each.
+
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths DirectionalStationaryLight.gif" width="400"  style="display:block; margin:auto;">
+
+2 movable lights are treated in a different way. They are using cubemaps to record shadow depths. For each light, firstly CopyCachedShadowMap  outputs a cubemap without movable objects.
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths Cubemap NewWorld.PointLight_movable0.gif" width="300"  style="display:block; margin:auto;">
+
+Then unreal adds the movable objects shadow depths into the cubemaps.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths Cubemap NewWorld.PointLight_movable.gif" width="300"  style="display:block; margin:auto;">
 
 # Volumetric Fog*
+[Documentation](https://docs.unrealengine.com/en-US/Engine/Rendering/LightingAndShadows/VolumetricFog/index.html)
+
 ```c
       |   - InitializeVolumeAttributes                                               | 74     | 6998.016
 762   |    \- Dispatch(60, 32, 32)                                                   | 74     | 6998.016
@@ -251,8 +268,24 @@ Unreal creates a Hi-Z buffer (passes HZB SetupMipXX) stored as a 16 floating poi
 ```
 <!-- InitializeVolumeAttributes output uav0 = LightScattering and uav1 = VBufferB -->
 
+## Initialize Volume Attributes*
+This pass calculates and stores fog parameters (scattering and absorption) into the volume texture and also stores a global emissive value into a second volume texture.
+
+Note that in my test scene I put 1 **AtmosphereFog** and 1 **ExponentialHeightFog**. They are different entities and at this pass it is the ExponentialHeightFog got calculated. AtmosphereFog is more like the skybox (or cubemap used for IBL) and will be treated at Atmosphere pass later.
+
+## Light Scattering*
+This pass calculates the light scattering and extinction for each cell combining the shadowed directional light, sky light and local lights, assigned to the Light volume texture during the ComputeLightGrid pass above. It also uses temporal antialiasing on the compute shader output (Light Scattering, Extinction) using a history buffer, which is itself a 3D texture, improve scattered light quality per grid cell.
+
+## Final Integration*
+This pass simply raymarches the 3D texture in the Z dimension and accumulates scattered light and transmittance, storing the
+result, as it goes, to the corresponding cell grid.
 
 # BasePass
+This is the main pass rendering **non-translucent materials**, reading and saving **static lighting** to the G-Buffer. As we can see here we have 6 render targets in GBuffer got cleared before rendering.
+<!-- Applying DBuffer decals
+Applying fog
+Calculating final velocity (from packed 3D velocity)
+In forward renderer: dynamic lighting -->
 ```c
       |   - CompositionBeforeBasePass                                                | 80     | 0.00
 812   |    \- DeferredDecals DRS_BeforeBasePass                                      | 80     |
@@ -280,14 +313,19 @@ Unreal creates a Hi-Z buffer (passes HZB SetupMipXX) stored as a 16 floating poi
 970   |      \- DrawIndexed(3684)                                                    | 92     | 98.272
       |     - M_Wood_Walnut Wall_Window_400x400                                      | 93     | 748.544
 998   |      \- DrawIndexed(192)                                                     | 93     | 748.544
-      |     - M_Rock_Basalt Wall_Window_400x400                                      | 94     | 732.16
+      |     - M_Wood_Walnut Wall_Window_400x400                                      | 94     | 732.16
 1010  |      \- DrawIndexed(192)                                                     | 94     | 732.16
 1015  |     - API Calls                                                              | 95     | 0.00
 ```
+The **actual materials** on the objects are finally used in rendering: M_Basic_Floor, M_Chair, M_Brick_Clay_Old, M_Statue, M_Rock_Marble_Polished, M_Rock, M_Wood_Walnut, M_Wood_Walnut. **At the result this pass is deeply affected by shader complexity.** Also notice this time drawcalls are per-material rather than per-mesh intance like in Z-prepass. So during content optimization, be aware of the **number of material slots** on the meshes.
+
+Examples of different G-buffer render targets: base color of materials/ normal/ material properties/ baked lightings.
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/g.jpg" width="800"  style="display:block; margin:auto;">
 
+TBC
 
-# Velocity
+<!-- # Velocity
+Saving velocity of each vertex (used later by motion blur and temporal anti-aliasing).
 ```c
       |   - RenderVelocities                                                         | 96     | 9.216
 1020  |    \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)          | 96     | 9.216
@@ -324,4 +362,4 @@ Unreal creates a Hi-Z buffer (passes HZB SetupMipXX) stored as a 16 floating poi
 ```
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao1.jpg" width="400"  style="display:block; margin:auto;">
 
-<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao2.jpg" width="400"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao2.jpg" width="400"  style="display:block; margin:auto;"> -->
