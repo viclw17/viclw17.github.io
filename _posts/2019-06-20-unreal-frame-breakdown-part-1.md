@@ -24,7 +24,7 @@ I build this testing scene following the post. The ```umap``` is named as NewWor
 # Particle PreRender
 Particle simulation on the GPU (only of **GPU Sprites particle** type). It seems 2 drawcalls here are because we have 2 gpu emitters in the particle system.
 
-<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particleGPU.jpg" width="600"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particleGPU.jpg" width="800"  style="display:block; margin:auto;">
 
 ```c
  EID  | Event                                                                        | Draw # | Duration (Microseconds)
