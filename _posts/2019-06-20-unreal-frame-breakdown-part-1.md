@@ -6,15 +6,15 @@ tags:
 ---
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/frame.jpg" width="640"  style="display:block; margin:auto;">
 <br>
-<!-- My scene umap is called NewWorld. --> This is my version of investigation on [how unreal render one frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/).
+This is my version of [How Unreal Render One Frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/). I'm trying to follow this post and profile a frame by myself to learn the deferred rendering pipeline of Unreal Engine.
 
-I build this testing scene following the post. The ```umap``` is named as NewWorld. It has
+I build this testing scene following the post. Unreal is set to use **deferred shading**. If set to use **forward shading** the profiling results will be extremely different and I will try to go through in another post. The ```umap``` is named as NewWorld in my test. The map contains:
 
 1. 1 directional light, from left-up to right-down
 2. 1 static light, white
 3. 2 stationary lights, both blue
 4. 2 movable lights, one green one red
-5. rock mesh lablled as movable
+5. rock mesh labeled as movable
 6. all the rest of meshes are static
 7. all meshes with shadows on
 8. 1 fire particle system
@@ -22,7 +22,7 @@ I build this testing scene following the post. The ```umap``` is named as NewWor
 10. skybox
 
 # Particle PreRender
-Particle simulation on the GPU (only of **GPU Sprites particle** type). It seems 2 drawcalls here are because we have 2 gpu emitters in the particle system.
+Particle simulation on the GPU (only of **GPU Sprites particle** type). It seems the pass costs 2 drawcalls because we have 2 GPU emitters in this particle system.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particleGPU.jpg" width="800"  style="display:block; margin:auto;">
 
@@ -47,7 +47,7 @@ This pass takes input textures:
 3. texture3 ParticleAttributes
 4. etc.
 
-and outputs following 2 render target(RT):
+and outputs following 2 **Render Target(RT)**:
 
 1. RT0 Particle State Position
 2. RT1 Particle State Velocity
@@ -55,7 +55,7 @@ and outputs following 2 render target(RT):
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/particle.jpg" width="400"  style="display:block; margin:auto;">
 
 # PrePass
-PrePass takes all non-translucent meshes and outputs a **depth Z pass** (Z-prepass). Its results are required by **DBuffer** hence "Forced by DBuffer". It could also be forced by **Forward Shading**. The pre-pass may also be used by **occlusion culling**.
+PrePass takes all non-translucent(eg. with opaque or masked materials) meshes and outputs a **depth Z pass** (Z-prepass). Its results are required by **DBuffer** hence "Forced by DBuffer". It could also be forced by **Forward Shading**. The pre-pass may also be used by **occlusion culling**.
 ```c
  EID  | Event                                                                        | Draw # | Duration (Microseconds)
       |   - PrePass DDM_AllOpaque (Forced by DBuffer)                                | 7      | 239.616
@@ -85,13 +85,12 @@ PrePass takes all non-translucent meshes and outputs a **depth Z pass** (Z-prepa
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/prepass.gif" width="400"  style="display:block; margin:auto;">
 
-Note that chairs/sculptures/window walls/floor+ceiling are all in pairs so they are rendered as "2 instances" per pair and only cause 1 drawcall per pair. This is the proof of **instancing** being a great practice of optimization.
+Note that chairs/sculptures/window walls/floor+ceiling are all in pairs so they are rendered as "2 instances" per pair and only cause 1 drawcall per pair. This is the proof of **instancing** being a great practice of optimization by saving drawcalls.
 
 Also notice an interesting detail - this pass is using WorldGridMaterial (engine default material) for all the meshes.
 
-Some render passes in the list appear to be empty, like the **ResolveSceneDepth**, which is for
-platforms that actually need “resolving” a rendertarget before using it as a texture. Not applicable in our case.
-<!-- (the PC doesn’t). -->
+<!-- Some render passes in the list appear to be empty, like the **ResolveSceneDepth**, which is for
+platforms that actually need “resolving” a rendertarget before using it as a texture. Not applicable in our case. (the PC doesn’t). -->
 
 # ComputeLightGrid*
 > Responsible for optimizing lighting in forward shading. According to the comment in Unreal’s source code, this pass “culls local lights to a grid in frustum space. Needed for forward shading or translucency using the Surface lighting mode”. In other words: it assigns lights to cells in a grid (shaped like a pyramid along camera view). This operation has a cost of its own but it pays off later, making it faster to determine which lights affect which meshes. [source](https://unrealartoptimization.github.io/book/profiling/passes-lighting/#computelightgrid)
@@ -122,6 +121,8 @@ The term occlusion culling refers to a method that tries to reduce the rendering
 [Source](https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter06.html)
 
 <!-- https://forums.unrealengine.com/development-discussion/vr-ar-development/107536-beginocclusiontests-is-this-something-that-could-take-advantage-of-instanced-stereo -->
+
+The pass starts with 2 ShadowFrustumQueries followed by 1 GroupedQueries and 1 IndividualQueries.
 
 ```c
       |   - BeginOcclusionTests                                                      | 24     | 249.856
@@ -167,7 +168,7 @@ The first group of 2 ShadowFrustumQueries is for 2 movable point lights, so the 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowFrustumQueries.gif" width="400"  style="display:block; margin:auto;">
 
 ## GroupedQueries
-This is for occluded objects. In my scene there is a table mesh behind the wall.
+This is for occluded objects. In my scene there is a table mesh behind the wall got fully occluded so it shows up in this step.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/GroupedQueries.jpg" width="400"  style="display:block; margin:auto;">
 
@@ -177,7 +178,7 @@ This is for all the other objects, and notice occlusion testing is done on bound
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/IndividualQueries.gif" width="400"  style="display:block; margin:auto;">
 
 # BuildHZB
-Generating the Hierarchical Z-Buffer. This takes the depth buffer produced during the Z-prepass as in input and creates a mip chain (i.e. downsamples it successively) of depths.
+This step generate the Hierarchical Z-Buffer. This takes the depth buffer produced during the Z-prepass as in input and creates a mip chain (i.e. downsamples it successively) of depths.
 
 ```c
       |   - BuildHZB(ViewId=0)                                                       | 49     | 207.904
@@ -197,7 +198,7 @@ Generating the Hierarchical Z-Buffer. This takes the depth buffer produced durin
 
 
 # ShadowDepths
-This pass is **only for movable objects** as their shadowing situation should be calculated in realtime. For all the static objects shadows are supposed to be baked in advance to save performance. In this case all the following calculations are done for the rock mesh which is lablled as movable object.
+This pass is **only for movable objects** as their shadowing situation should be calculated in realtime. All the static object shadows are supposed to be baked in advance to save performance. In this case all the following calculations are done for the rock mesh because it's labelled as movable object.
 ```c
       |   - ShadowDepths                                                             | 60     | 997.376
       |    \- Atlas0 2048x2048                                                       | 60     | 112.64
@@ -240,15 +241,15 @@ This pass is **only for movable objects** as their shadowing situation should be
 745   |           - API Calls                                                        | 73     | 0.00
 748   |     - PreshadowCache                                                         | 74     |
 ```
-For 1 directional and 2 stationary lights, the shadow depths are written into Atlas0, one for each.
+For 1 directional and 2 stationary lights, the shadow depths are written into Atlas0. One light source corresponds to one shadow depth map.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths DirectionalStationaryLight.gif" width="400"  style="display:block; margin:auto;">
 
-2 movable lights are treated in a different way. They are using cubemaps to record shadow depths. For each light, firstly CopyCachedShadowMap  outputs a cubemap without movable objects.
+2 movable lights are treated in different way. They are using cubemaps to record shadow depths. For each light, firstly CopyCachedShadowMap outputs a cubemap without movable objects.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths Cubemap NewWorld.PointLight_movable0.gif" width="300"  style="display:block; margin:auto;">
 
-Then unreal adds the movable objects shadow depths into the cubemaps.
+Then Unreal adds the movable objects shadow depths into the cubemaps.
 
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowDepths Cubemap NewWorld.PointLight_movable.gif" width="300"  style="display:block; margin:auto;">
 
@@ -319,7 +320,7 @@ In forward renderer: dynamic lighting -->
 ```
 The **actual materials** on the objects are finally used in rendering: M_Basic_Floor, M_Chair, M_Brick_Clay_Old, M_Statue, M_Rock_Marble_Polished, M_Rock, M_Wood_Walnut, M_Wood_Walnut. **At the result this pass is deeply affected by shader complexity.** Also notice this time drawcalls are per-material rather than per-mesh intance like in Z-prepass. So during content optimization, be aware of the **number of material slots** on the meshes.
 
-Examples of different G-buffer render targets: base color of materials/ normal/ material properties/ baked lightings.
+Examples of different G-buffer render targets: material base color/ normals/ material properties/ baked lightings.
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/g.jpg" width="800"  style="display:block; margin:auto;">
 
 TBC
