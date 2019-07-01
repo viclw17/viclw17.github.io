@@ -1,14 +1,16 @@
 ---
-title: Unreal Frame Breakdown - Part 1
+title: Unreal Frame Breakdown
 date: 2019-06-20
 tags:
 - Unreal
+- Deferred Rendering
+- Rendering Pipeline
 ---
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/frame.jpg" width="640"  style="display:block; margin:auto;">
 <br>
 This is my version of [How Unreal Render One Frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/). I'm trying to follow this post and profile a frame by myself to learn the deferred rendering pipeline of Unreal Engine.
 
-I build this testing scene following the post. Unreal is set to use **deferred shading**. If set to use **forward shading** the profiling results will be extremely different and I will try to go through in another post. The ```umap``` is named as NewWorld in my test. The map contains:
+I build this testing scene following the post. Unreal is set to use **deferred shading**. If set to use **forward shading** the profiling results will be extremely different and I will try to go through in another post. The ```umap``` is named as NewWorld in my test and it contains:
 
 1. 1 directional light, from left-up to right-down
 2. 1 static light, white
@@ -40,14 +42,7 @@ Particle simulation on the GPU (only of **GPU Sprites particle** type). It seems
 148   |     - API Calls                                                              | 6      | 0.00
 ```
 
-This pass takes input textures:
-
-1. texture1 ParticleStatePosition
-2. texture2 ParticleStateVelocity
-3. texture3 ParticleAttributes
-4. etc.
-
-and outputs following 2 **Render Target(RT)**:
+This pass outputs following 2 **Render Target(RT)**:
 
 1. RT0 Particle State Position
 2. RT1 Particle State Velocity
@@ -323,9 +318,30 @@ The **actual materials** on the objects are finally used in rendering: M_Basic_F
 Examples of different G-buffer render targets: material base color/ normals/ material properties/ baked lightings.
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/g.jpg" width="800"  style="display:block; margin:auto;">
 
-TBC
+Note that most of the time different channel of the buffers has different information encoded. We can see the details from the engine code in ```DeferredShadingCommon.ush```:
+```c
+/** Populates OutGBufferA, B and C */
+void EncodeGBuffer(...)
+{
+    ...
+	OutGBufferA.rgb = EncodeNormal( GBuffer.WorldNormal );
+	OutGBufferA.a = GBuffer.PerObjectGBufferData;
 
-<!-- # Velocity
+	OutGBufferB.r = GBuffer.Metallic;
+	OutGBufferB.g = GBuffer.Specular;
+	OutGBufferB.b = GBuffer.Roughness;
+	OutGBufferB.a = EncodeShadingModelIdAndSelectiveOutputMask(GBuffer.ShadingModelID, GBuffer.SelectiveOutputMask);
+
+	OutGBufferC.rgb = EncodeBaseColor( GBuffer.BaseColor );
+	OutGBufferC.a = GBuffer.GBufferAO;
+
+	OutGBufferD = GBuffer.CustomData;
+	OutGBufferE = GBuffer.PrecomputedShadowFactors;
+    ...
+}
+```
+
+# Velocity
 Saving velocity of each vertex (used later by motion blur and temporal anti-aliasing).
 ```c
       |   - RenderVelocities                                                         | 96     | 9.216
@@ -361,6 +377,315 @@ Saving velocity of each vertex (used later by motion blur and temporal anti-alia
 1168  |    \- DrawInstanced(4, 64)                                                   | 108    | 279.552
 1171  |     - API Calls                                                              | 109    | 0.00
 ```
+This pass LightCompositionTasks_PreLighting mainly calculates AmbientOcclusion. It firstly outputs a low-res AO then a high-res AO, and finally apply the result to the scene color.
 <img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao1.jpg" width="400"  style="display:block; margin:auto;">
 
-<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao2.jpg" width="400"  style="display:block; margin:auto;"> -->
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ao2.jpg" width="400"  style="display:block; margin:auto;">
+
+
+
+# Lighting
+Here comes to the big lighting pass. Through this pass Unreal calculates and applys lightings to the scene.
+
+## Non Shadowed Lights
+At first the pass processes **NonShadowedLights**. NonShadowedLights include
+
+1. simple lights such as **per particle lighting**, and
+2. non shadowed normal scene lights.
+
+A difference between the two is that normal scene lights use a **depth bounds test** when rendering, to avoid lighting pixels outside an approximate light volume.
+
+Here in **StandardDeferredSimpleLights**, each DrawIndexed is for each particle light. As we can see they are processed per particle and are pretty expensive. So it's a good idea to avoid using too much per particle lighting.
+
+The lighting is accumulated to the SceneColourDeferred buffer.
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/StandardDeferredSimpleLights.gif" width="400"  style="display:block; margin:auto;">
+
+```c
+      |   - DirectLighting                                                           | 110    | 23271.328
+      |    \- NonShadowedLights                                                      | 110    | 17419.264
+      |      \- BeginRenderingSceneColor                                             | 110    | 0.00
+      |       - StandardDeferredSimpleLights                                         | 111    | 17419.264
+1214  |        \- DrawIndexed(1296)                                                  | 111    | 1810.432
+1223  |         - DrawIndexed(1296)                                                  | 112    | 2066.432
+1232  |         - DrawIndexed(1296)                                                  | 113    | 1979.392
+1241  |         - DrawIndexed(1296)                                                  | 114    | 2081.792
+1250  |         - DrawIndexed(1296)                                                  | 115    | 1941.504
+1259  |         - DrawIndexed(1296)                                                  | 116    | 1825.792
+1268  |         - DrawIndexed(1296)                                                  | 117    | 1940.48
+1277  |         - DrawIndexed(1296)                                                  | 118    | 1861.632
+1286  |         - DrawIndexed(1296)                                                  | 119    | 1911.808
+      |       - StandardDeferredLighting                                             | 120    | 0.00
+      |        \- BeginRenderingSceneColor                                           | 120    | 0.00
+1295  |       - InjectSimpleLightsTranslucentLighting                                | 121    |
+
+      |     - IndirectLighting                                                       | 121    | 0.00
+1299  |      \- UpdateLPVs                                                           | 121    |
+```
+
+## Shadowed Lights
+### Inject Translucent Volume
+Unreal’s approach to lighting translucent surfaces comprises of injecting light into 2 volume textures. The two textures store a **spherical harmonics representation** of the light (shadowed+attenuated) that reaches each volume cell (texture TranslucentVolumeX) and an approximate light direction of each light source (texture TranslucentVolumeDirX).
+
+The renderer maintains 2 sets of such textures **one for close to the camera props**, that require higher resolution lighting, and **one for more distant objects** where high resolution lighting is not that important.
+
+Note that from the previous NonShadowedLights pass, it seems simple lights do not appear to write to the translucency lighting volumes at all, hence **InjectSimpleLightsTranslucentLighting** is empty.
+
+### Shadowed Lights
+This pass is done on each light - 1 directional 2 stationary and 2 movable because they are all casting shadows. For each light this is done with steps:
+
+1. ShadowProjectionOnOpaque
+2. InjectTranslucentVolume
+3. StandardDeferredLighting
+
+```c
+      |     - ShadowedLights                                                         | 121    | 5852.064
+      |      \- NewWorld.DirectionalLight_1                                          | 121    | 933.888
+1306  |        \- ClearRenderTargetView(1.000000, 1.000000, 1.000000, 1.000000)      | 121    | 14.336
+      |         - ShadowProjectionOnOpaque                                           | 122    | 110.592
+      |          \- PreShadow SM_Rock_19                                             | 122    | 51.20
+      |            \- Stencil Mask Subjects                                          | 122    | 21.504
+      |              \- WorldGridMaterial SM_Rock                                    | 122    | 21.504
+1326  |                \- DrawIndexed(3684)                                          | 122    | 21.504
+1351  |             - DrawIndexed(36)                                                | 123    | 29.696
+      |           - PerObject SM_Rock_19                                             | 124    | 59.392
+1364  |            \- DrawIndexed(36)                                                | 124    | 21.504
+1380  |             - DrawIndexed(36)                                                | 125    | 37.888
+1384  |           - API Calls                                                        | 126    | 0.00
+      |         - InjectTranslucentVolume                                            | 127    | 247.808
+1407  |          \- DrawInstanced(4, 64)                                             | 127    | 135.168
+1418  |           - DrawInstanced(4, 64)                                             | 128    | 112.64
+      |         - BeginRenderingSceneColor                                           | 129    | 0.00
+1424  |          \- API Calls                                                        | 129    | 0.00
+      |         - StandardDeferredLighting                                           | 130    | 561.152
+1452  |          \- DrawIndexed(3)                                                   | 130    | 561.152
+
+      |       - NewWorld.PointLight_movable2                                         | 131    | 1443.84
+      |        \- ClearQuad                                                          | 131    | 67.584
+1475  |          \- Draw(4)                                                          | 131    | 67.584
+1477  |           - API Calls                                                        | 132    | 0.00
+      |         - ShadowProjectionOnOpaque                                           | 133    | 488.448
+1505  |          \- DrawIndexed(1296)                                                | 133    | 441.344
+      |           - InjectTranslucentVolume                                          | 134    | 47.104
+1530  |            \- DrawInstanced(4, 7)                                            | 134    | 29.696
+1541  |             - DrawInstanced(4, 3)                                            | 135    | 17.408
+1543  |             - API Calls                                                      | 136    | 0.00
+      |         - BeginRenderingSceneColor                                           | 137    | 0.00
+1549  |          \- API Calls                                                        | 137    | 0.00
+      |         - StandardDeferredLighting                                           | 138    | 887.808
+1577  |          \- DrawIndexed(1296)                                                | 138    | 887.808
+
+      |       - NewWorld.PointLight_movable1                                         | 139    | 1415.168
+                ...
+
+      |       - NewWorld.PointLight_stationary1                                      | 147    | 956.416
+      |        \- ClearQuad                                                          | 147    | 61.44
+1725  |          \- Draw(4)                                                          | 147    | 61.44
+1727  |           - API Calls                                                        | 148    | 0.00
+      |         - ShadowProjectionOnOpaque                                           | 149    | 88.064
+      |          \- PreShadow SM_Rock_19                                             | 149    | 50.176
+      |            \- Stencil Mask Subjects                                          | 149    | 19.456
+      |              \- WorldGridMaterial SM_Rock                                    | 149    | 19.456
+1749  |                \- DrawIndexed(3684)                                          | 149    | 19.456
+1774  |             - DrawIndexed(36)                                                | 150    | 30.72
+      |           - PerObject SM_Rock_19                                             | 151    | 37.888
+1787  |            \- DrawIndexed(36)                                                | 151    | 13.312
+1803  |             - DrawIndexed(36)                                                | 152    | 24.576
+1807  |           - API Calls                                                        | 153    | 0.00
+      |         - InjectTranslucentVolume                                            | 154    | 46.08
+1830  |          \- DrawInstanced(4, 7)                                              | 154    | 29.696
+1841  |           - DrawInstanced(4, 3)                                              | 155    | 16.384
+      |         - BeginRenderingSceneColor                                           | 156    | 0.00
+1847  |          \- API Calls                                                        | 156    | 0.00
+      |         - StandardDeferredLighting                                           | 157    | 760.832
+1874  |          \- DrawIndexed(1296)                                                | 157    | 760.832
+
+      |       - NewWorld.PointLight_stationary2                                      | 158    | 1102.752
+                ...
+
+      |   - FilterTranslucentVolume 64x64x64 Cascades:2                              | 170    | 558.08
+2075  |    \- DrawInstanced(4, 64)                                                   | 170    | 280.576
+2087  |     - DrawInstanced(4, 64)                                                   | 171    | 277.504
+2090  |     - API Calls                                                              | 172    | 0.00
+```
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ShadowedLights.jpg" width="800"  style="display:block; margin:auto;">
+
+As a final step the translucency lighting volumes (for both cascades) are filtered in **FilterTranslucentVolume** to suppress aliasing when lighting translucent props/effects.
+
+# Reflection
+Here Unreal calculates and applies reflections. ScreenSpaceReflections takes Hi-Z buffer to speed up raymarching intersection calculation - for rougher surface using low mip and for more reflective surface using high mip for better reflection.
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ScreenSpaceReflections.jpg" width="400"  style="display:block; margin:auto;">
+
+Then ReflectionEnvironmentAndSky takes environment reflection captures into consideration. The environment reflection probes are generated during game startup and they only capture static geometry. The captured reflections are stored in a mipmapped cubemap per probe.
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ReflectionEnvironmentAndSky.jpg" width="400"  style="display:block; margin:auto;">
+
+```c
+      |   - ScreenSpaceReflections 1916x1014                                         | 173    | 712.704
+2095  |    \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)          | 173    | 13.312
+2123  |     - DrawIndexed(3)                                                         | 174    | 699.392
+2126  |     - API Calls                                                              | 175    | 0.00
+
+      |   - ReflectionEnvironmentAndSky                                              | 176    | 2372.64
+      |    \- BeginRenderingSceneColor                                               | 176    | 0.00
+2133  |      \- API Calls                                                            | 176    | 0.00
+2163  |     - DrawIndexed(6)                                                         | 177    | 2372.64
+      |     - ResolveSceneColor                                                      | 178    | 0.00
+2168  |      \- API Calls                                                            | 178    | 0.00
+
+2170  |   - ResolveSceneColor                                                        | 179    |
+2172  |   - CompositionAfterLighting                                                 | 179    |
+      |   - BeginRenderingSceneColor                                                 | 179    | 0.00
+2179  |    \- API Calls                                                              | 179    | 0.00
+```
+
+# Atmosphere and Fog
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/ExponentialHeightFog.jpg" width="400"  style="display:block; margin:auto;">
+
+```c
+      |   - Atmosphere 1916x1014                                                     | 180    | 561.152
+2200  |    \- DrawIndexed(6)                                                         | 180    | 561.152
+2202  |     - API Calls                                                              | 181    | 0.00
+      |   - BeginRenderingSceneColor                                                 | 182    | 0.00
+2208  |    \- API Calls                                                              | 182    | 0.00
+
+      |   - ExponentialHeightFog 1916x1014                                           | 183    | 972.768
+2229  |    \- DrawIndexed(6)                                                         | 183    | 972.768
+2231  |     - API Calls                                                              | 184    | 0.00
+
+      |   - GPUParticles_PostRenderOpaque                                            | 185    | 23.52
+      |    \- GPUParticles_SimulateAndClear                                          | 185    | 16.352
+      |      \- ParticleSimulationCommands                                           | 185    | 16.352
+      |        \- ParticleSimulation                                                 | 185    | 16.352
+2275  |          \- DrawIndexed(48)                                                  | 185    | 16.352
+2281  |           - API Calls                                                        | 186    | 0.00
+      |     - ParticleSimulation                                                     | 187    | 7.168
+2298  |      \- DrawIndexed(48)                                                      | 187    | 7.168
+2306  |       - API Calls                                                            | 188    | 0.00
+```
+Note that here we have another particle pass GPUParticles_PostRenderOpaque.
+
+
+# Translucency
+From here the engine finally starts to process the translucent objects in my case the 2 sculptures and the fire particles.
+
+Transparent props are affected by the **local and directional lights, environmental reflections, fog etc**. By default, the renderer uses a high quality shader to render
+
+1. transparent props which samples
+2. the atmospheric simulation precomputed textures,
+3. baked lightmap data,
+4. the translucency lighting volumes which contain lighting from the directional and
+5. local lights and
+6. the reflection probe cubemaps and uses them to calculate lighting.
+
+Lots of previous rendering data are needed at this stage for translucency rendering which is why translucency is expensive.
+
+```c
+      |   - Translucency                                                             | 189    | 158.752
+      |    \- BeginRenderingSceneColor                                               | 189    | 0.00
+2316  |      \- API Calls                                                            | 189    | 0.00
+2328  |     - Draw(4)                                                                | 190    | 52.224
+      |     - M_StatueGlass None 2 instances                                         | 191    | 106.528
+2378  |      \- DrawIndexedInstanced(9768, 2)                                        | 191    | 106.528
+2382  |       - API Calls                                                            | 192    | 0.00
+
+      |   - Translucency                                                             | 193    | 599.04
+      |    \- BeginSeparateTranslucency                                              | 193    | 12.288
+2392  |      \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 1.000000)        | 193    | 12.288
+2395  |       - API Calls                                                            | 194    | 0.00
+      |     - M_Fire_SubUV P_Fire 4 instances                                        | 195    | 71.712
+2421  |      \- DrawIndexedInstanced(6, 4)                                           | 195    | 71.712
+      |     - M_Fire_SubUV P_Fire 5 instances                                        | 196    | 51.168
+2428  |      \- DrawIndexedInstanced(6, 5)                                           | 196    | 51.168
+      |     - M_smoke_subUV P_Fire 5 instances                                       | 197    | 304.128
+2451  |      \- DrawIndexedInstanced(6, 5)                                           | 197    | 304.128
+      |     - M_Radial_Gradient P_Fire 5 instances                                   | 198    | 50.176
+2471  |      \- DrawIndexedInstanced(96, 5)                                          | 198    | 50.176
+      |     - M_Radial_Gradient P_Fire 2 instances                                   | 199    | 42.976
+2478  |      \- DrawIndexedInstanced(96, 2)                                          | 199    | 42.976
+      |     - M_Heat_Distortion P_Fire 5 instances                                   | 200    | 66.592
+2494  |      \- DrawIndexedInstanced(6, 5)                                           | 200    | 66.592
+2498  |       - API Calls                                                            | 201    | 0.00
+2499  |     - ResolveSeparateTranslucency                                            | 202    |
+```
+
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/Translucency.gif" width="400"  style="display:block; margin:auto;">
+
+# Distortion
+Both transparent props and particles (that are set to refract) are rendered again to write out a full resolution buffer with the **distortion vectors** that will later be used to calculate refractio. The stencil buffer is also active during that pass to mark the pixels that need refracting.
+
+```c
+      |   - Distortion                                                               | 202    | 204.864
+      |    \- DistortionAccum                                                        | 202    | 148.544
+2508  |      \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)        | 202    | 6.112
+      |       - M_StatueGlass SM_Statue                                              | 203    | 38.944
+2537  |        \- DrawIndexed(9768)                                                  | 203    | 38.944
+      |       - M_StatueGlass SM_Statue                                              | 204    | 29.728
+2541  |        \- DrawIndexed(9768)                                                  | 204    | 29.728
+      |       - M_Heat_Distortion P_Fire 5 instances                                 | 205    | 73.76
+2559  |        \- DrawIndexedInstanced(6, 5)                                         | 205    | 73.76
+      |     - DistortionApply                                                        | 206    | 56.32
+2585  |      \- DrawIndexed(3)                                                       | 206    | 40.96
+2601  |       - DrawIndexed(3)                                                       | 207    | 15.36
+2603  |       - API Calls                                                            | 208    | 0.00
+
+      |   - ResolveSceneColor                                                        | 209    | 0.032
+2608  |    \- API Calls                                                              | 209    | 0.032
+
+```
+<img src="{{ site.url }}/images/2019-06-20-unreal-frame-breakdown-part-1/Distortion.jpg" width="400"  style="display:block; margin:auto;">
+
+# PostProcessing
+At this stage the renderer applies temporal antialiasing, motion blur, auto exposure calculations, bloom and tonemapping etc. to the main rendertarget.
+```c
+      |   - PostProcessing                                                           | 210    | 3801.056
+      |    \- BokehDOFRecombine#2 1916x1014                                          | 210    | 489.44
+2627  |      \- Draw(10)                                                             | 210    | 8.192
+2644  |       - DrawIndexed(3)                                                       | 211    | 481.248
+2646  |       - API Calls                                                            | 212    | 0.00
+      |     - TAA Main PS 1916x1014                                                  | 213    | 1119.232
+2677  |      \- DrawIndexed(3)                                                       | 213    | 1039.36
+2689  |       - DrawIndexed(3)                                                       | 214    | 79.872
+2691  |       - API Calls                                                            | 215    | 0.00
+      |     - VelocityFlattenCS 1916x1014                                            | 216    | 562.176
+2701  |      \- Dispatch(120, 64, 1)                                                 | 216    | 562.176
+2705  |       - API Calls                                                            | 217    | 0.00
+      |     - VelocityGatherCS 1916x1014                                             | 218    | 44.032
+2713  |      \- Dispatch(8, 4, 1)                                                    | 218    | 44.032
+2716  |       - API Calls                                                            | 219    | 0.00
+      |     - MotionBlur 1916x1014                                                   | 220    | 348.128
+2735  |      \- DrawIndexed(3)                                                       | 220    | 348.128
+      |     - Downsample 958x507                                                     | 221    | 156.672
+2741  |      \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)        | 221    | 5.088
+2752  |       - DrawIndexed(3)                                                       | 222    | 151.584
+      |     - PostProcessHistogram                                                   | 223    | 137.216
+2760  |      \- Dispatch(15, 16, 1)                                                  | 223    | 137.216
+2763  |       - API Calls                                                            | 224    | 0.00
+      |     - PostProcessHistogramReduce                                             | 225    | 37.888
+2777  |      \- DrawIndexed(3)                                                       | 225    | 37.888
+      |     - PostProcessEyeAdaptation                                               | 226    | 35.808
+2791  |      \- DrawIndexed(3)                                                       | 226    | 35.808
+      |     - Downsample 479x254                                                     | 227    | 17.408
+2797  |      \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)        | 227    | 0.992
+2807  |       - DrawIndexed(3)                                                       | 228    | 16.416
+            ...
+      |     - PostProcessWeightedSampleSum#32Horizontal 15x16 in 15x16               | 237    | 20.448
+2880  |      \- DrawIndexed(3)                                                       | 237    | 20.448
+      |     - PostProcessWeightedSampleSum#32Vertical 30x16 in 30x16                 | 238    | 14.336
+2894  |      \- DrawIndexed(3)                                                       | 238    | 14.336
+            ...
+      |     - PostProcessCombineLUTs [1] 32x32x32                                    | 249    | 65.536
+3072  |      \- DrawInstanced(4, 32)                                                 | 249    | 65.536
+      |     - Tonemapper(PS GammaOnly=0 HandleScreenPercentage=0) 1916x1014          | 250    | 383.04
+3078  |      \- ClearRenderTargetView(0.000000, 0.000000, 0.000000, 0.000000)        | 250    | 8.224
+3104  |       - DrawIndexed(3)                                                       | 251    | 374.816
+
+3107  |       - End of Frame                                                         | 252    | 0.00
+```
+
+# Wrap up
+Following the post [How Unreal Render One Frame](https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/) I set up my own scene and did this frame capture with RenderDoc, just trying to varify the results for future reference. I will keep coming back here to add more of my own insights about the rendering pipeline.
+
+END
