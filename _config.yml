@@ -223,8 +223,8 @@ social_icons:
   enable: true
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
-  Twitter: twitter
-  Instagram: instagram
+  # Twitter: twitter
+  # Instagram: instagram
   LinkedIn: linkedIn
   GitHub: github
   ArtStation: paint-brush

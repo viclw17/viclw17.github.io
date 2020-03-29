@@ -16,7 +16,7 @@ I enjoy creating and optimizing shaders, visual effects and art/pipeline tools f
 
 <!-- [comment]: I have been always fascinated by the rationality in mathematics and programming, and I enjoy using them as tools to discover how things work and solve problems. I also appreciate the craftmanship and creativity in arts and design, and and I am willing to interpret visual through programming and to bridge the gap between art and technology. -->
 
-Currently working on VR game <a href="https://evasionvrgame.com/" target="_blank">Evasion</a> at <a href="http://archiactinteractive.com" target="_blank">Archiact Interactive</a>.
+<!-- Currently working on VR game <a href="https://evasionvrgame.com/" target="_blank">Evasion</a> at <a href="http://archiactinteractive.com" target="_blank">Archiact Interactive</a>. -->
 
 ## Skills:
 
