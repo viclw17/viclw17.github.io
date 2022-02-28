@@ -5,6 +5,7 @@
 .container {
   margin-left: auto;
   margin-right: auto;
+  // content width
   width: 615px;
 }
 
@@ -42,7 +43,24 @@
 }
 
 .header-subtitle {
+  padding-left: 10px;
   color: $light-gray-color;
+}
+
+.header-img {
+  // display: block;
+  
+  width: 48px;
+  height: 48px;
+
+  margin: 0 auto;
+  margin-bottom: -0.5rem; // move logo down a bit
+
+  // border-width: 1px; 
+  // border-style: solid;
+  // border-radius: 0px;
+
+
 }
 
 /*
@@ -82,6 +100,10 @@
     margin-bottom: 5px;
   }
 }
+
+
+
+
 
 /*
   Footer

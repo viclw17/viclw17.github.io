@@ -1,8 +1,6 @@
 # Victor's blog
 [1000 Forms Of Bunnies](http://viclw17.github.io/)
 
-<img src="https://raw.githubusercontent.com/viclw17/viclw17.github.io/master/index.jpg" width="512"/>
-
 ## Blog Tools
 [Gif Optimization](https://ezgif.com/)
 
