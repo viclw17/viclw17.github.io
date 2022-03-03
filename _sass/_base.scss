@@ -3,7 +3,9 @@
 */
 
 body {
-  font-family: $serif-font-family;
+  // font-family: $serif-font-family;
+  font-family: $sans-serif-font-family;
+
   font-size: 18px;
   color: $body-color;
   line-height: 1.75rem;
@@ -24,6 +26,7 @@ h1{ // main title
   font-size: 2rem;
   font-family: $sans-serif-font-family;
   color: $dark-gray-color;
+  // padding-top: 0rem;
 }
 
 h1 a {
