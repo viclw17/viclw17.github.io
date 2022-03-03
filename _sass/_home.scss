@@ -3,7 +3,7 @@
 */
 
 .posts-container {
-  margin-bottom: 5rem;
+  margin-bottom: 4rem; // 5
   padding: 0px;
   list-style: none;
 }
@@ -14,7 +14,7 @@
 
 .thumbnail-container {
   max-width: 100%;
-  overflow: hidden;
+  overflow: auto; // hidden
   border-radius: 5px;
   margin-bottom: 25px;
 }

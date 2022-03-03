@@ -47,14 +47,14 @@
   color: $light-gray-color;
 }
 
+// LOGO
 .header-img {
   // display: block;
-
   width: 48px;
   height: 48px;
-
+  
   margin: 0 auto;
-  margin-right: 0.25rem;
+  margin-right: -0.25rem;
   margin-bottom: -0.5rem; // move logo down a bit
 
   // border-width: 1px; 
@@ -101,10 +101,6 @@
     margin-bottom: 5px;
   }
 }
-
-
-
-
 
 /*
   Footer
