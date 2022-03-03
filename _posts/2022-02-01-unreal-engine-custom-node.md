@@ -11,7 +11,7 @@ image: 2022-02-01-unreal-engine-custom-node/cover.png
 
 Recently I've been playing with raymarching technique and trying to implement it in Unreal Engine material editor. As the algorithm requires a **for loop** meaning it can only be done using HLSL code with the Custom Node.
 
-There are many pitfalls using custom node especially when the code is getting complex. The **details panel code editor** is very primitive so we want to edit the code over in like **VSCode**; also more options added into the panel and I barely used before -- here I documented some of my research and tests for future reference.
+There are many pitfalls using custom node especially when the code is getting complex. The **details panel code editor** is very primitive so we want to edit the code over in like **VSCode**; also more options added into the panel and I barely used before -- here I documented some of my **research and tests** for future reference.
 
 ## New custom node options
 An example:
@@ -22,20 +22,24 @@ An example:
 
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/1_viz.jpg" width="480"  style="display:block; margin:auto;">
 
-Here is one test with generated code below. (See the generated code at **Window -> HLSL Code** in the Material Editor.)
+Here is the generated code below. (See the generated code at **Window -> HLSL Code** in the Material Editor.) Note that ```FMaterialPixelParameters Parameters``` got passed in by the compiler as an additional secret input.
 
 ```hlsl
 #ifndef additional_defines
 #define additional_defines 42
 #endif//additional_defines
-MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters,MaterialFloat input, inout MaterialFloat a, inout MaterialFloat b)
+MaterialFloat3 CustomExpression0(
+  FMaterialPixelParameters Parameters,
+  MaterialFloat input, 
+  inout MaterialFloat a, 
+  inout MaterialFloat b)
 {
 a = input;
 b = a+1;
 return b;
 }
 ```
-> It’s super helpful in troubleshooting because you can also see all of the auto-generated boilerplate code that gets included in the final shader. You can also look at the code at ```C:\Program Files\Epic Games\UE_4.27\Engine\Shaders``` - lots of good stuff in there. 
+> This is super helpful in troubleshooting because you can see all of the auto-generated boilerplate code that gets included in the final shader. You can also look at the code at ```C:\Program Files\Epic Games\UE_4.27\Engine\Shaders``` - lots of good stuff in there. 
 
 ^ More digging in next post! :)
 
@@ -51,45 +55,51 @@ MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters)
 Based on this a hack can be done by type in code like this:
 
 ```hlsl
-  return 1;
-}
+//MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters)
+//{
+    return 1;
+  }
 
-float MyGlobalVariable;
+  float MyGlobalVariable;
 
-float MyGlobalFunction(float a)
-{
-  return a;
+  float MyGlobalFunction(float a)
+  {
+    return a;
+//}
 ```
 
-The trick on curly brackets breaks down the function and defined MyGlobalVariable and MyGlobalFunction() in the global namespace. (Hacky but cool!)
+You can see the trick on curly brackets breaks down the function and defined MyGlobalVariable and MyGlobalFunction() in the global namespace. (Hacky but cool!)
 
 
 ## #include shader code
 ### Issues
-Obviously we want to use the **Include File Paths** option in details panel. But this easily triggers some errors like:
+Obviously we want to use the **Include File Paths** option in details panel. But this easily triggers some errors like (say you put your shader at a dummy path ```/Project/a.usf```):
+
+<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_error.jpg"  style="display:block; margin:auto;">
 
 ```
-[SM5] Can't map virtual shader source path "/test/a.usf".
+[SM5] Can't map virtual shader source path "/Project/a.usf".
 Directory mappings are:
   /Engine -> D:/Program Files/Epic Games/UE_4.27/Engine/Shaders
-  ...
-[SM5] /Engine/Generated/Material.ush(2083): error: Can't open include file "/test/a.usf"
-    #include "/test/a.usf"
-    from /Engine/Private/BasePassVertexCommon.ush: 15:    #include "/Engine/Generated/Material.ush"
-    from /Engine/Private/BasePassVertexShader.usf: 7:    #include "BasePassVertexCommon.ush"
-    from /Engine/Private/BasePassPixelShader.usf: 38:    #include "/Engine/Generated/Material.ush"
-    from /Engine/Private/DebugViewModeVertexShader.usf: 28:    #include "/Engine/Generated/Material.ush"
+[SM5] /Engine/Generated/Material.ush(2080): error: Can't open include file "/Project/a.usf"
+  #include "/Project/a.usf"
+  from /Engine/Private/BasePassVertexCommon.ush: 15:    #include "/Engine/Generated/Material.ush"
+  from /Engine/Private/BasePassVertexShader.usf: 7:    #include "BasePassVertexCommon.ush"
+  from /Engine/Private/BasePassPixelShader.usf: 38:    #include "/Engine/Generated/Material.ush"
+[SM5] 1 error in preprocessor.
 ```
 
-UE is expecting you putting custom node hlsl code (.usf or .ush) at engine source ```/Engine -> D:/Program Files/Epic Games/UE_4.27/Engine/Shaders``` folder which is not very convenient - what if I want my shader ship with my project?
+UE is expecting you putting custom node hlsl code (.usf or .ush) at ```/Engine -> D:/Program Files/Epic Games/UE_4.27/Engine/Shaders```  which is not very convenient - what if I want my shader shipped with my project?
 
 
 ### Modify C++ Code
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_cpp.jpg" style="display:block; margin:auto;">
 
-Convert current project into C++ project by creating a new C++ class and compile. You may need to right click the ```.uproject``` file icon and and **Generate Visual Studio Project** Files for the project to load correctly into Visual Studio and compile.
+Convert current project into C++ project by creating a new dummy C++ class and compile(I created one called MyActor inherited from Actor base class.). 
 
-Create a folder called ```Shader``` at the same level as Content folder in the project directory.
+You may need to right click the ```.uproject``` file icon and and **Generate Visual Studio Project** Files for the project to load correctly into Visual Studio and compile.
+
+Create a folder called ```Shaders``` at the **same level as Content folder in the project directory**.
 
 Add ```RenderCore``` to array of public dependency modules in the ```<project>.build.cs``` file:
 
@@ -158,18 +168,46 @@ IMPLEMENT_PRIMARY_GAME_MODULE(FShaderBitsModule, Project, "Project"); // edit th
 ```
 
 ### Include shader code
-Then you can include the shader file from your ```/<Project>/Shaders``` folder by doing:
+Then you can create your shaders at ```/<Project>/Shaders``` like:
 
-<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_inc.jpg" width="600"  style="display:block; margin:auto;">
+ <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_inc3.jpg"  style="display:block; margin:auto;">
 
-Note that you need the ```return 1;```. 
+and include the shader file:
 
-Or using the panel, then you need to call the function explicitly:
+<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_inc2.jpg"  style="display:block; margin:auto;">
 
-<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_inc2.jpg" width="600"  style="display:block; margin:auto;">
+Note that you may need to call the function explicitly.
+
+Or you can include directly in the code block:
+
+```hlsl
+#include "/Project/ShaderPathTest/MyShaderStatement.usf"
+return 1;
+```
+
+<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_inc.jpg"  style="display:block; margin:auto;">
+
+Note that you need the ```return 1;``` in this case to let the compiler know it is a valid function.
+
+Check the generated code you will see the difference in nuance:
+
+```hlsl
+MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters,MaterialFloat4 SceneTexture)
+{
+#include "/Project/ShaderPathTest/MyShaderStatement.usf"
+return 1;
+}
+```
+
+```hlsl
+#include "/Project/ShaderPathTest/MyShaderFunction.usf"
+MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters,MaterialFloat4 SceneTexture)
+{
+return func(SceneTexture,Parameters);;
+}
+```
 
 Then after editing code in external editor and save, in the material editor **add a newline to the code (shift-enter)** to trigger a recomplie and click the Apply button.
-
 
 
 ## Define Multiple Functions inside UE4’s Custom Node
