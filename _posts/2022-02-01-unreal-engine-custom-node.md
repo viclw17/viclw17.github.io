@@ -9,11 +9,12 @@ image: 2022-02-01-unreal-engine-custom-node/cover.png
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/cover.png">
 <br>
 
-Recently I've been playing with raymarching technique and trying to implement it in Unreal Engine material editor. As the algorithm requires a for loop this means it can only be done using HLSL code with the Custom Node.
+Recently I've been playing with raymarching technique and trying to implement it in Unreal Engine material editor. As the algorithm requires a **for loop** meaning it can only be done using HLSL code with the Custom Node.
 
-There are many pitfalls using custom node especially when the code is getting complex. The details panel code editor is very primitive so we want to edit the code over in like VSCode; more options added into the panel and I barely used before -- here I documented some of my test for future reference.
+There are many pitfalls using custom node especially when the code is getting complex. The **details panel code editor** is very primitive so we want to edit the code over in like **VSCode**; also more options added into the panel and I barely used before -- here I documented some of my research and tests for future reference.
 
 ## New custom node options
+An example:
 
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/1_panel.jpg" width="480"  style="display:block; margin:auto;">
 
@@ -21,7 +22,7 @@ There are many pitfalls using custom node especially when the code is getting co
 
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/1_viz.jpg" width="480"  style="display:block; margin:auto;">
 
-Here is one test with generated code below. (See the generated code by looking in Window -> HLSL Code in the Material Editor.)
+Here is one test with generated code below. (See the generated code at **Window -> HLSL Code** in the Material Editor.)
 
 ```hlsl
 #ifndef additional_defines
@@ -34,12 +35,12 @@ b = a+1;
 return b;
 }
 ```
-> It’s super helpful in troubleshooting because you can also see all of the auto-generated boilerplate code that gets included in the final shader. You can also look at the code at C:\Program Files\Epic Games\UE_4.27\Engine\Shaders - lots of good stuff in there. 
+> It’s super helpful in troubleshooting because you can also see all of the auto-generated boilerplate code that gets included in the final shader. You can also look at the code at ```C:\Program Files\Epic Games\UE_4.27\Engine\Shaders``` - lots of good stuff in there. 
 
-More digging in next post! :)
+^ More digging in next post! :)
 
 ## Creating Global Functions (Hacks!)
-The compiler will literally copy-paste the text in a Custom node into a function called CustomExpressionX like:
+The compiler will literally copy-paste the text in a Custom node into a function called ```CustomExpressionX``` like:
 
 ```hlsl
 MaterialFloat3 CustomExpression0(FMaterialPixelParameters Parameters)
@@ -80,15 +81,15 @@ Directory mappings are:
     from /Engine/Private/DebugViewModeVertexShader.usf: 28:    #include "/Engine/Generated/Material.ush"
 ```
 
-UE is expecting you putting custom node hlsl code (in file .usf or .ush) at engine source Shader folder which is not very convenient - what if I want my shader ship with my project?
+UE is expecting you putting custom node hlsl code (.usf or .ush) at engine source ```/Engine -> D:/Program Files/Epic Games/UE_4.27/Engine/Shaders``` folder which is not very convenient - what if I want my shader ship with my project?
 
 
 ### Modify C++ Code
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/2_cpp.jpg" style="display:block; margin:auto;">
 
-Convert current project into C++ project by creating a new C++ class and compile You may need to right click the .uproject file icon and and Generate Visual Studio Project Files for the project to load correctly into Visual Studio and compile.
+Convert current project into C++ project by creating a new C++ class and compile. You may need to right click the ```.uproject``` file icon and and **Generate Visual Studio Project** Files for the project to load correctly into Visual Studio and compile.
 
-Create a folder called Shader at the same level as Content folder in the project directory.
+Create a folder called ```Shader``` at the same level as Content folder in the project directory.
 
 Add ```RenderCore``` to array of public dependency modules in the ```<project>.build.cs``` file:
 
@@ -114,7 +115,7 @@ public class ShaderBits : ModuleRules
 	}
 ```
 
-In ```<project_name>.h``` file add a new module with a StartupModule function overrides:
+In ```<project_name>.h``` file add a new module with a ```StartupModule()``` function overrides:
 
 ```c
 #pragma once
@@ -129,12 +130,9 @@ public:
 };
 ```
 
-In ```<project_name>.cpp```, add the StartupModule override With the definition of the added shaders path, and mapping this new path as “/Project”.
+In ```<project_name>.cpp```, add the ```StartupModule()``` override With the definition of the added shaders path, and mapping this new path as ```/Project```.
 
-Lastly in macro ```IMPLEMENT_PRIMARY_GAME_MODULE``` replace ```FDefaultGameModuleImpl``` with our ```FShaderBitsModule```.
-Notes:
-a. We must include “Misk/Paths”
-b. Note that the addition of this folder mapping is restricted to versions 4.22 and higher via a compiler directive condition. for version 4.21, you should state “ENGINE_MINOR_VERSION >= 21:
+Lastly in macro ```IMPLEMENT_PRIMARY_GAME_MODULE``` replace ```FDefaultGameModuleImpl``` with ```FShaderBitsModule```.
 
 
 ```c
@@ -176,7 +174,7 @@ Then after editing code in external editor and save, in the material editor **ad
 
 ## Define Multiple Functions inside UE4’s Custom Node
 
-CustomExpression nodes wrap your code inside CustomExpression#() functions, and that normally prohibits defining your own functions.
+Custom nodes wrap your code inside ```CustomExpression#()``` functions, and that normally prohibits defining your own functions.
 
 However, there seems to be a barely documented feature in HLSL that allows defining functions (methods) inside ```struct``` definitions. **struct definitions can be nested inside functions**.
 
@@ -196,7 +194,9 @@ Functions f;
 return f.Out();
 ```
 
-The cool part is, this is all happening inside your own effective namespace, not interfering with Unreal’s USF files, and the compilation is Fast for iteration. So now, you can start to build a library of custom functions, and more complex shaders. 
+The cool part is, this is all happening inside your own effective namespace, not interfering with Unreal’s USF files, and the compilation is Fast for iteration. 
+
+So now, you can start to build a library of custom functions, and more complex shaders. 
 
 It seems HLSL is prohibiting defining a struct nested inside a struct, so make sure to define your custom structs above and outside struct Functions.
 
