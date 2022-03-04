@@ -1,10 +1,10 @@
 ---
-title: Simplified PBR Shading Model for Unreal
+title: Simplified PBR Shading Model for Unreal Part 1
 layout: post
-image: 2019-06-15-PBR_note/pbr-unreal.jpg
+image: 2019-06-15-simplified-pbr-shading-model-for-unreal-part-1/pbr-unreal.jpg
 ---
 
-<img src="{{ site.url }}/images/2019-06-15-PBR_note/pbr-unreal.jpg" width="640"  style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2019-06-15-simplified-pbr-shading-model-for-unreal-part-1/pbr-unreal.jpg" width="640"  style="display:block; margin:auto;">
 <br>
 To get ready for the comming project, I am looking into an customized shading model for the base material - the one with a minimal implementation of PBR and without any unnecessary built-in features for a better rendering performance. After digging into the PBR theories as well as [this](https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf) amazing article spacific about PBR in Unreal Engine, I finally pieced up the puzzle of the basic shading model.
 
