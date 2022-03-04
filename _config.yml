@@ -11,12 +11,12 @@
 #   sort_reverse: true
 
 # jekyll-paginate configuration
-paginate:            5
+paginate:            8
 
 # Build settings
 markdown:            kramdown
 highlighter:         rouge
-permalink:           /:title
+permalink:           /:year/:month/:day/:title
 plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
