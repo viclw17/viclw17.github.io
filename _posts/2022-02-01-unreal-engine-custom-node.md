@@ -4,8 +4,6 @@ layout: post
 image: 2022-02-01-unreal-engine-custom-node/cover.png
 ---
 
-<!-- Recently I've been helping my team porting some shadertoy code over to Unreal Engine. -->
-
 <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/cover.png">
 <br>
 
