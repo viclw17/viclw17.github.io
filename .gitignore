@@ -1,4 +1,6 @@
 _site/*
+draft/*
+
 _theme_packages/*
 .sass-cache/*
 .jekyll-cache/
