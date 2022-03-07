@@ -108,9 +108,11 @@ Texture sampling:
 > Direct3D 10 uses templated texture objects instead. Here is an example of the equivalent texture operation.
 > ```Output.RGBColor = g_MeshTexture.Sample(MeshTextureSampler, In.TextureUV) * In.Diffuse;```
 
+> [[UE4 Quick Tip] Sampling Textures in Custom Nodes](http://oliverm-h.blogspot.com/2014/12/ue4-quick-tip-sampling-textures-in.html)
+
 Note that in Unreal each texture object **Tex** will automatically define a correponding sampler called **TexSampler**, just add "Sampler" behind the texture obj name. And it has to be explicitly passed into the function call as in ```Tex.Sample(TexSampler, UV)```.
 
-Here [```textureGrad()```](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/textureGrad.xhtml) need to be replaced by ```Tex.SampleGrad(TexSampler, float2, float2, float2)``` (alternative [```tex2Dgrad```](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-tex2dgrad))
+Here [```textureGrad()```](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/textureGrad.xhtml) need to be replaced by ```Tex.SampleGrad(TexSampler, UVs, ddx(UVs), ddy(UVs));``` (alternative [```tex2Dgrad```](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-tex2dgrad))
 
 ### Syntax
 Note that in GLSL you can initialize vecter with all elements in same value like ```vec2(1.)``` ( aka ```vec2(1., 1.)```) but in HLSL you cannot. quick hack is to do ```(1.).xx``` for initializing ```float2(1., 1.).```
