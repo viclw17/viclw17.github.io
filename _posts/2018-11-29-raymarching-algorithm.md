@@ -1,16 +1,15 @@
 ---
-title: Raymarching Algorithm
+title: Raymarching and Raytracing Algorithm
 layout: post
 image: 2018-11-29-raymarching-algorithm/raymarching-0.png
 ---
 
 <img src="{{ site.url }}/images/2018-11-29-raymarching-algorithm/raymarching-0.png" width="640"  style="display:block; margin:auto;">
-<!-- <figcaption style="text-align: center;">Continue on the previous post - more about my Siggraph 2018 journey. </figcaption> -->
 <br>
 
-[Shadertoy](https://www.shadertoy.com/view/4dKyRz) is an amazing place to see all sorts of creative shader demos and get inspired. I learned most of the shaders there which depict certain 3D geometries - simple or extremely complex (could also be procedurally generated) - are drawn using **raymarching algorithm**.
+[Shadertoy](https://www.shadertoy.com/view/4dKyRz) is an amazing place to see all sorts of creative shader demos and get inspired. I noticed that most of the shaders there that depict certain 3D geometries - simple or extremely complex - are drawn using **raymarching algorithm**.
 
-At first the algorithm sounds kind of magical, and the similarity of its name comparing with raytracing algorithm keeps me wondering. This time I want to dig deeper about it and get it documented for future reference.
+At first the algorithm sounds kind of magical, and the similarity of its name to *raytracing* keeps me wondering the difference. This time I want to dig deeper about it and get it documented for future reference.
 
 ---
 
@@ -96,6 +95,8 @@ float cubeSDF(vec3 p) {
 ```
 ### More SDF examples
 Inigo Quilez's blog post - [distance functions](http://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
+
+---
 
 # Raymarching Algorithm
 Now we can describe 3D objects using SDF which returns signed distance between any point and 3D surface. To render them we will be using raymarching algorithm. From here I'm mainly citing Jamie Wong’s amazing blog post - [Ray Marching and Signed Distance Functions](http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/).
