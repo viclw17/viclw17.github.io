@@ -168,8 +168,8 @@ Then you will have something like this:
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/ssBBzd?gui=true&t=10&paused=false&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 About shader above:
-- mouse.x to push the iteration
-- mouse.y to scale the stepping distance
+- mouse.x to scale the stepping distance
+- mouse.y to push the iteration
 - left side rgb grid to visualize world position of sdf traced points + depth (distance from the camera to FAR_PLANE)
 - right side white gradient to visualize the iterations (how many times the for loop ran to calculate the pixel)
 
@@ -211,7 +211,7 @@ Hit Raymarching(Ray ray) {
 About shader above:
 - mouse.y to push the iteration
 - left side rgb grid to visualize world position of sdf traced points + depth (distance from the camera to FAR_PLANE)
--  right side white gradient to visualize the iterations (how many times the for loop ran to calculate the pixel)
+- right side white gradient to visualize the iterations (how many times the for loop ran to calculate the pixel)
 
 We can see the closer the end of ray is approaching the surface, the more iterations are needed (whiter). But majority of the pixels are breaking out the for loop way earlier thanks to the SDF, and used little iterations (black).
 

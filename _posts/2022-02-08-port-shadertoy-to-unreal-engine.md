@@ -7,7 +7,7 @@ image: 2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif
 <img src="{{ site.url }}/images/2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif" style="display:block; margin:auto;">
 <figcaption style="text-align:center; font-size:15px; font-style:italic;">Default decal compares with fixed decal using biplanar projection. Code ported from shadertoy. </figcaption>
 
-Recently I've been helping my team implementing a better decal projection in Unreal Engine as the default decal projection is fairly limited. It is causing stretching pattern on the parallel surface as projection intended to be. 
+Recently I've been helping my friends implementing a better decal projection in Unreal Engine as the default decal projection is fairly limited. It is causing stretching pattern on the parallel surface as projection intended to be. 
 
 A potential solution was presented by my teammate about using triplanar/biplanar projection on the decal to wrap the pattern all around the object that affected by the decal. Biplanar projection is particularly tempting as it is requiring only 2 texture sampling comparing with 3 in triplanar. 
 
@@ -107,8 +107,6 @@ Texture sampling:
 > ```Output.RGBColor = tex2D(MeshTextureSampler, In.TextureUV) * In.Diffuse;```
 > Direct3D 10 uses templated texture objects instead. Here is an example of the equivalent texture operation.
 > ```Output.RGBColor = g_MeshTexture.Sample(MeshTextureSampler, In.TextureUV) * In.Diffuse;```
-
-> [[UE4 Quick Tip] Sampling Textures in Custom Nodes](http://oliverm-h.blogspot.com/2014/12/ue4-quick-tip-sampling-textures-in.html)
 
 Note that in Unreal each texture object **Tex** will automatically define a correponding sampler called **TexSampler**, just add "Sampler" behind the texture obj name. And it has to be explicitly passed into the function call as in ```Tex.Sample(TexSampler, UV)```.
 

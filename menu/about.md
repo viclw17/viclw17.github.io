@@ -8,7 +8,7 @@ I am a Technical Artist and Unreal Engine Developer with great passion for
 game development, real-time virtual production and computer graphics research.
 
 I enjoy working closely with both artists and engineers to implement and optimize
-digital assets, tackle rendering and pipeline problems and push for a better game
+digital assets, tackle rendering and pipeline problems and push for a better product
 performance and visual quality.
 
 ### Skills:
