@@ -42,10 +42,6 @@
   @include social-media-icon($linkedin-color, $icon-transition-time);
 }
 
-.fa-paint-brush {
-  padding: 5px;
-  @include social-media-icon($twitter-color, $icon-transition-time);
-}
 
 .fa-facebook {
   padding: 5px;
@@ -70,4 +66,9 @@
 .fa-rss-square {
   padding: 5px;
   @include social-media-icon($rss-color, $icon-transition-time);
+}
+
+.fa-paint-brush {
+  padding: 5px;
+  @include social-media-icon($pinterest-color, $icon-transition-time);
 }

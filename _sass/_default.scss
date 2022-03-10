@@ -43,7 +43,9 @@
 }
 
 .header-subtitle {
-  padding-left: 10px;
+  font-size: 1.25rem;
+
+  padding-left: 5px;
   color: $light-gray-color;
 }
 
@@ -79,7 +81,7 @@
 
 .menu-content a {
   color: $light-gray-color;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding-right: 10px;
 }
 
@@ -89,7 +91,7 @@
 
 .social-icons a {
   color: $light-gray-color;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 @media (max-width: $elements-responsive-width) {
@@ -110,11 +112,14 @@
   color: $light-gray-color;
   text-align: center;
   margin: 2rem;
+  font-size: 1.25rem; // icon
+
 }
 
 .footer a {
   color: $light-gray-color;
-  padding: 10px;
+  // padding: 10px;
+  // font-size: 1rem;
   text-decoration: none;
 }
 
@@ -128,5 +133,5 @@
   margin-bottom: 1rem;
   color: $light-gray-color;
   font-family: $sans-serif-font-family;
-  font-size:0.8rem;
+  font-size:1rem;
 }
