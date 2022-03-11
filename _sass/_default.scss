@@ -43,7 +43,7 @@
 }
 
 .header-subtitle {
-  font-size: 1.25rem;
+  font-size: 1rem;
 
   padding-left: 5px;
   color: $light-gray-color;
@@ -52,18 +52,17 @@
 // LOGO
 .header-img {
   // display: block;
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   
-  margin: 0 auto;
-  margin-right: -0.25rem;
-  margin-bottom: -0.5rem; // move logo down a bit
+  // margin: 0 auto;
+  margin-left: -.25rem;
+  margin-right: -.25rem;
+  margin-bottom: -1rem; // move logo down a bit
 
   // border-width: 1px; 
   // border-style: solid;
   // border-radius: 0px;
-
-
 }
 
 /*
@@ -79,9 +78,10 @@
   float: left;
 }
 
+// menu links
 .menu-content a {
   color: $light-gray-color;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding-right: 10px;
 }
 
@@ -111,15 +111,13 @@
 .footer {
   color: $light-gray-color;
   text-align: center;
-  margin: 2rem;
-  font-size: 1.25rem; // icon
-
+  // margin: 2rem;
+  // icon size
+  font-size: 1.25rem;
 }
 
 .footer a {
   color: $light-gray-color;
-  // padding: 10px;
-  // font-size: 1rem;
   text-decoration: none;
 }
 
@@ -127,11 +125,12 @@
   color: $dark-gray-color;
 }
 
+// footer text
 .footer-description {
   display: block;
-  margin-top:3px;
+  margin-top: 3px;
   margin-bottom: 1rem;
   color: $light-gray-color;
   font-family: $sans-serif-font-family;
-  font-size:1rem;
+  font-size: .8rem;
 }
