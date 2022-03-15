@@ -36,16 +36,18 @@ h1 a {
 }
 
 h2{ // ##
+  font-size: 1.75rem;
   font-family: $sans-serif-font-family;
   color: $dark-gray-color;
-  line-height: 1.5rem; // if not inherit!
+  line-height: 1.5rem; // if not, inherit!
   padding-top: 1rem;
 }
 
 h3, h4, h5, h6 {
+  font-size: 1.5rem;
   font-family: $sans-serif-font-family;
   color: $dark-gray-color;
-  line-height: 1.5rem; // if not inherit!
+  line-height: 1.5rem; // if not, inherit!
 
 }
 
