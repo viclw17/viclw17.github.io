@@ -2,6 +2,7 @@
 <html>
   {% include head.html %}
   <body>
+    
     <div class="container">
       {% include header.html %}
       <div class="content-container">
@@ -9,7 +10,12 @@
       </div>
       {% include footer.html %}
     </div>
-
+    
+    <canvas id="nokey" width="800" height="800">
+      Your Browser Don't Support Canvas, Please Download Chrome ^_^``
+    </canvas>
+    
+    <script type="text/javascript" src="{{ site.github.url }}/assets/lib/canvas.js"></script>
     <!-- <script type="text/javascript" src="{{ site.github.url }}/assets/lib/canvas-nest/canvas-nest.min.js"></script> -->
 
   </body>
