@@ -29,7 +29,7 @@ var canvas = document.getElementById("nokey"),
     ctx = canvas.getContext("2d");
 
 // console.log(typeof can_w);
-var BALL_NUM = 300;
+var BALL_NUM = 500;
 
 var ball = {
         x: 0,
@@ -52,7 +52,7 @@ var ball = {
 
     // Line
     link_line_width = 1,
-    dis_limit = 200,
+    dis_limit = 150,
     add_mouse_point = false,
     mouse_in = false,
     mouse_ball = {
