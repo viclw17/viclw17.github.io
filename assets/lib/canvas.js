@@ -1,12 +1,35 @@
 //https://codepen.io/jkiss/pen/OVEeqK
 
+// Victor - get browser type
+function getBrowserType() {
+var browserType = "Undefined";
+var browserAgent = navigator.userAgent;
+if (browserAgent != null) {
+    if	(	browserAgent.indexOf("Mobile") >= 0
+        ||	browserAgent.indexOf("Android") >= 0
+        ||	browserAgent.indexOf("BlackBerry") >= 0
+        ||	browserAgent.indexOf("iPhone") >= 0
+        ||	browserAgent.indexOf("iPad") >= 0
+        ||	browserAgent.indexOf("iPod") >= 0
+        ||	browserAgent.indexOf("Opera Mini") >= 0
+        ||	browserAgent.indexOf("IEMobile") >= 0
+        ) {
+        browserType = "MOBILE";
+    }
+    else {
+        browserType = "DESKTOP";
+    }
+}
+return browserType;
+}
+
 var canvas = document.getElementById("nokey"),
     can_w = parseInt(canvas.getAttribute("width")),
     can_h = parseInt(canvas.getAttribute("height")),
     ctx = canvas.getContext("2d");
 
 // console.log(typeof can_w);
-var BALL_NUM = 150;
+var BALL_NUM = 500;
 
 var ball = {
         x: 0,
@@ -25,12 +48,12 @@ var ball = {
     R = 1,
     balls = [],
     alpha_f = 0.01,
-    // alpha_phase = 0,
+    // alpha_phase = 1,
 
     // Line
-    link_line_width = 0.5,
-    dis_limit = 120,
-    add_mouse_point = true,
+    link_line_width = 1,
+    dis_limit = 150,
+    add_mouse_point = false,
     mouse_in = false,
     mouse_ball = {
         x: 0,
@@ -42,7 +65,7 @@ var ball = {
     };
 
 // Random speed
-var speed = .25;
+var speed = .1;
 function getRandomSpeed(pos) {
     var min = -speed,
         max = speed;
@@ -176,6 +199,7 @@ function updateBalls() {
 function loopAlphaInf() {}
 
 // Draw lines
+var line_color = "128,128,128,";
 function renderLines() {
     var fraction, alpha;
     for (var i = 0; i < balls.length; i++) {
@@ -185,7 +209,7 @@ function renderLines() {
             if (fraction < 1) {
                 alpha = (1 - fraction).toString();
 
-                ctx.strokeStyle = "rgba(150,150,150," + alpha + ")";
+                ctx.strokeStyle = "rgba(" + line_color + alpha + ")";
                 ctx.lineWidth = link_line_width;
 
                 ctx.beginPath();
@@ -215,17 +239,19 @@ function addBallIfy() {
 
 // Render
 function render() {
-    ctx.clearRect(0, 0, can_w, can_h);
+    if(getBrowserType() === "DESKTOP"){
+        ctx.clearRect(0, 0, can_w, can_h);
 
-    renderBalls();
+        renderBalls();
 
-    renderLines();
+        renderLines();
 
-    updateBalls();
+        updateBalls();
 
-    addBallIfy();
+        addBallIfy();
 
-    window.requestAnimationFrame(render);
+        window.requestAnimationFrame(render);
+    }
 }
 
 // Init Balls
@@ -247,8 +273,8 @@ function initCanvas() {
     canvas.setAttribute("width", window.innerWidth);
     canvas.setAttribute("height", window.innerHeight);
 
-    can_w = parseInt(canvas.getAttribute("width"));
-    can_h = parseInt(canvas.getAttribute("height"));
+    can_w = 3840;//parseInt(canvas.getAttribute("width"));
+    can_h = 2160;//parseInt(canvas.getAttribute("height"));
 }
 
 window.addEventListener("resize", function(e) {
@@ -264,27 +290,27 @@ function goMovie() {
 goMovie();
 
 // Mouse effect
-canvas.addEventListener("mouseenter", function() {
-    console.log("mouseenter");
-    mouse_in = true;
-    balls.push(mouse_ball);
-});
+// canvas.addEventListener("mouseenter", function() {
+//     console.log("mouseenter");
+//     mouse_in = true;
+//     balls.push(mouse_ball);
+// });
 
-canvas.addEventListener("mouseleave", function() {
-    console.log("mouseleave");
-    mouse_in = false;
-    var new_balls = [];
-    Array.prototype.forEach.call(balls, function(b) {
-        if (!b.hasOwnProperty("type")) {
-            new_balls.push(b);
-        }
-    });
-    balls = new_balls.slice(0);
-});
+// canvas.addEventListener("mouseleave", function() {
+//     console.log("mouseleave");
+//     mouse_in = false;
+//     var new_balls = [];
+//     Array.prototype.forEach.call(balls, function(b) {
+//         if (!b.hasOwnProperty("type")) {
+//             new_balls.push(b);
+//         }
+//     });
+//     balls = new_balls.slice(0);
+// });
 
-canvas.addEventListener("mousemove", function(e) {
-    var e = e || window.event;
-    mouse_ball.x = e.pageX;
-    mouse_ball.y = e.pageY;
-    // console.log(mouse_ball);
-});
+// canvas.addEventListener("mousemove", function(e) {
+//     var e = e || window.event;
+//     mouse_ball.x = e.pageX;
+//     mouse_ball.y = e.pageY;
+//     // console.log(mouse_ball);
+// });
