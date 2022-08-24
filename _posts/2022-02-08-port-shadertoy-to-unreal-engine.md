@@ -1,5 +1,5 @@
 ---
-title: "Porting Shadertoy to Unreal Engine Using Custom Node (Case 1)"
+title: "Porting Shadertoy to Unreal Engine Using Custom Node (Case #1)"
 layout: post
 image: 2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif
 ---
