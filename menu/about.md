@@ -4,7 +4,7 @@ title: About Me
 permalink: /about
 ---
 
-I am a [**Technical Artist**](https://www.artstation.com/viclw17) and **Unreal Engine Developer** with great passion for
+I am a **Unreal Engine Developer** and **Technical Artist** with great passion for
 game development, real-time virtual production and computer graphics R&D.
 
 I enjoy working closely with both artists and engineers to implement and optimize
