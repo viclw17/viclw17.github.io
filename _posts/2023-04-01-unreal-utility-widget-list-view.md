@@ -6,7 +6,7 @@ image: 2023-04-01-unreal-utility-widget-list-view\cover.png
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\cover.png" style="display:block; margin:auto;">
 
-**List View** is a useful type of widget available in **Editor Utility Widget** Blueprint. During editor tooling in Unreal Engine, there are many cases require querying assets or actors and display them as a list. 
+**List View** is a useful type of widget available in **Editor Utility Widget** Blueprint (EUW). During editor tooling in Unreal Engine, there are many cases require querying assets or actors and display them as a list. 
 
 One of the recent tools I worked on will list out all the cinematic cameras in the level as a list view widget (a subset of tools for our Virtual Production workflow). From it we can snap to the camera view with options to lock and unlock the viewport control. 
 
@@ -22,8 +22,6 @@ There is an important distinction between the concepts of "**Item**" and "**Entr
 
 > For example, a scrolling ListView of 200 items with 5 currently visible will only have created 5 entry widgets.
 
-To make a widget usable as an **entry** in a ListView, it must inherit from the **IUserObjectListEntry interface**.
-
 To add an item with custom properties, we need:
 
 - An ```Editor Utility Widget``` with a List View widget
@@ -32,21 +30,27 @@ To add an item with custom properties, we need:
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_4.png" style="display:block; margin:auto;">
 
-The idea behind this setup is most likely to **keep data and visual presentation separated**.
+To make a widget usable as an **entry** in a ListView, it must inherit from the **UserObjectListEntry interface**. More details will follow.
 
-### Entry Data
+> The idea behind this setup is to **keep data and visual presentation separated**.
 
-The entry data object's purpose is only to store data. Create it as a Blueprint class that inherits from **Object**.
+# Entry Data
+
+The entry data object's purpose is only to store data. 
+
+Create it as a Blueprint class that inherits from **Object**.
+
+<img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_5_0.png" style="display:block; margin:auto;">
 
 We will revisit it later.
 
-### Entry Widget
+# Entry Widget
 
 The entry widget will be the visual representation of the list item data. Create it as a Blueprint class that inherits from **User Widget**.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_5.png" style="display:block; margin:auto;">
 
-Then open the blueprint and switch to graph mode, click class setting and Implement the **User Object List Entry** interface.
+Then open the blueprint and switch to graph mode, click **class setting** and Implement the **User Object List Entry** interface.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_3.png" style="display:block; margin:auto;">
 
@@ -54,15 +58,19 @@ After that a few more events will be available on the side in the interface sect
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_7.png" style="display:block; margin:auto;">
 
-### Editor Utility Widget
+# Editor Utility Widget
 
-Inside EUW, add a List View and scroll down to add List Entries.
+## Assign List Entry Widget
 
-It should show up in the drop-down if the entry widget is properly setup and implemented the required interface mentioned above.
+Inside EUW, add a List View and scroll down to add **List Entries**.
+
+**EntryWidget** we just created should show up in the drop-down if it is properly setup and **implemented the required interface** mentioned above.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_9.png" style="display:block; margin:auto;">
 
 Note that by default there will be 5 preview entries inside the widget editor but once compiled no entries will show up in the EUW. More following steps are required.
+
+## Construct List Entry Data
 
 Inside the blueprint graph, use **construct object from class** node to construct entry data and add to list view as item. Use for loop to add more.
 
@@ -72,18 +80,20 @@ Compile the EUW and run, 5 entries will show up as a list.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_14.png" style="display:block; margin:auto;">
 
-### Presenting the data in widget
+However, note that at this point all the entry widgets are showing the default data (default text in text block here). We still need one more step to pass entry data to the widget to present.
 
-What if we want to dynamically to pass data to entry widget to present?
+# Presenting data in widget
+
+What if we want to pass custom data to entry widget to present?
 
 We have to utilize both **Entry Data** blueprint and  
-**UserObjectListEntry interfac**e implemented in the **Entry Widget**.
+**UserObjectListEntry interface** implemented in the **Entry Widget**.
 
-First add the data as a variable to **Entry Data** object blueprint. Make sure it is **public, Instance Editable and Expose on Spawn**.
+First, add the data as a variable to **Entry Data** object blueprint. Make sure it is **public, Instance Editable and Expose on Spawn**.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_10.png" style="display:block; margin:auto;">
 
-Back in Entry Widget blueprint, right click to implement the interface event **Event on List Item Object Set** and pass the data from inside of variable to the widget to display (TextBlock for example here)
+Back in Entry Widget blueprint, right click to implement the interface event **Event on List Item Object Set** and pass the data from inside of variable to the widget to display (TextBlock for example here).
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_8.png" style="display:block; margin:auto;">
 
@@ -92,3 +102,7 @@ Back in Entry Widget blueprint, right click to implement the interface event **E
 Back in EUW, we can pass dynamic data (index here for example) during constructing Entry Data. Right click to refresh the construct node if the **index** input is not showing.
 
 <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\Screenshot_13.png" style="display:block; margin:auto;">
+
+This the minimal workflow to setup and use the List Widget in EUW. More notes will be added here for more conplex usage of the feature.
+
+TBC
