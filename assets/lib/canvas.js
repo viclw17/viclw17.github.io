@@ -41,9 +41,9 @@ var ball = {
         phase: 0
     },
     ball_color = {
-        r: 64,
-        g: 64,
-        b: 64
+        r: 200,
+        g: 200,
+        b: 200
     },
     R = 1,
     balls = [],
@@ -199,7 +199,7 @@ function updateBalls() {
 function loopAlphaInf() {}
 
 // Draw lines
-var line_color = "64,64,64,";
+var line_color = "200,200,200,";
 function renderLines() {
     var fraction, alpha;
     for (var i = 0; i < balls.length; i++) {
