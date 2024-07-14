@@ -33,6 +33,34 @@ And of course, while reading the chaper above, I kept bumping into implementatio
 
 Similarly, lot of time I was pushed to pause and catch up at [7 Sampling and Reconstruction](https://pbr-book.org/3ed-2018/Sampling_and_Reconstruction.html) to brush up my probability and statistic theories.(honestly these are the fields I sufferred the most back in university...)
 
+TBC...
+
+---
+
+# smallpt
+https://www.kevinbeason.com/smallpt/
+
+# Intel Path-Tracing Workshop
+https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.wisfdw
+
+# Classes - TU Wien
+https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr
+
+# Luminox
+https://github.com/yumcyaWiz/Luminox
+
+<!-- 
+https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/spherical-coordinates-and-trigonometric-functions.html
+
+Simplifying Calculations for Trigonometric Ratios
+
+template<typename T> inline T cosTheta(const Vec3<T> &w) { return w[2]; } -->
+
+# glsl330-cornellbox
+https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/
+
+https://github.com/yumcyaWiz/glsl330-cornellbox
+
 TBC
 
 
