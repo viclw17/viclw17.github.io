@@ -1,12 +1,12 @@
 ---
 title: "Path Tracing Workshop Note"
 layout: post
-# image: 2024-07-15-revisit-path-tracing\victor-li-render-final-msaa-result.jpg
+image: 2024-07-16-path-tracing-workshop-note\cover.png
 ---
 
 # Intel Path-Tracing Workshop
-- [Path-Tracing Workshop Part 1: Write a Ray Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
-- [Path-Tracing Workshop Part 2: Write a Path Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
+- [Path-Tracing Workshop Part 1: Write a **Ray Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
+- [Path-Tracing Workshop Part 2: Write a **Path Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
 
 
 This workshop shows how to:
@@ -163,5 +163,7 @@ Note that the function outputs are in 3 ways:
 <img src="{{ site.url }}/images\2024-07-16-path-tracing-workshop-note\triangle3.png" width="400" style="display:block; margin:auto;">
 
 
+# Path tracing
+## Global Illumination
 
 
