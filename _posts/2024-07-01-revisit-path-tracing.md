@@ -4,7 +4,7 @@ layout: post
 image: 2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg
 ---
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="240" style="display:block; margin:auto;">
 
 It's been a long time since last time I was learning the theories and implementation of raytracing by following the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently I finally decided to revisit the topic, since I have read so many related books and articles and also have improved a lot on various technical tools necessary for its implementation.
 
@@ -16,7 +16,7 @@ In this and the following posts I would like to write down my new understanding 
 After the previous playful implementation based on *Ray Tracing in One Weekend*, I got my hands on the 
 *de facto* PBR bible [Physically Based Rendering:From Theory To Implementation](https://pbr-book.org/3ed-2018/contents) and started grinding on it. It was by no means an easy read as it is about a full-feature extremely physically accurate software renderer, based on solid scientific derivation and implemented in C++ with lots of consideration on architecture and system design.
 
-<img src="https://i.ebayimg.com/images/g/E-oAAOSw181mMYFR/s-l1600.jpg" style="display:block; margin:auto;">
+<img src="https://i.ebayimg.com/images/g/E-oAAOSw181mMYFR/s-l1600.jpg" width="240" style="display:block; margin:auto;">
 
 I started by reading the chapters:
 - [1.2 Photorealistic Rendering and the Ray-Tracing Algorithm](https://pbr-book.org/3ed-2018/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm.html)
@@ -38,7 +38,7 @@ Similarly, lots of times I was pushed to pause and catch up at [7 Sampling and R
 
 Obviously, *pbrt* is not the best book to quickly guide me to produce path tracing pretty images, like last time, but it was a great experience for me to peek under the hood to see how much knowledge a simple path tracing demo is built upon - which is awe-inspiring, and also to form a clear structure in my mind of all the topics I need to further look into.
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\pbrt-chapters.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\pbrt-chapters.png" width="240" style="display:block; margin:auto;">
 
 The [pbrt source code](https://github.com/mmp/pbrt-v4) is very complex to dig through. However, [1.3.5 An Integrator for **Whitted Ray Tracing**](https://pbr-book.org/3ed-2018/Introduction/pbrt_System_Overview#AnIntegratorforWhittedRayTracing) offers a great minimal viable implementation for a quick path tracing demo. And while reading this part I followed this article [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/light-transport-ray-tracing-whitted.html
 ) on *scratchapixel.com* and its source code to learn more.
