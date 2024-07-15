@@ -11,7 +11,7 @@ I enjoy working closely with both artists and engineers to implement and optimiz
 digital assets, tackle rendering and pipeline problems and push for a better product
 performance and visual quality.
 
-Currently I am the **Senior Cinematic Technical Artist** at **The Coalition**, a subsidiary of Microsoft Xbox Game Studios. Currently working on AAA games [**Gears of Wars: E-Day**](https://www.gearsofwar.com/).
+Currently I am the **Senior Cinematic Technical Artist** at **The Coalition**, a subsidiary of Microsoft Xbox Game Studiosm and now working on AAA games [**Gears of Wars: E-Day**](https://www.gearsofwar.com/).
 
 ## Skills:
 * **Unreal Engine** >> Blueprint/Python/Materials/Shaders/VFX

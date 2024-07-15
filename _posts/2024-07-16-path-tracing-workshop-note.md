@@ -4,6 +4,8 @@ layout: post
 image: 2024-07-16-path-tracing-workshop-note\cover.png
 ---
 
+<img src="{{ site.url }}/images/2024-07-16-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
+
 Note for Intel Path-Tracing Workshop.
 
 ---
