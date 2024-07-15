@@ -62,18 +62,36 @@ There are also many cool path tracing **shadertoys** I was exploring, which help
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XdcfRr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Classes - TU Wien
-All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of keeping grinding the book or guessing how the source code just magically works.
+All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of staying on grinding the book or guessing how the source code just magically works.
 
-I bumpped into this open courses [Rendering (186.101, 2021S)](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr) which is a gold mine. Not suprised to find out they are exactly using *pbrt* as their main teaching book.
+I bumpped into this open courses [Rendering (186.101, 2021S)](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr) which is such a gold mine. Not suprised to find out they are exactly using *pbrt* as their main teaching book. Important course are:
 
-TBC...
+- [Rendering Lecture 01 - Light](https://www.youtube.com/watch?v=QgzqCLXX1OQ&list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&index=2&t=7s&pp=iAQB)
+- [Rendering Lecture 02 - Monte Carlo](https://www.youtube.com/watch?v=_56eYqYYO6I&list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&index=3&t=1356s&pp=iAQB)
+- [Rendering Lecture 03 - The Rendering Equation](https://www.youtube.com/watch?v=RBqQKGbxrsY&list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&index=4&pp=iAQB)
+- [Rendering Lecture 04 - Path Tracing Basics](https://www.youtube.com/watch?v=w36xgaGQYAY&list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&index=5&pp=iAQB)
+
+The course is really well structured and clear demonstrated, helped me comb through what I have read in the *pbrt* book and achieved better understanding.
 
 # Intel Path-Tracing Workshop
+I paused my study for a while until I came across this material:
 
-https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.wisfdw
+- [Path-Tracing Workshop Part 1: Write a Ray Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
+- [Path-Tracing Workshop Part 2: Write a Path Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
 
-https://momentsingraphics.de/PathTracingWorkshop.html
 
+This workshop shows how to:
+
+- Implement ray tracing in software on the GPU.
+- Use GLSL, Shadertoy, camera models, ray-triangle intersection tests, and ray-mesh intersection tests.
+- Build on your ray tracer and implement a path tracer that renders a scene with full global illumination.
+- Learn about fundamental concepts in physically based rendering such as global illumination, radiance, the rendering equation, Monte Carlo integration, and path tracing.
+- Implement the Monte Carlo integration, and use it to compute direct illumination.
+- Write your path tracer.
+
+More about the workshop from the author can be found on his [blog](https://momentsingraphics.de/PathTracingWorkshop.html).
+
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Luminox
 https://github.com/yumcyaWiz/Luminox
