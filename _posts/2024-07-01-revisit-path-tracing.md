@@ -91,7 +91,29 @@ This workshop shows how to:
 
 More about the workshop from the author can be found on his [blog](https://momentsingraphics.de/PathTracingWorkshop.html).
 
+Course project result on shadertoy:
+
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+
+# Exploration on real-time rendering
+At the meantime, I had another personal learning project going on to brush up my **OpenGL** knowledge and probably write a real-time renderer.
+
+The current result has been pretty underwhelming - just **a model viewer with basic lighting types support**:
+
+- directional, point and spot light
+- *assimp* for model loading
+- *stb_image* for texture loading
+
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" width="480" style="display:block; margin:auto;">
+
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl2.gif" width="400" height="400" style="display:block; margin:auto;">
+
+# glsl330-cornellbox
+https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/
+
+https://github.com/yumcyaWiz/glsl330-cornellbox
+
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=-dmQk2q3FTo&feature=youtu.be" frameborder="0" allow="autoplay; encrypted-media"></iframe>
 
 # Luminox
 https://github.com/yumcyaWiz/Luminox
@@ -103,10 +125,7 @@ Simplifying Calculations for Trigonometric Ratios
 
 template<typename T> inline T cosTheta(const Vec3<T> &w) { return w[2]; } -->
 
-# glsl330-cornellbox
-https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/
 
-https://github.com/yumcyaWiz/glsl330-cornellbox
 
 TBC
 
