@@ -4,7 +4,7 @@ layout: post
 image: 2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg
 ---
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="240" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="480" style="display:block; margin:auto;">
 
 It's been a long time since last time I was learning the theories and implementation of raytracing by following the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently I finally decided to revisit the topic, since I have read so many related books and articles and also have improved a lot on various technical tools necessary for its implementation.
 
@@ -57,9 +57,9 @@ I got the code built and run and produced some nice images. It is an amazing lea
 - Sampling Sphere light by Solid Angle
 - Shadow Ray, etc.
 
-There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to under stand smallpt:
+There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand smallpt:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XdcfRr?gui=true&t=10&paused=false&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XdcfRr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Classes - TU Wien
 All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of keeping grinding the book or guessing how the source code just magically works.
