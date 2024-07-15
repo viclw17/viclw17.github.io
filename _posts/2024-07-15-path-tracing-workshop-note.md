@@ -106,13 +106,13 @@ struct triangle_t {
 
 ## Ray tracing
 ### Intersection - Ray vs Triangle
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="480" style="display:block; margin:auto;">
 
 Use **barycentric coordinate** to describe point on the triangle, and it is equal to the point on the ray, it indicates an intersection.
 
 A mathmatic representation is as followed, and the goal here is to fomulate it toward getting the ray and 2 barycentric parameters.
 
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" width="480" style="display:block; margin:auto;">
 
 ```
 // Checks whether a ray intersects a triangle
