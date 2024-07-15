@@ -110,7 +110,8 @@ The current result has been pretty underwhelming - just **a model viewer** with 
 
 Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
 
-<iframe width="560" height="315" src="https://vimeo.com/382872589" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="640" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/382872589">PBR Renderer with PyOpenGL</a> from <a href="https://vimeo.com/viclw17">Victor Li</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
 *^ I'm planning to write more posts about those real-time renderer projects, just as experiment notes...*
 
@@ -122,17 +123,17 @@ However, the shadertoy path tracing demos I referred above are very interactive 
 
 This is my current idea of my next project. :)
 
-# 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" style="display:block; margin:auto;">
+# Another gold mine...
+It is lucky to land at
+[yumcyawiz's blog - OpenGL3.3でGPUパストレーサーを実装する](https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/) to find out someone achieved exactly the same goal!
 
-https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/
+His project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox) is an amazing example to look into, with even extra effort on integrating **Imgui** for more interactivity. Even more, his project is based on [GLSL-PathTracer](https://github.com/knightcrawler25/GLSL-PathTracer) which is offering more interactive features!
 
-https://github.com/yumcyaWiz/glsl330-cornellbox
+Here is the result of building and running the demo:
 
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\cornellbox.jpg" width="400" height="400" style="display:block; margin:auto;">
 
-
-# Luminox
-https://github.com/yumcyaWiz/Luminox
+Apart from that his another project [Luminox](https://github.com/yumcyaWiz/Luminox) is a minimal typical CPU path tracer and offers clean implementation. 
 
 <!-- 
 https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/spherical-coordinates-and-trigonometric-functions.html
@@ -141,9 +142,9 @@ Simplifying Calculations for Trigonometric Ratios
 
 template<typename T> inline T cosTheta(const Vec3<T> &w) { return w[2]; } -->
 
+In the following posts I will put some of my study notes that I mentioned above, thanks to all those amazing resources I discovered online.
 
-
-TBC
+END
 
 
 
