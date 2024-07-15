@@ -136,6 +136,8 @@ Note that the function outputs are in 2 ways:
 - `out float out_t` parameter indicate it will capture the ray parameter at the intersection (if any) (t), aka the hitting point
 
 ### Intersection - Ray vs Mesh
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" style="display:block; margin:auto;">
+
 ```
 // Checks whether a ray intersects any triangle of the mesh
 // \param out_t The ray parameter at the closest intersection (if any) (t)
@@ -164,10 +166,6 @@ Note that the function outputs are in 3 ways:
 - `bool` indicates the return value, true if there is an intersection, false otherwise
 - `out triangle_t out_tri`: closest hit triangle
 - `out float out_t`: ray parameter at the intersection (if smaller than max ray length)
-
-
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" width="400" style="display:block; margin:auto;">
-
 
 # Path tracing
 TBC
