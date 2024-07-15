@@ -4,7 +4,7 @@ layout: post
 image: 2024-07-15-revisit-path-tracing\victor-li-render-final-msaa-result.jpg
 ---
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="480" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="480" style="display:block; margin:auto;">
 
 It's been a long time since last time I was learning the theories and implementation of raytracing by following the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently I finally decided to revisit the topic, since I have read so many related books and articles and also have improved a lot on various technical tools necessary for its implementation.
 
@@ -38,7 +38,7 @@ Similarly, lots of times I was pushed to pause and catch up at [7 Sampling and R
 
 Obviously, *pbrt* is not the best book to quickly guide me to produce path tracing pretty images, like last time, but it was a great experience for me to peek under the hood to see how much knowledge a simple path tracing demo is built upon - which is awe-inspiring, and also to form a clear structure in my mind of all the topics I need to further look into.
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\pbrt-chapters.png" width="300" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-revisit-path-tracing\pbrt-chapters.png" width="300" style="display:block; margin:auto;">
 
 The [pbrt source code](https://github.com/mmp/pbrt-v4) is very complex to dig through. However, [1.3.5 An Integrator for **Whitted Ray Tracing**](https://pbr-book.org/3ed-2018/Introduction/pbrt_System_Overview#AnIntegratorforWhittedRayTracing) offers a great minimal viable implementation for a quick path tracing demo. And while reading this part I followed this article [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/light-transport-ray-tracing-whitted.html
 ) on *scratchapixel.com* and its source code to learn more.
@@ -104,9 +104,9 @@ The current result has been pretty underwhelming - just **a model viewer** with 
 - *assimp* for model loading
 - *stb_image* for texture loading
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-revisit-path-tracing\opengl1.png" style="display:block; margin:auto;">
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl2.gif" width="400" height="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-revisit-path-tracing\opengl2.gif" width="400" height="400" style="display:block; margin:auto;">
 
 Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
 
@@ -131,7 +131,7 @@ His project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox
 
 Here is the result of building and running the demo:
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\cornellbox.jpg" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-revisit-path-tracing\cornellbox.jpg" style="display:block; margin:auto;">
 
 Apart from that his another project [Luminox](https://github.com/yumcyaWiz/Luminox) is a minimal typical CPU path tracer and offers clean implementation. 
 
