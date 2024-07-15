@@ -4,6 +4,10 @@ layout: post
 image: 2024-07-16-path-tracing-workshop-note\cover.png
 ---
 
+Note for Intel Path-Tracing Workshop.
+
+---
+
 # Intel Path-Tracing Workshop
 - [Path-Tracing Workshop Part 1: Write a **Ray Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
 - [Path-Tracing Workshop Part 2: Write a **Path Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
@@ -165,5 +169,9 @@ Note that the function outputs are in 3 ways:
 
 # Path tracing
 ## Global Illumination
+Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
+Path tracing starts at camera, finds a light when it is lucky.
+
+
 
 
