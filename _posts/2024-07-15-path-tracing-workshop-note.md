@@ -106,13 +106,13 @@ struct triangle_t {
 
 ## Ray tracing
 ### Intersection - Ray vs Triangle
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="480" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" style="display:block; margin:auto;">
 
 Use **barycentric coordinate** to describe point on the triangle, and it is equal to the point on the ray, it indicates an intersection.
 
 A mathmatic representation is as followed, and the goal here is to fomulate it toward getting the ray and 2 barycentric parameters.
 
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" width="480" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" style="display:block; margin:auto;">
 
 ```
 // Checks whether a ray intersects a triangle
@@ -170,11 +170,21 @@ Note that the function outputs are in 3 ways:
 
 
 # Path tracing
-## Global Illumination
+TBC
+
+<!-- ## Global Illumination
 Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
 Path tracing starts at camera, finds a light when it is lucky.
 
 ## Radiance
+L(x,w) = color for ray x+tw
+it is a **plenoptic function / radiance field**
+pixel = radiance for camera ray
+
+Radiance is constant along rays in vacuum, hence
+L(y,w)=L(x.w)
+
+Ray tracing is transporting radiance, aka how light propogates in empty space. -->
 
 
 
