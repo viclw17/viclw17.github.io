@@ -1,10 +1,10 @@
 ---
 title: "Path Tracing Workshop Note"
 layout: post
-image: 2024-07-16-path-tracing-workshop-note\cover.png
+image: 2024-07-15-path-tracing-workshop-note\cover.png
 ---
 
-<img src="{{ site.url }}/images/2024-07-16-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
 
 Note for Intel Path-Tracing Workshop.
 
@@ -82,7 +82,7 @@ Built-in scalar, vector, matrix types: int float
 - Mesh - Many triangles
 
 ### Camera
-<img src="{{ site.url }}/images\2024-07-16-path-tracing-workshop-note\camera.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\camera.png" width="400" style="display:block; margin:auto;">
 
 ### Shape - Triangle
 Triangle definition. Here it contains both geo data and surface data, for simplicity.
@@ -106,13 +106,13 @@ struct triangle_t {
 
 ## Ray tracing
 ### Intersection - Ray vs Triangle
-<img src="{{ site.url }}/images\2024-07-16-path-tracing-workshop-note\triangle.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="400" style="display:block; margin:auto;">
 
 Use **barycentric coordinate** to describe point on the triangle, and it is equal to the point on the ray, it indicates an intersection.
 
 A mathmatic representation is as followed, and the goal here is to fomulate it toward getting the ray and 2 barycentric parameters.
 
-<img src="{{ site.url }}/images\2024-07-16-path-tracing-workshop-note\triangle2.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" width="400" style="display:block; margin:auto;">
 
 ```
 // Checks whether a ray intersects a triangle
@@ -166,13 +166,16 @@ Note that the function outputs are in 3 ways:
 - `out float out_t`: ray parameter at the intersection (if smaller than max ray length)
 
 
-<img src="{{ site.url }}/images\2024-07-16-path-tracing-workshop-note\triangle3.png" width="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" width="400" style="display:block; margin:auto;">
 
 
 # Path tracing
 ## Global Illumination
 Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
 Path tracing starts at camera, finds a light when it is lucky.
+
+## Radiance
+
 
 
 
