@@ -95,10 +95,10 @@ Course project result on shadertoy:
 
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
-# Exploration on real-time rendering
+# Side Quest - Real-time Rendering
 At the meantime, I had another personal learning project going on to brush up my **OpenGL** knowledge and probably write a real-time renderer.
 
-The current result has been pretty underwhelming - just **a model viewer with basic lighting types support**:
+The current result has been pretty underwhelming - just **a model viewer** with basic lighting types support, done in **C++**:
 
 - directional, point and spot light
 - *assimp* for model loading
@@ -108,12 +108,28 @@ The current result has been pretty underwhelming - just **a model viewer with ba
 
 <img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl2.gif" width="400" height="400" style="display:block; margin:auto;">
 
-# glsl330-cornellbox
+Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
+
+<iframe width="560" height="315" src="https://vimeo.com/382872589" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+*^ I'm planning to write more posts about those real-time renderer projects, just as experiment notes...*
+
+But the main point is all those tests made me wonder if I can connect both sides together - **a real-time demo done in OpenGL, but displaying a progressive path tracing result?**
+
+It would be a great system since - most of the path tracing materials I was following are purely CPU based with an end result being a staitc image (PPM file). It is a slow process and it is by no means interactive.
+
+However, the shadertoy path tracing demos I referred above are very interactive as it is implementing bare bone path tracing in GLSL hence the computation is on GPU. Technically, I can have my real-time renderer to render a quad that fill the entire window and have a fragment shader to render path tracing, and possibly have the demo taking user input to have interactivity.
+
+This is my current idea of my next project. :)
+
+# 
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" style="display:block; margin:auto;">
+
 https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/
 
 https://github.com/yumcyaWiz/glsl330-cornellbox
 
-<iframe width="560" height="315" src="https://youtu.be/-dmQk2q3FTo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
 
 # Luminox
 https://github.com/yumcyaWiz/Luminox
