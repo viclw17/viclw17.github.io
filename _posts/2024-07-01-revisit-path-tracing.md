@@ -131,7 +131,7 @@ His project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox
 
 Here is the result of building and running the demo:
 
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\cornellbox.jpg" width="400" height="400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\cornellbox.jpg" style="display:block; margin:auto;">
 
 Apart from that his another project [Luminox](https://github.com/yumcyaWiz/Luminox) is a minimal typical CPU path tracer and offers clean implementation. 
 
