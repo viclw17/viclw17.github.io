@@ -170,20 +170,62 @@ Note that the function outputs are in 3 ways:
 # Path tracing
 TBC
 
-<!-- ## Global Illumination
+## Global Illumination
 Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
 Path tracing starts at camera, finds a light when it is lucky.
 
 ## Radiance
-L(x,w) = color for ray x+tw
-it is a **plenoptic function / radiance field**
-pixel = radiance for camera ray
+$L_(x,w)$ is basically color for ray $x+tw$. It is a **plenoptic function / radiance field**.
 
-Radiance is constant along rays in vacuum, hence
-L(y,w)=L(x.w)
+> The plenoptic illumination function is an idealized function used in computer graphics to express the image of a scene from **any possible viewing position** at **any viewing angle** at **any pointin time**.
 
-Ray tracing is transporting radiance, aka how light propogates in empty space. -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Plenoptic-function-a.png" width = "300" style="display:block; margin:auto;">
 
+
+So the final pixel color is the radiance for camera ray.
+
+Radiance is constant along rays in vacuum.
+<!-- , hence $$L(y,w)=L(x.w)$$ -->
+
+Ray tracing is transporting radiance, describes how light propogates in empty space.
+
+### More from pbrt
+Radiance measures Irradiance with respect to solid angles. Definition:
+
+$$L = \frac{dE_{w}}{dw}$$
+
+where, $E{w}$ is the irradiance at the surface that is perpendicular to the direction $w$: $E_{\omega} =  \frac{d\phi}{dA^ \bot}$, so
+
+$$L = \frac{dEw}{dw} = \frac{d\phi}{d\omega \cdot dA^ \bot}$$
+
+which means, radiance is the flux density per unit area, per unit solid angle.
+
+> It is the limit of: the measurement of incident light at the surface, as a cone of incident directions of interest dw becomes very small, and as the local area of interest on the surface dA also becomes very small.
+
+
+
+## Irradiance
+We don't just have to deal with empty space, we also have to figure out how light **interact with the surface** - defined by irradiance.
+
+Irradiance is the weighted integral over radiance:
+
+$$E(x,n(x)) = \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
+
+### More from pbrt
+From a differential perspective, irradiance is the average density of power over the area. Taking the limit of differential power per differential area at a point p, we got:
+
+$$E(p) = \frac{d\phi(p)}{dA}$$
+
+It is guided by **Lambert’s Law**.
+
+## Rendering equation
+$$L{o}(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
+
+- result: outgoing radiance for diffuse surface at x
+- compute incoming irradiance $E(x,n(x))$, = total light reaching x
+- multiply by surface color $a(x)$
+- divide by $\pi$ to ensure energy conservation
+- add light emitted at x, 0 if x is not a light source
 
 
 
