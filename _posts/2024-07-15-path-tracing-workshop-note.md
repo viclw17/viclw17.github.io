@@ -106,13 +106,13 @@ struct triangle_t {
 
 ## Ray tracing
 ### Intersection - Ray vs Triangle
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="480" style="display:block; margin:auto;">
 
 Use **barycentric coordinate** to describe point on the triangle, and it is equal to the point on the ray, it indicates an intersection.
 
 A mathmatic representation is as followed, and the goal here is to fomulate it toward getting the ray and 2 barycentric parameters.
 
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" width="480" style="display:block; margin:auto;">
 
 ```glsl
 // Checks whether a ray intersects a triangle
@@ -351,14 +351,16 @@ vec2 rands_1 = get_random_numbers(seed);
 
 ## Direct Illumination
 
-Rendering direct illumination is the first step to test the theory - it only accounts for emission from light sources and direct illumination only from the light sources. 
+Rendering direct illumination is the first step to test the theory - it only accounts for emission from light sources and direct illumination that from the light sources. 
 
 $$L(x) = L_e + \frac{a(x)}{\pi} \cdot 2{\pi} \cdot L_e(y) \cdot n(x) \cdot w$$
 
 $$y = ray\_intersection(x,w) = x + tw$$
 
-## Direct + Indirect Illumination
-With camera ray $x_0, w_0$, we want to estimate $L(x_0, w_0)$ where $x_1 = ray\_intersection(x_0,w_0)$. 
+## Direct + Indirect Illumination = GI!
+With camera ray $x_0, w_0$, we want to estimate $L(x_0, w_0)$ where 
+
+$$x_1 = ray\_intersection(x_0,w_0)$$
 
 Setting Monte Carlo $N = 1$, with a random direction $w_1$, we have:
 
@@ -366,16 +368,29 @@ $$L(x_0, w_0) = L_o(x_1) \approx L_e(x_1) + \frac{a(x_1)}{\pi} 2{\pi} L(x_1,w_1)
 
 then from point $x_1$, ray trace to another random direction for next intersection point, and we will have:
 
-$$L(x_1, w_1) = L_o(x_2) \approx L_e(x_2) + \frac{a(x_2)}{\pi} 2{\pi} L(x_2,w_1)n(x_2) \cdot w_2$$
+$$x_2 = ray\_intersection(x_1,w_1)$$ 
 
-and this keeps propagating.
+
+$$L(x_1, w_1) = L_o(x_2) \approx L_e(x_2) + \frac{a(x_2)}{\pi} 2{\pi} L(x_2,w_2)n(x_2) \cdot w_2$$
+
+and this keeps propagating... **Path tracing is a recursion!**
 
 ## Flatten recursion into loop
+Notice $\pi$ got cancelled out.
+
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt1.png" width="480" style="display:block; margin:auto;">
 
-Add emission and update throughput weight $T_j$ in each iteration:
+The process is now simplified into: **in each iteration, add emission and update throughput weight $T_j$**:
 
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt2.png" width="480" style="display:block; margin:auto;">
+
+The function now is taking in a ray - a camera ray $(x_0, w_0)$. In a `for-loop` with `MAX_PATH_LENGTH` to control the ray tracing depth. 
+
+In the loop, we:
+trace next intersecting point and update to use it as the next ray trace origin; 
+gather $T \cdot L_e$ into the radiance;
+sample a random direction to use it as the next ray trace direction;
+update throughput weight by multiplying it with $a(x_{j+1}) \cdot 2\cdot (n(x_{j+1}) \cdot w_{j+1})$, (which is basically BRDF information)
 
 ```glsl
 // Performs path tracing: It starts with the given ray. If this ray intersects
@@ -404,7 +419,7 @@ vec3 get_ray_radiance(vec3 origin, vec3 direction, inout uvec2 seed) {
 }
 ```
 
-The calling function:
+The calling function. Remember to divide total radiance by sample amount N.
 ```glsl
 void mainImage(out vec4 out_color, in vec2 pixel_coord) {
     // Define the camera position and the view plane
@@ -421,6 +436,8 @@ void mainImage(out vec4 out_color, in vec2 pixel_coord) {
 ```
 
 # Progressive rendering on Shadertoy
+On shadertoy, we do everything in **Buffer A**, where `out vec4 out_color` is output into `iChannel0`. `iChannel0` kept being sampled as `prev_color` and got added with newly sampled radiance weighted by per-frame contribution weight.
+
 ```glsl
 vec3 prev_color = texture(iChannel0, tex_coord).rgb;
 float weight = 1.0 / float(iFrame + 1);
@@ -428,9 +445,22 @@ out_color.rgb = (1.0 - weight) * prev_color + weight * out_color.rgb;
 out_color.a = 1.0;
 ```
 
+In **Image**, we simply just display `iChannel0` texture to full screen:
+
+```glsl
+// Interesting things happen in Buffer A, this just displays the image
+void mainImage(out vec4 out_color, in vec2 pixel_coord) {
+    out_color = texture(iChannel0, pixel_coord / iResolution.xy);
+}
+```
+
 Now we have the final result:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/fttcz4?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/fttcz4?gui=true&t=10&paused=true&muted=true" allowfullscreen width="480" style="display:block; margin:auto;"></iframe>
+
+
+# Thoughts
+
 
 END
 
