@@ -136,7 +136,7 @@ Note that the function outputs are in 2 ways:
 - `out float out_t` parameter indicate it will capture the ray parameter at the intersection (if any) (t), aka the hitting point
 
 ### Intersection - Ray vs Mesh
-<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" width="480" style="display:block; margin:auto;">
 
 ```glsl
 // Checks whether a ray intersects any triangle of the mesh
@@ -311,11 +311,11 @@ $$L(x_1, w_1) = L_o(x_2) \approx L_e(x_2) + \frac{a(x_2)}{\pi} 2{\pi} L(x_2,w_1)
 and this keeps repeating.
 
 ## Flatten recursion into loop
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt1.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt1.png" width="480" style="display:block; margin:auto;">
 
 Add emission and update throughput weight $T_j$ in each iteration:
 
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt2.png" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt2.png" width="480" style="display:block; margin:auto;">
 
 ```glsl
 // Performs path tracing: It starts with the given ray. If this ray intersects
