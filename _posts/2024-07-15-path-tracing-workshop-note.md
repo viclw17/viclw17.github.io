@@ -219,6 +219,7 @@ It is guided by **Lambert’s Law**.
 
 ## Rendering equation
 **Note that this is the simplified version for the workshop:*
+
 $$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 
 - result: outgoing radiance $L_o(x)$ for diffuse surface at x
@@ -227,18 +228,25 @@ $$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 - divide by $\pi$ to ensure energy conservation
 - add light emitted at x, 0 if x is not a light source
 
-We have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. We need $L(x,w)$ which equal to $L{o}(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
+We have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. Then, we need $L(x,w)$ for each integral, which equals to $L{o}(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
 
 ## Monte Carlo Integration
-Instead, pick(sample) $w1$ at random, we have:
+Instead, if we pick(sample) $w_1$ at random, we have:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi}L(x,w_1) n(x) \cdot w_1$$
 
-when sample for many (towards infinite) times:
+and when we sample for many (towards infinite) times:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j = 1}{\overset{N}{\sum }} L(x,w_j) n(x) \cdot w_j$$
 
+This is called a Monte Carlo Estimator, and when $N$ approaches infinity, the estimate is approaching 100% probability on being the correct answer.
+
+The errors of the estimator is called zero-mean noise.
+
+
 ### Uniform hemisphere sampling
+Utility funtions to generate random direction vectors on hemisphere. It is using a uniform distribution to generate random numbers and map them to a random direction vector.
+
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/7t3yRn?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 Code:
@@ -296,11 +304,17 @@ vec2 rands_1 = get_random_numbers(seed);
 ```
 
 ## Direct Illumination
-$$L(x) = L_e + \frac{a(x)}{\pi} L_e(y) n(x) \cdot w$$
+
+Rendering direct illumination is the first step to test the theory - it only accounts for emission from light sources and direct illumination only from the light sources. 
+
+$$L(x) = L_e + \frac{a(x)}{\pi} \cdot 2{\pi} \cdot L_e(y) \cdot n(x) \cdot w$$
+
 $$y = ray\_intersection(x,w) = x + tw$$
 
 ## Direct + Indirect Illumination
-Camera ray $x_0, w_0$, want to estimate $L(x_0, w_0)$, $x_1 = ray\_intersection(x_0,w_0)$, setting Monte Carlo $N = 1$:
+With camera ray $x_0, w_0$, we want to estimate $L(x_0, w_0)$ where $x_1 = ray\_intersection(x_0,w_0)$. 
+
+Setting Monte Carlo $N = 1$, with a random direction $w_1$, we have:
 
 $$L(x_0, w_0) = L_o(x_1) \approx L_e(x_1) + \frac{a(x_1)}{\pi} 2{\pi} L(x_1,w_1)n(x_1) \cdot w_1$$
 
@@ -308,7 +322,7 @@ then from point $x_1$, ray trace to another random direction for next intersecti
 
 $$L(x_1, w_1) = L_o(x_2) \approx L_e(x_2) + \frac{a(x_2)}{\pi} 2{\pi} L(x_2,w_1)n(x_2) \cdot w_2$$
 
-and this keeps repeating.
+and this keeps propagating.
 
 ## Flatten recursion into loop
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt1.png" width="480" style="display:block; margin:auto;">
@@ -368,7 +382,11 @@ out_color.rgb = (1.0 - weight) * prev_color + weight * out_color.rgb;
 out_color.a = 1.0;
 ```
 
-TBC
+Now we have the final result:
+
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/fttcz4?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+
+END
 
 
 
