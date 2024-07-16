@@ -205,7 +205,11 @@ Radiance measures **irradiance with respect to solid angles**. Definition:
 
 $$L = \frac{dE_{w}}{dw}$$
 
-where, $E_w$ is the irradiance at the surface that is perpendicular to the direction $w$: $E_{\omega} =  \frac{d\phi}{dA^ \bot}$, so
+where, $E_w$ is the irradiance at the surface that is perpendicular to the direction $w$: 
+
+$$E_{\omega} =  \frac{d\phi}{dA^ \bot}$$
+
+so:
 
 $$L = \frac{dE_w}{dw} = \frac{d^2 \phi}{d\omega \cdot dA^ \bot}$$
 
@@ -245,6 +249,8 @@ $$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 Now we have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. Then, we need $L(x,w)$ for each integral, which equals to $L_o(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
 
 ## Monte Carlo Integration
+Monte Carlo Integration is the method we use to solve the rendering equation.
+
 If we try picking(or *sampling*) ray direction $w_1$ at random, we have:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi}L(x,w_1) n(x) \cdot w_1$$
@@ -253,10 +259,36 @@ and when we sample for many (towards infinite) times:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j = 1}{\overset{N}{\sum }} L(x,w_j) n(x) \cdot w_j$$
 
-This is called a **Monte Carlo Estimator**, and when $N$ (the sampling times) approaches infinity, the estimate is approaching 100% probability on being the correct answer.
+This is called a **Monte Carlo Estimator**, and when $N$ (the sampling times) approaches infinity, the estimate is *approaching* 100% probability on being the correct answer.
+
+<img src="https://www.scratchapixel.com/images/monte-carlo-methods/mcintegration06.png?" width = "400" style="display:block; margin:auto;">
 
 The errors of the estimator is called *zero-mean noise*.
 
+*I will document the derivations of Monte Carlo in another post as it is such an important field in pace tracing implementation. Also I have to brush up probability theories for that...*
+
+### More from pbrt
+The expected value $E_p[f(x)]$ of a function $f$ is defined as **the average value of the function over some distribution** $p(x)$ over its domain $D$. Definition:
+
+$$E_p[f(x)]=\int_D f(x)p(x)dx$$
+
+Given a supply of **independent uniform random variable** $X_i \in [a,b]$, the Monte Carlo Estimator is showing:
+
+the expected value $E[F_n]$ of the estimator $F_n = \frac{b-a}{n} {\overset{n}{\underset{i=1}\sum}} f(X_i)$ is equal to the integral.
+
+$X_i$ can be drawn from any PDF $p(x)$, then the estimator is:
+
+$$F_n = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}$$
+
+then we have:
+
+$$E[F_n] = E[\frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}E[ {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}} E[ \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}}\int_D \frac{f(x)}{p(x)}p(x)dx$$
+
+$$ = \int_D f(x)dx$$
+
+Final form:
+
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "400" style="display:block; margin:auto;">
 
 ### Uniform hemisphere sampling
 Utility funtions to generate random direction vectors on hemisphere. It is using a uniform distribution to generate random numbers and map them to a random direction vector.
