@@ -241,6 +241,8 @@ $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j
 ### Uniform hemisphere sampling
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/7t3yRn?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
+Code:
+
 ```
 // Given uniform random numbers u_0, u_1 in [0,1)^2, this function returns a
 // uniformly distributed point on the unit sphere (i.e. a random direction)
@@ -298,8 +300,65 @@ $$L(x) = L_e + \frac{a(x)}{\pi} L_e(y) n(x) \cdot w$$
 $$y = ray\_intersection(x,w) = x + tw$$
 
 ## Direct + Indirect Illumination
-Camera ray $x_0, w_0$, want to estimate $L(x_0, w_0)$, $x_1 = ray\_intersection(x_0,w_0)$, setting Monte Carlo N = 1:
+Camera ray $x_0, w_0$, want to estimate $L(x_0, w_0)$, $x_1 = ray\_intersection(x_0,w_0)$, setting Monte Carlo $N = 1$:
+
 $$L(x_0, w_0) = L_o(x_1) \approx L_e(x_1) + \frac{a(x_1)}{\pi} 2{\pi} L(x_1,w_1)n(x_1) \cdot w_1$$
+
+then from point $x_1$, ray trace to another random direction for next intersection point, and we will have:
+
+$$L(x_1, w_1) = L_o(x_2) \approx L_e(x_2) + \frac{a(x_2)}{\pi} 2{\pi} L(x_2,w_1)n(x_2) \cdot w_2$$
+
+and this keeps repeating.
+
+## Flatten recursion into loop
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt1.png" style="display:block; margin:auto;">
+
+Add emission and update throughput weight $T_j$ in each iteration:
+
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt2.png" style="display:block; margin:auto;">
+
+```
+// Performs path tracing: It starts with the given ray. If this ray intersects
+// a triangle, a new random ray is traced iteratively, up to a fixed limit.
+// \param origin The position at which the ray starts (x_j)
+// \param direction The direction vector of the ray (omega_j)
+// \param seed Needed for get_random_numbers()
+// \return A noisy estimate of the reflected and emitted radiance at the point
+//         intersected by the ray (i.e. the color) (L_o(x))
+vec3 get_ray_radiance(vec3 origin, vec3 direction, inout uvec2 seed) {
+    vec3 radiance = vec3(0.0);
+    vec3 throughput_weight = vec3(1.0);
+    for (int i = 0; i != MAX_PATH_LENGTH; ++i) {
+        float t;
+        triangle_t tri;
+        if (ray_mesh_intersection(t, tri, origin, direction)) {
+            radiance += throughput_weight * tri.emission;
+            origin += t * direction;
+            direction = sample_hemisphere(get_random_numbers(seed), tri.normal);
+            throughput_weight *= tri.color * 2.0 * dot(tri.normal, direction);
+        }
+        else
+            break;
+    }
+    return radiance;
+}
+```
+
+The calling function:
+```
+void mainImage(out vec4 out_color, in vec2 pixel_coord) {
+    // Define the camera position and the view plane
+    // Compute the camera ray
+    // Use a different seed for each pixel and each frame
+    
+    // Perform path tracing with SAMPLE_COUNT paths
+    out_color.rgb = vec3(0.0);
+    for (int i = 0; i != SAMPLE_COUNT; ++i)
+        out_color.rgb += get_ray_radiance(camera_position, ray_direction, seed);
+    out_color.rgb /= float(SAMPLE_COUNT);
+    // ...
+}
+```
 
 
 
