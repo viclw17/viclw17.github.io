@@ -168,7 +168,6 @@ Note that the function outputs are in 3 ways:
 - `out float out_t`: ray parameter at the intersection (if smaller than max ray length)
 
 # Path tracing
-TBC
 
 ## Global Illumination
 Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
@@ -194,9 +193,9 @@ Radiance measures Irradiance with respect to solid angles. Definition:
 
 $$L = \frac{dE_{w}}{dw}$$
 
-where, $E{w}$ is the irradiance at the surface that is perpendicular to the direction $w$: $E_{\omega} =  \frac{d\phi}{dA^ \bot}$, so
+where, $E_w$ is the irradiance at the surface that is perpendicular to the direction $w$: $E_{\omega} =  \frac{d\phi}{dA^ \bot}$, so
 
-$$L = \frac{dEw}{dw} = \frac{d\phi}{d\omega \cdot dA^ \bot}$$
+$$L = \frac{dE_w}{dw} = \frac{d\phi}{d\omega \cdot dA^ \bot}$$
 
 which means, radiance is the flux density per unit area, per unit solid angle.
 
@@ -219,13 +218,97 @@ $$E(p) = \frac{d\phi(p)}{dA}$$
 It is guided by **Lambert’s Law**.
 
 ## Rendering equation
-$$L{o}(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
+**Note that this is the simplified version for the workshop:*
+$$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 
-- result: outgoing radiance for diffuse surface at x
+- result: outgoing radiance $L_o(x)$ for diffuse surface at x
 - compute incoming irradiance $E(x,n(x))$, = total light reaching x
 - multiply by surface color $a(x)$
 - divide by $\pi$ to ensure energy conservation
 - add light emitted at x, 0 if x is not a light source
+
+We have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. We need $L(x,w)$ which equal to $L{o}(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
+
+## Monte Carlo Integration
+Instead, pick(sample) $w1$ at random, we have:
+
+$$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi}L(x,w_1) n(x) \cdot w_1$$
+
+when sample for many (towards infinite) times:
+
+$$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j = 1}{\overset{N}{\sum }} L(x,w_j) n(x) \cdot w_j$$
+
+### Uniform hemisphere sampling
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/7t3yRn?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+
+```
+// Given uniform random numbers u_0, u_1 in [0,1)^2, this function returns a
+// uniformly distributed point on the unit sphere (i.e. a random direction)
+// (omega)
+vec3 sample_sphere(vec2 random_numbers) {
+    float z = 2.0 * random_numbers[1] - 1.0;
+    float phi = 2.0 * M_PI * random_numbers[0];
+    float x = cos(phi) * sqrt(1.0 - z * z);
+    float y = sin(phi) * sqrt(1.0 - z * z);
+    return vec3(x, y, z);
+}
+
+
+// Like sample_sphere() but only samples the hemisphere where the dot product
+// with the given normal (n) is >= 0
+vec3 sample_hemisphere(vec2 random_numbers, vec3 normal) {
+    vec3 direction = sample_sphere(random_numbers);
+    if (dot(normal, direction) < 0.0)
+        direction -= 2.0 * dot(normal, direction) * normal;
+    return direction;
+}
+```
+
+### Psendorandom number generator
+```
+// A pseudo-random number generator
+// \param seed Numbers that are different for each invocation. Gets updated so
+//             that it can be reused.
+// \return Two independent, uniform, pseudo-random numbers in [0,1) (u_0, u_1)
+vec2 get_random_numbers(inout uvec2 seed) {
+    // This is PCG2D: https://jcgt.org/published/0009/03/02/
+    seed = 1664525u * seed + 1013904223u;
+    seed.x += 1664525u * seed.y;
+    seed.y += 1664525u * seed.x;
+    seed ^= (seed >> 16u);
+    seed.x += 1664525u * seed.y;
+    seed.y += 1664525u * seed.x;
+    seed ^= (seed >> 16u);
+    // Convert to float. The constant here is 2^-32.
+    return vec2(seed) * 2.32830643654e-10;
+}
+
+// ...
+// Use a different seed for each pixel and each frame
+uvec2 seed = uvec2(pixel_coord) ^ uvec2(iFrame << 16, iFrame << 16 + 237);
+
+// This gives 2 uniform random numbers in [0,1)
+vec2 rands_0 = get_random_numbers(seed);
+// These are different random numbers because seed has changed
+vec2 rands_1 = get_random_numbers(seed);
+```
+
+## Direct Illumination
+$$L(x) = L_e + \frac{a(x)}{\pi} L_e(y) n(x) \cdot w$$
+$$y = ray\_intersection(x,w) = x + tw$$
+
+## Direct + Indirect Illumination
+Camera ray $x_0, w_0$, want to estimate $L(x_0, w_0)$, $x_1 = ray\_intersection(x_0,w_0)$, setting Monte Carlo N = 1:
+$$L(x_0, w_0) = L_o(x_1) \approx L_e(x_1) + \frac{a(x_1)}{\pi} 2{\pi} L(x_1,w_1)n(x_1) \cdot w_1$$
+
+
+
+
+
+
+
+
+
 
 
 
