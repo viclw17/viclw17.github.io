@@ -464,7 +464,7 @@ My journey of raytracing started at [Ray Tracing in One Weekend](https://viclw17
 
 Thanks to this workshop as it helped me reformulated all the reading and researching with a minimal context. Credit and biggest appreciation to the author [Christoph Peters](https://momentsingraphics.de/PathTracingWorkshop.html).
 
-Even though my choosen career path is Technical Art in game development and **real-time** production in film and animation, so many times I came so close to graphic engineering and came across low level rendering theories. Looking into such field is purly interest driven but proven to be extremely benefitial as a Technical Artist.
+Even though my choosen career path is Technical Art in game development and **real-time** production in film and animation, so many times I came so close to graphic engineering and came across low level rendering theories. Looking into such field is purely interest driven but proven to be extremely benefitial as a Technical Artist.
 
 END
 
