@@ -288,7 +288,7 @@ $$ = \int_D f(x)dx$$
 
 Final form of Monte Carlo Estimator in its full glory:
 
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "350" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "300" style="display:block; margin:auto;">
 
 ### Uniform hemisphere sampling
 Utility funtions to generate random direction vectors on hemisphere. It is using a uniform distribution to generate random numbers and map them to a random direction vector.
