@@ -350,7 +350,7 @@ void mainImage(out vec4 out_color, in vec2 pixel_coord) {
     // Define the camera position and the view plane
     // Compute the camera ray
     // Use a different seed for each pixel and each frame
-    
+
     // Perform path tracing with SAMPLE_COUNT paths
     out_color.rgb = vec3(0.0);
     for (int i = 0; i != SAMPLE_COUNT; ++i)
@@ -360,6 +360,15 @@ void mainImage(out vec4 out_color, in vec2 pixel_coord) {
 }
 ```
 
+# Progressive rendering on Shadertoy
+```
+vec3 prev_color = texture(iChannel0, tex_coord).rgb;
+float weight = 1.0 / float(iFrame + 1);
+out_color.rgb = (1.0 - weight) * prev_color + weight * out_color.rgb;
+out_color.a = 1.0;
+```
+
+TBC
 
 
 
