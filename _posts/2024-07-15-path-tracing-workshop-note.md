@@ -460,9 +460,11 @@ Now we have the final result:
 
 
 # Thoughts
-My journey of raytracing started at [Ray Tracing in One Weekend](https://viclw17.github.io/2018/07/17/raytracing-camera-and-msaa) then proceeded by diving into the rabbit hole of *pbrt*. The richness of *pbrt* kept pushing me out of my comfort zone to learn more and read more, and try to understand rigorous scientific and mathmatic base of path tracing and pbr. The process kept echoing with what I learned at university in digital media and computer science, and bringing all the familiar knowledge back to surface with much more interesting context - C++ programming, data structures, calculus, discrete math, probability theories, digital image processing and 3D art production and so much more.
+My journey of raytracing started at [Ray Tracing in One Weekend](https://viclw17.github.io/2018/07/17/raytracing-camera-and-msaa) then proceeded by diving into [the rabbit hole of *pbrt*](https://viclw17.github.io/2024/07/01/revisit-path-tracing). The richness of *pbrt* kept pushing me out of my comfort zone to learn more and read more, and try to understand rigorous scientific and mathmatic base of path tracing and pbr. The process kept echoing with what I learned at university in digital media and computer science -- C++ programming, data structures, calculus, discrete math, probability theories, digital image processing and 3D art production and so much more -- and bringing all those convoluted fading-away knowledge back to the surface with much more relavant and interesting context. :)
 
-Even though my choosen career path is Technical Art in game development and **real-time** production in film and animation, so many times I came so close to graphic engineering and low level rendering theories. Looking into such field is purly interest driven but proven to be extremely benefitial as a Technical Artist. :)
+Thanks to this workshop as it helped me reformulated all the reading and researching with a minimal context. Credit and biggest appreciation to the author [Christoph Peters](https://momentsingraphics.de/PathTracingWorkshop.html).
+
+Even though my choosen career path is Technical Art in game development and **real-time** production in film and animation, so many times I came so close to graphic engineering and came across low level rendering theories. Looking into such field is purly interest driven but proven to be extremely benefitial as a Technical Artist.
 
 END
 
