@@ -89,7 +89,7 @@ Triangle definition. Here it contains both geo data and surface data, for simpli
 
 In better implementation like in pbrt, geo data is the only focus for shape class, and a material class will focus on surface data including a reference to texture class. Above all, a primitive class will encompass both shape and material.
 
-```
+```glsl
 // A triangle along with some shading parameters
 struct triangle_t {
     // The positions of the three vertices (v_0, v_1, v_2)
@@ -114,7 +114,7 @@ A mathmatic representation is as followed, and the goal here is to fomulate it t
 
 <img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle2.png" style="display:block; margin:auto;">
 
-```
+```glsl
 // Checks whether a ray intersects a triangle
 // \param out_t The ray parameter at the intersection (if any) (t)
 // \param origin The position at which the ray starts (o)
@@ -138,7 +138,7 @@ Note that the function outputs are in 2 ways:
 ### Intersection - Ray vs Mesh
 <img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle3.png" style="display:block; margin:auto;">
 
-```
+```glsl
 // Checks whether a ray intersects any triangle of the mesh
 // \param out_t The ray parameter at the closest intersection (if any) (t)
 // \param out_tri The closest triangle that was intersected (if any)
@@ -243,7 +243,7 @@ $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j
 
 Code:
 
-```
+```glsl
 // Given uniform random numbers u_0, u_1 in [0,1)^2, this function returns a
 // uniformly distributed point on the unit sphere (i.e. a random direction)
 // (omega)
@@ -267,7 +267,7 @@ vec3 sample_hemisphere(vec2 random_numbers, vec3 normal) {
 ```
 
 ### Psendorandom number generator
-```
+```glsl
 // A pseudo-random number generator
 // \param seed Numbers that are different for each invocation. Gets updated so
 //             that it can be reused.
@@ -317,7 +317,7 @@ Add emission and update throughput weight $T_j$ in each iteration:
 
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\pt2.png" style="display:block; margin:auto;">
 
-```
+```glsl
 // Performs path tracing: It starts with the given ray. If this ray intersects
 // a triangle, a new random ray is traced iteratively, up to a fixed limit.
 // \param origin The position at which the ray starts (x_j)
@@ -345,7 +345,7 @@ vec3 get_ray_radiance(vec3 origin, vec3 direction, inout uvec2 seed) {
 ```
 
 The calling function:
-```
+```glsl
 void mainImage(out vec4 out_color, in vec2 pixel_coord) {
     // Define the camera position and the view plane
     // Compute the camera ray
@@ -361,7 +361,7 @@ void mainImage(out vec4 out_color, in vec2 pixel_coord) {
 ```
 
 # Progressive rendering on Shadertoy
-```
+```glsl
 vec3 prev_color = texture(iChannel0, tex_coord).rgb;
 float weight = 1.0 / float(iFrame + 1);
 out_color.rgb = (1.0 - weight) * prev_color + weight * out_color.rgb;
