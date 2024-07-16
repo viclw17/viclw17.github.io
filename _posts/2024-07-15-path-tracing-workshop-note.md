@@ -6,7 +6,7 @@ image: 2024-07-15-path-tracing-workshop-note\cover.png
 
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
 
-Note for Intel Path-Tracing Workshop.
+I haven't explored ray tracing and path tracing techniques in a while. Recently, I stumbled upon this cool workshop that got me excited about diving back into the topic. It's a chance for me to approach rendering and its implementation in a whole new way and document my journey along the process. :)
 
 ---
 
@@ -26,13 +26,13 @@ This workshop shows how to:
 
 More about the workshop from the author can be found on his [blog](https://momentsingraphics.de/PathTracingWorkshop.html).
 
-Course project result on shadertoy:
+<!-- Course project result on shadertoy:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe> -->
 
 # Ray Tracing
 ## A tiny ray tracer
-[Back of the Business Card Ray Tracers](https://www.realtimerendering.com/blog/back-of-the-business-card-ray-tracers/)
+Firstly, start with a fun trivia:  [Back of the Business Card Ray Tracers](https://www.realtimerendering.com/blog/back-of-the-business-card-ray-tracers/)
 
 <img src="https://www.realtimerendering.com/blog/wp-content/uploads/2021/10/image-2.png"  width="400" style="display:block; margin:auto;">
 
@@ -44,7 +44,7 @@ Course project result on shadertoy:
 
 More about ray tracing on Scratchapixel [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/ray-tracing-rendering-technique-overview.html)
 
-## Workshop checklist
+## Workshop goal keypoints
 - Framework provided - shadertoy etc.
 - Scene provided - triangles only cornell box
 - Only diffuse surface
