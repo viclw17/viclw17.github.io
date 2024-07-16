@@ -170,68 +170,82 @@ Note that the function outputs are in 3 ways:
 # Path tracing
 
 ## Global Illumination
-Surfaces can be lit directly, but also indirectly, via paths of arbitrary length.
-Path tracing starts at camera, finds a light when it is lucky.
+Surfaces can be lit directly, but also **indirectly**, via paths of **arbitrary length and directions**.
+Path tracing operation starts at camera, keep tracing done the bouncing rays (ray tracing) until finds a light source when it is lucky.
 
 ## Radiance
-$L_(x,w)$ is basically color for ray $x+tw$. It is a **plenoptic function / radiance field**.
+$L_(x,w)$ is called radiance, which is *basically color* for the ray $x+tw$. 
+
+It is a **plenoptic function / radiance field**.
 
 > The plenoptic illumination function is an idealized function used in computer graphics to express the image of a scene from **any possible viewing position** at **any viewing angle** at **any pointin time**.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Plenoptic-function-a.png" width = "300" style="display:block; margin:auto;">
 
+The final pixel color of the render result is **the radiance for camera ray**.
 
-So the final pixel color is the radiance for camera ray.
+Radiance is constant along rays in vacuum. Which means if we trace a ray up from point $x$ to $y$, the radiance received at $x$ (from $y$) is the same as the radiance sent from $y$ (to $x$):
+$L(x,w)=L(y,-w)$
 
-Radiance is constant along rays in vacuum.
-<!-- , hence $$L(y,w)=L(x.w)$$ -->
+**Ray tracing** is transporting radiance, describes how light propogates in empty space.
 
-Ray tracing is transporting radiance, describes how light propogates in empty space.
+### Derivation of Radiance and other Rediometry Terms
+Note: the best way is to follow the order of derivation of:
+
+- Energy ($J$)
+- flux ($W$)
+- Irradiance and Radiant Exitance ($W/m^2$)
+- Intensity ($W/sr$)
+- Radiance ($W/m^2sr$)
+  
+It is well explained in [pbrt](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Radiometry) but here we will follow the workshop structure.
 
 ### More from pbrt
-Radiance measures Irradiance with respect to solid angles. Definition:
+Radiance measures **irradiance with respect to solid angles**. Definition:
 
 $$L = \frac{dE_{w}}{dw}$$
 
 where, $E_w$ is the irradiance at the surface that is perpendicular to the direction $w$: $E_{\omega} =  \frac{d\phi}{dA^ \bot}$, so
 
-$$L = \frac{dE_w}{dw} = \frac{d\phi}{d\omega \cdot dA^ \bot}$$
+$$L = \frac{dE_w}{dw} = \frac{d^2 \phi}{d\omega \cdot dA^ \bot}$$
 
-which means, radiance is the flux density per unit area, per unit solid angle.
+which means, radiance is the **flux density per unit area, per unit solid angle**.
 
-> It is the limit of: the measurement of incident light at the surface, as a cone of incident directions of interest dw becomes very small, and as the local area of interest on the surface dA also becomes very small.
+> It is the limit of the measurement of incident light at the surface, as a cone of incident directions of interest dw becomes very small, and as the local area of interest on the surface dA also becomes very small.
 
 
 
 ## Irradiance
-We don't just have to deal with empty space, we also have to figure out how light **interact with the surface** - defined by irradiance.
+We don't just have to deal with empty space, we also have to figure out how light **interact with the surface** - this is defined by irradiance.
 
-Irradiance is the weighted integral over radiance:
+Irradiance is the **weighted integral over radiance**:
 
 $$E(x,n(x)) = \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 
 ### More from pbrt
-From a differential perspective, irradiance is the average density of power over the area. Taking the limit of differential power per differential area at a point p, we got:
+From a differential perspective, irradiance is the average **density of power (flux, $\phi$) over the area ($A$)**. Taking the limit of differential power per differential area at a point p, we got **Irradiance** at point p:
 
 $$E(p) = \frac{d\phi(p)}{dA}$$
 
-It is guided by **Lambert’s Law**.
+It is following **Lambert's cosine law**.
 
 ## Rendering equation
-**Note that this is the simplified version for the workshop:*
+**Note: this is the over simplified version for the workshop, more at this [post](https://viclw17.github.io/2018/06/30/raytracing-rendering-equation):*
 
 $$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
 
 - result: outgoing radiance $L_o(x)$ for diffuse surface at x
-- compute incoming irradiance $E(x,n(x))$, = total light reaching x
-- multiply by surface color $a(x)$
-- divide by $\pi$ to ensure energy conservation
-- add light emitted at x, 0 if x is not a light source
+- compute incoming irradiance $E(x,n(x))=\int_{\Omega(x)}L(x,w) n(x) \cdot w dw$, aka. **total light reaching x**
+  - multiply by surface color $a(x)$ (this is actually *albedo*)
+  - divide by $\pi$ to ensure energy conservation (this is actually the *diffuse BRDF*)
+  - add light emitted at x, 0 if x is not a light source
 
-We have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. Then, we need $L(x,w)$ for each integral, which equals to $L{o}(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
+*Note: here is a good read about [Albedo and Diffuse BRDF](https://sakibsaikia.github.io/graphics/2019/09/10/Deriving-Lambertian-BRDF-From-First-Principles.html)*
+
+Now we have to integrate over $\Omega(x)$, which contains infinite many of incoming direction vectors. Then, we need $L(x,w)$ for each integral, which equals to $L_o(y)$ where $y = ray\_intersection(x,w) = x + tw$, and accordingly there are infinite many of point $y$.
 
 ## Monte Carlo Integration
-Instead, if we pick(sample) $w_1$ at random, we have:
+If we try picking(or *sampling*) ray direction $w_1$ at random, we have:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi}L(x,w_1) n(x) \cdot w_1$$
 
@@ -239,9 +253,9 @@ and when we sample for many (towards infinite) times:
 
 $$\int_{\Omega(x)}(L(x,w) n(x) \cdot w dw) \approx 2{\pi} \frac{1}{N}\underset{j = 1}{\overset{N}{\sum }} L(x,w_j) n(x) \cdot w_j$$
 
-This is called a Monte Carlo Estimator, and when $N$ approaches infinity, the estimate is approaching 100% probability on being the correct answer.
+This is called a **Monte Carlo Estimator**, and when $N$ (the sampling times) approaches infinity, the estimate is approaching 100% probability on being the correct answer.
 
-The errors of the estimator is called zero-mean noise.
+The errors of the estimator is called *zero-mean noise*.
 
 
 ### Uniform hemisphere sampling
