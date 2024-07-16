@@ -286,9 +286,9 @@ $$E[F_n] = E[\frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}
 
 $$ = \int_D f(x)dx$$
 
-Final form:
+Final form of Monte Carlo Estimator in its full glory:
 
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "400" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "350" style="display:block; margin:auto;">
 
 ### Uniform hemisphere sampling
 Utility funtions to generate random direction vectors on hemisphere. It is using a uniform distribution to generate random numbers and map them to a random direction vector.
@@ -456,11 +456,13 @@ void mainImage(out vec4 out_color, in vec2 pixel_coord) {
 
 Now we have the final result:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/fttcz4?gui=true&t=10&paused=true&muted=true" allowfullscreen width="480" style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/fttcz4?gui=true&t=10&paused=true&muted=true" allowfullscreen width="600" style="display:block; margin:auto;"></iframe>
 
 
 # Thoughts
+My journey of raytracing started at [Ray Tracing in One Weekend](https://viclw17.github.io/2018/07/17/raytracing-camera-and-msaa) then proceeded by diving into the rabbit hole of *pbrt*. The richness of *pbrt* kept pushing me out of my comfort zone to learn more and read more, and try to understand rigorous scientific and mathmatic base of path tracing and pbr. The process kept echoing with what I learned at university in digital media and computer science, and bringing all the familiar knowledge back to surface with much more interesting context - C++ programming, data structures, calculus, discrete math, probability theories, digital image processing and 3D art production and so much more.
 
+Even though my choosen career path is Technical Art in game development and **real-time** production in film and animation, so many times I came so close to graphic engineering and low level rendering theories. Looking into such field is purly interest driven but proven to be extremely benefitial as a Technical Artist. :)
 
 END
 
