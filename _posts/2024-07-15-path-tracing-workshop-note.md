@@ -1,5 +1,5 @@
 ---
-title: "Path Tracing Workshop Note"
+title: "Notes from A Path Tracing Workshop"
 layout: post
 image: 2024-07-15-path-tracing-workshop-note\cover.png
 ---
