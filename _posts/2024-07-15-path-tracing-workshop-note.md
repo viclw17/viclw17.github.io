@@ -1,10 +1,12 @@
 ---
 title: "Notes from A Path Tracing Workshop"
 layout: post
-image: 2024-07-15-path-tracing-workshop-note\cover.png
+image: /images/2024-07-15-path-tracing-workshop-note/cover.png
 ---
 
 I haven't explored ray tracing and path tracing techniques in a while. Recently, I stumbled upon this cool workshop that got me excited about diving back into the topic. It's a chance for me to approach rendering and its implementation in a whole new way and document my journey along the process. :)
+
+---
 
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
 
