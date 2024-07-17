@@ -23,6 +23,7 @@ plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-t
 title:		           '1000 Forms of Bunnies'
 description:	       "victor's tech art blog."
 author:              'Victor Li'
+image:               'assets\img\mountains.jpg'
 
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
