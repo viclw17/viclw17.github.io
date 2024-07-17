@@ -3,6 +3,7 @@ title: "Notes from A Path Tracing Workshop"
 layout: post
 image: 2024-07-15-path-tracing-workshop-note\cover.png
 ---
+<meta name="og:image" content="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note/cover.png">
 
 <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover.png" style="display:block; margin:auto;">
 
