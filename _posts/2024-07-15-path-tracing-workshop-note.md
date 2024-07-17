@@ -278,9 +278,9 @@ Given a supply of **independent uniform random variable** $X_i \in [a,b]$, the M
 
 the expected value $E[F_n]$ of the estimator $F_n = \frac{b-a}{n} {\overset{n}{\underset{i=1}\sum}} f(X_i)$ is equal to the integral.
 
-Here the uniform random variable is from a [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution) which has PDF of $p_uniform=\frac{1}{b-a}$, so the estimator can be written as
+Here the uniform random variable is from a [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution) which has PDF of $p\_uniform=\frac{1}{b-a}$, so the estimator can be written as
 
-$$F_n = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{1/(b-a)} = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p_uniform}$$
+$$F_n = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{1/(b-a)} = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p\_uniform}$$
 
 Basically, $X_i$ can be drawn from any PDF $p(x)$, then the estimator is:
 
