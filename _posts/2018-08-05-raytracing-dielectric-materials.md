@@ -4,8 +4,8 @@ layout: post
 image: 2018-08-05-raytracing-dielectric-materials/raytracing-dielectric-0.jpg
 ---
 
-<img src="{{ site.url }}/images/2018-08-05-raytracing-dielectric-materials/raytracing-dielectric-0.jpg" width="640"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2018-08-05-raytracing-dielectric-materials/raytracing-dielectric-0.jpg" width="640"  style="display:block; margin:auto;">
+<br> -->
 
 Chapter 9 study note. Breakdown topics about basic optic physics (refractive index, Snell's Law, total reflection, Fresnel coefficients, Schlick's approximation) and vector maths for calculating refraction ray.
 

@@ -4,7 +4,8 @@ layout: post
 image: 2016-04-10-specular-shading-optimization/specular2.gif
 ---
 
-<img src="{{ site.url }}/images/2016-04-10-specular-shading-optimization/specular2.gif" width="400" height="400" style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images/2016-04-10-specular-shading-optimization/specular2.gif" width="400" height="400" style="display:block; margin:auto;"> -->
+
 <figcaption style="text-align: center;">Low poly water mesh with unity standard specular material.</figcaption>
 <br />
 When learning and practicing shader programming for Unity, I found the [Cg Wiki](https://en.wikibooks.org/wiki/Cg_Programming/Unity) website extremely benevolent on getting a well-rounded understanding of how to shade an object step by step. Apart from the magic configuration parts(Shader Properties/Passes/Tags etc.) of a typical Unity shader, the main function-related part of the shader only lies between _CGPROGRAM_ and _ENDCG_. According to my practice, I believe [Cg Wiki](https://en.wikibooks.org/wiki/Cg_Programming/Unity) and [Unity Shader Reference](http://docs.unity3d.com/Manual/SL-Reference.html) can cover almost all the basic tricks of Unity shader programming. ;)

@@ -4,8 +4,8 @@ layout: post
 image: 2019-03-15-exploring-interaction-effect-in-vr/depth_cover.jpg
 ---
 
-<img src="{{ site.url }}/images/2019-03-15-exploring-interaction-effect-in-vr/depth_cover.jpg" width="640"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2019-03-15-exploring-interaction-effect-in-vr/depth_cover.jpg" width="640"  style="display:block; margin:auto;">
+<br> -->
 
 In VR development, because the motion of the first person character is precisely mapping the real players' body(mainly hands) movement, the environment collision will never be able to prevent the player model from intersecting with the surrounding meshed. This is a well-accepted limitation of VR technique, however I personally feel it is a bit annoying if there is nothing done visually to address this fact.
 

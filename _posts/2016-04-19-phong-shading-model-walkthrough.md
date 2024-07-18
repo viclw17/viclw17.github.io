@@ -4,8 +4,9 @@ layout: post
 image: 2016-04-19-phong-shading-model-walkthrough/phong.png
 ---
 
-<img src="{{ site.url }}/images/2016-04-19-phong-shading-model-walkthrough/phong.png" width="640"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2016-04-19-phong-shading-model-walkthrough/phong.png" width="640"  style="display:block; margin:auto;">
+<br> -->
+
 <!-- ![]({{ site.url }}/images/2016-04-19-phong-shading-model-walkthrough/phong.png) -->
 <!-- <figcaption style="text-align: center;">Final work w/ transparency and faint tint and BUNNY!</figcaption> -->
 [Phong shading model](https://en.wikipedia.org/wiki/Phong_reflection_model) is one of the most classic realistic shading models. It captures the basic features of a lit object using a very concise and straightforward theory. It matches people's observation in daily life, and also easy to describe using math. Therefore, Phong shading model is always used as the base for other artistic shading effects to be built on.

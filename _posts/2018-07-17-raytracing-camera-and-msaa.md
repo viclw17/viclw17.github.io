@@ -4,8 +4,8 @@ layout: post
 image: 2018-07-17-raytracing-camera-and-msaa/raytracing-camera-msaa-01.jpg
 ---
 
-<img src="{{ site.url }}/images/2018-07-17-raytracing-camera-and-msaa/raytracing-camera-msaa-01.jpg" width="480"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2018-07-17-raytracing-camera-and-msaa/raytracing-camera-msaa-01.jpg" width="480"  style="display:block; margin:auto;">
+<br> -->
 
 Finish reading [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) Chapter 2 to 6. Breakdown topics about raytracing analogy, simple camera model implementation, surface normal visualization, and Multisampling Antialiasing (MSAA) implementation.
 

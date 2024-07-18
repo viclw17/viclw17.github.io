@@ -11,7 +11,7 @@ I haven't explored ray tracing and path tracing techniques in a while. Recently,
 - [Path-Tracing Workshop Part 1: Write a **Ray Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
 - [Path-Tracing Workshop Part 2: Write a **Path Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
 
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover0.jpg" style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\cover0.jpg" style="display:block; margin:auto;"> -->
 
 This workshop shows how to:
 

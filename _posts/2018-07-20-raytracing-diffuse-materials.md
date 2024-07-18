@@ -4,8 +4,9 @@ layout: post
 image: 2018-07-20-raytracing-diffuse-materials/raytracing-diffuse.jpg
 ---
 
-<img src="{{ site.url }}/images/2018-07-20-raytracing-diffuse-materials/raytracing-diffuse.jpg" width="640"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2018-07-20-raytracing-diffuse-materials/raytracing-diffuse.jpg" width="640"  style="display:block; margin:auto;">
+<br> -->
+
 Chapter 7 study note. Breakdown topics about diffuse reflection, random reflecting ray generation and rejection sampling in unit sphere.
 <br>
 

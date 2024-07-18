@@ -4,8 +4,8 @@ layout: post
 image: 2022-02-01-unreal-engine-custom-node/cover.png
 ---
 
-<img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/cover.png">
-<br>
+<!-- <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/cover.png">
+<br> -->
 
 Recently I've been playing with raymarching technique and trying to implement it in Unreal Engine material editor. As the algorithm requires a **for loop** meaning it can only be done using HLSL code with the Custom Node.
 

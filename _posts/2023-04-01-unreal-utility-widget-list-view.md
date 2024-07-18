@@ -4,7 +4,7 @@ layout: post
 image: 2023-04-01-unreal-utility-widget-list-view\cover.png
 ---
 
-<img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\cover.png" style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\cover.png" style="display:block; margin:auto;"> -->
 
 **List View** is a useful type of widget available in **Editor Utility Widget** Blueprint (EUW). During editor tooling in Unreal Engine, there are many cases require querying assets or actors and display them as a list. 
 

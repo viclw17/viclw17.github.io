@@ -4,7 +4,8 @@ layout: post
 image: 2018-07-15-raytracing-image-output/raytracing-image-output-1.jpg
 ---
 
-<img src="{{ site.url }}/images/2018-07-15-raytracing-image-output/raytracing-image-output-1.jpg" width="640"  style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images/2018-07-15-raytracing-image-output/raytracing-image-output-1.jpg" width="640"  style="display:block; margin:auto;"> -->
+
 <figcaption style="text-align: center;">The "Hello World!" of Computer Graphics.</figcaption>
 <br>
 

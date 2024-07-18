@@ -4,7 +4,8 @@ layout: post
 image: 2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif
 ---
 
-<img src="{{ site.url }}/images/2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif" style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images/2022-02-08-port-shadertoy-to-unreal-engine/1_decal400.gif" style="display:block; margin:auto;"> -->
+
 <figcaption style="text-align:center; font-size:15px; font-style:italic;">Default decal compares with fixed decal using biplanar projection. Code ported from shadertoy. </figcaption>
 
 Recently I've been helping my friends implementing a better decal projection in Unreal Engine as the default decal projection is fairly limited. It is causing stretching pattern on the parallel surface as projection intended to be. 

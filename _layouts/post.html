@@ -7,11 +7,11 @@ layout: default
 </h1>
 {% include post-date.html %}
 
-<!-- {% if page.image %} -->
+{% if page.image %}
   <!-- victor hide auto cover image in post -->
   <!-- <img src="{{ site.github.url }}/assets/img/{{ page.image }}"> -->
-  <!-- <img src="{{ site.github.url }}/images/{{ page.image }}"> -->
-<!-- {% endif %} -->
+  <img src="{{ site.github.url }}/images/{{ page.image }}" class="center">
+{% endif %}
 
 <article>
   {{ content }}

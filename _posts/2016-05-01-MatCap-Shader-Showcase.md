@@ -4,8 +4,9 @@ layout: post
 image: 2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg
 ---
 
-<img src="{{ site.url }}/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg" width="640"  style="display:block; margin:auto;">
-<br>
+<!-- <img src="{{ site.url }}/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg" width="640"  style="display:block; margin:auto;">
+<br> -->
+
 <!-- ![MatCap Bunnies]({{ site.url }}/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg) -->
 MatCap (Material Capture) shader uses an image of a sphere as a view-space environment map. It's very cheap and looks great when the camera doesn't rotate. It is widely used in 3D sculpting software (like Zbrush) to preview meshes.
 

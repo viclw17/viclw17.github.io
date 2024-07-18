@@ -4,9 +4,9 @@ layout: post
 image: 2022-03-01-raymarching-visualization-shaders/1.png
 ---
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NlSSDy?gui=true&t=10&paused=false&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
-
 During my study on implementing raymarching shadertoy in Unreal Engine, I constantly got confused by the algorithm simply because I cannot keep a clear and stable visual model of it in mind. A good way to drill how the algorithm works is to output some debug images to visualze the scene. 
+
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NlSSDy?gui=true&t=10&paused=false&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 ## A refresher
 > The shader program runs for every pixel on the canvas IN PARALLEL. This is extremely important to keep in mind.

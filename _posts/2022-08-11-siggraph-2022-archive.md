@@ -3,8 +3,8 @@ title: "Siggraph 2022 Archive"
 layout: post
 image: 2022-08-11-siggraph-2022-archive/s2022-banner.jpg
 ---
-<img src="{{ site.url }}/images/2022-08-11-siggraph-2022-archive/s2022-banner.jpg" style="display:block; margin:auto;">
-<figcaption style="text-align:center; font-size:15px; font-style:italic;"></figcaption>
+<!-- <img src="{{ site.url }}/images/2022-08-11-siggraph-2022-archive/s2022-banner.jpg" style="display:block; margin:auto;">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"></figcaption> -->
 
 A list of interesting talks at Siggraph 2022. All with recorded video available.
 

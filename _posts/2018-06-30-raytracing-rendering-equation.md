@@ -4,7 +4,7 @@ layout: post
 image: 2018-06-30-raytracing-rendering-equation/pbr-equation.jpg
 ---
 
-<img src="{{ site.url }}/images/2018-06-30-raytracing-rendering-equation/pbr-equation.jpg" width="640"  style="display:block; margin:auto;">
+<!-- <img src="{{ site.url }}/images/2018-06-30-raytracing-rendering-equation/pbr-equation.jpg" width="640"  style="display:block; margin:auto;"> -->
 <!-- ![]({{ site.url }}/images/2018-06-30-raytracing-rendering-equation/pbr-equation.jpg) -->
 <div style="text-align:center">
 Where the journey of physically based rendering begins.
