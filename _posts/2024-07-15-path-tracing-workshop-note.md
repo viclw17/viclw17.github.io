@@ -284,13 +284,13 @@ $$F_n = \frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}$$
 
 then we have:
 
-$$E[F_n] = E[\frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}E[ {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}} E[ \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}}\int_D \frac{f(x)}{p(x)}p(x)dx$$
+$$E[F_n] = E[\frac{1}{n} {\overset{n}{\underset{i=1}\sum}} \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}} E[ \frac{f(X_i)}{p(X_i)}] = \frac{1}{n}{\overset{n}{\underset{i=1}\sum}}\int_D \frac{f(x)}{p(x)}p(x)dx$$
 
 $$ = \int_D f(x)dx$$
 
 Final form of Monte Carlo Estimator in its full glory:
 
-<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "300" style="display:block; margin:auto;">
+<img src="{{ site.url }}/images/2024-07-15-path-tracing-workshop-note\mt1.png" width = "250" style="display:block; margin:auto;">
 
 ### Uniform hemisphere sampling
 Utility funtions to generate random direction vectors on hemisphere. It is using a uniform distribution to generate random numbers and map them to a random direction vector.

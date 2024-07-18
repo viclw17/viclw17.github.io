@@ -59,7 +59,7 @@ I got the code built and run and produced some nice images. It is an amazing lea
 
 There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand smallpt:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/XdcfRr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MclcR2?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Classes - TU Wien
 All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of staying on grinding the book or guessing how the source code just magically works.
@@ -93,7 +93,7 @@ More about the workshop from the author can be found on his [blog](https://momen
 
 Course project result on shadertoy:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MflczB?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Side Quest - Real-time Rendering
 At the meantime, I had another personal learning project going on to brush up my **OpenGL** knowledge and probably write a real-time renderer.
