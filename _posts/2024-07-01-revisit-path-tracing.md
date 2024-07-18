@@ -59,7 +59,7 @@ I got the code built and run and produced some nice images. It is an amazing lea
 
 There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand smallpt:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MclcR2?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MclcR2?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Classes - TU Wien
 All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of staying on grinding the book or guessing how the source code just magically works.
@@ -93,7 +93,7 @@ More about the workshop from the author can be found on his [blog](https://momen
 
 Course project result on shadertoy:
 
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MflczB?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MflczB?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 # Side Quest - Real-time Rendering
 At the meantime, I had another personal learning project going on to brush up my **OpenGL** knowledge and probably write a real-time renderer.
@@ -110,7 +110,7 @@ The current result has been pretty underwhelming - just **a model viewer** with 
 
 Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
 
-<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="640" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="640" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="display:block; margin:auto;" allowfullscreen></iframe>
 <p><a href="https://vimeo.com/382872589">PBR Renderer with PyOpenGL</a> from <a href="https://vimeo.com/viclw17">Victor Li</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
 *^ I'm planning to write more posts about those real-time renderer projects, just as experiment notes...*

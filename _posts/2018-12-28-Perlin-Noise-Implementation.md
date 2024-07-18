@@ -229,6 +229,6 @@ This somehow makes the PGM decoder confused with all those float values and prod
 1. Solarian Programmer 's post [Perlin noise in C++11](https://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/) helped me a lot on debugging and also offered a cool setup to generate wooden-looking noise pattern as noted in the code above.
 2. Also here is the clearest explanation I found so far:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MJ3bvCkHJtE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MJ3bvCkHJtE" frameborder="0" allow="autoplay; encrypted-media" style="display:block; margin:auto;" allowfullscreen></iframe>
 
 END

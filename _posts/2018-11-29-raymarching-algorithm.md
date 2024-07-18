@@ -113,7 +113,7 @@ Now we can describe 3D objects using SDF which returns signed distance between a
 
 >We could just step along a very small increment of the view ray every time, but we can do much better than this (both in terms of speed and in terms of accuracy) using “**sphere tracing**”.
 
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/4dKyRz?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/lflcR2?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 <figcaption style="text-align: center;"><a href="https://www.shadertoy.com/view/4dKyRz">Ray Marching Demo For Beginner</a> by Trashe725</figcaption>
 <br>
@@ -146,7 +146,7 @@ GLSL code implementation for raymartching algorithm:
  }
 ```
 ## Amazing interactive tutorial
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/4dSfRc?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MfscR2?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"></iframe>
 <br>
 <figcaption style="text-align: center;"><a href="https://www.shadertoy.com/view/4dSfRc">[SH17C] Raymarching tutorial</a> by reinder</figcaption>
 

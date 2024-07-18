@@ -31,10 +31,6 @@ $$L_o( \omega_o)= L_e(\omega_o)+\int_{\Omega}{f(\omega_i, \omega_o)L_i(\omega_i)
 
 The above equation is one type of simplified versions, and here is the a more extended explanation:
 
-<img src="https://pbs.twimg.com/media/CHW_bGCUwAAIS1r.png" width="640" style="display:block; margin:auto;">
-<div style="text-align:center">
-<a href="https://twitter.com/levork/status/609603797258600448" style="color:lightgrey">source</a>
-</div>
 <br>
 <img src="https://i.redd.it/802mndge03t01.png" width="500" style="display:block; margin:auto;">
 <div style="text-align:center">
