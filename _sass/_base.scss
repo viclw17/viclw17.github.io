@@ -27,7 +27,7 @@ body {
 
 @media (max-width: $elements-responsive-width) {
   body {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5rem;
   }
   body h1 {
@@ -37,28 +37,28 @@ body {
 
 h1{ // main title
   font-size: 2rem;
-  // font-family: $sans-serif-font-family;
-  // color: $dark-gray-color;
-  // line-height: 2rem;
+  font-family: $sans-serif-font-family;
+  color: $dark-gray-color;
+  line-height: 2rem;
 }
 
 h1 a {
   text-decoration: none;
 }
 
-// h2{ // ##
-//   font-size: 1.75rem;
-//   font-family: $sans-serif-font-family;
-//   color: $dark-gray-color;
-//   line-height: 1.5rem; // if not, inherit!
-//   padding-top: 1rem;
-// }
-
-h1,h2,h3, h4, h5, h6 {
-  // font-size: 1.5rem;
+h2{ // ##
+  font-size: 1.75rem;
   font-family: $sans-serif-font-family;
   color: $dark-gray-color;
-  // line-height: 1.5rem; // if not, inherit!
+  line-height: 1.5rem; // if not, inherit!
+  padding-top: 1rem;
+}
+
+h3, h4, h5, h6 {
+  font-size: 1.5rem;
+  font-family: $sans-serif-font-family;
+  color: $dark-gray-color;
+  line-height: 1.5rem; // if not, inherit!
 
 }
 
@@ -83,7 +83,7 @@ blockquote {
   padding: 0px 15px;
   border-left: 0.25em solid $extra-light-gray-color;
   color: $light-gray-color;
-  // font-style: italic;
+  font-style: italic;
   line-height: 1.5;
 }
 
