@@ -4,9 +4,6 @@ layout: post
 image: 2018-12-09-camera-model-summary/camera-model-summary-1.jpg
 ---
 
-<!-- <img src="{{ site.url }}/images/2018-12-09-camera-model-summary/camera-model-summary-1.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
 During my study of raytracing and browsing on Shadertoy, I have seen lots of different ways of implementing camera models for final rendering. Here is my summary for most of the solutions.
 
 # Camera Model in _Raytracing in One Weekend_

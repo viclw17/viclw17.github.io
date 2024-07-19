@@ -4,8 +4,6 @@ layout: post
 image: 2023-04-01-unreal-utility-widget-list-view/cover.png
 ---
 
-<!-- <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\cover.png" style="display:block; margin:auto;"> -->
-
 **List View** is a useful type of widget available in **Editor Utility Widget** Blueprint (EUW). During editor tooling in Unreal Engine, there are many cases require querying assets or actors and display them as a list. 
 
 One of the recent tools I worked on will list out all the cinematic cameras in the level as a list view widget (a subset of tools for our Virtual Production workflow). From it we can snap to the camera view with options to lock and unlock the viewport control. 

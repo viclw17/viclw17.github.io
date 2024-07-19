@@ -4,16 +4,13 @@ layout: post
 image: 2018-07-20-raytracing-diffuse-materials/raytracing-diffuse.jpg
 ---
 
-<!-- <img src="{{ site.url }}/images/2018-07-20-raytracing-diffuse-materials/raytracing-diffuse.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
 Chapter 7 study note. Breakdown topics about diffuse reflection, random reflecting ray generation and rejection sampling in unit sphere.
-<br>
 
 <!--
 https://blog.csdn.net/libing_zeng/article/details/72599041
 https://blog.csdn.net/libing_zeng/article/details/54428306
 -->
+
 # Diffuse Material and Diffuse Reflection
 Object with a diffuse material **doesn't emit light** but take on the colors from the surroundings(background/sky light), and **modulate** _(alter the amplitude or frequency of an electromagnetic wave or other oscillation in accordance with the variations of a second signal, typically one of a lower frequency)_ the colors with its own intrinsic color.
 

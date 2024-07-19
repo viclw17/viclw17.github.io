@@ -4,15 +4,6 @@ layout: post
 image: 2018-06-12-GLSL-Practice-With-Shadertoy/glsl-jupiter.jpg
 ---
 
-<!---
-Featured image. width set to 640 to align with shadertoy
--->
-
-<!-- <img src="{{ site.url }}/images/2018-06-12-GLSL-Practice-With-Shadertoy/glsl-jupiter.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
-<!-- ![]({{ site.url }}/images/2018-06-12-GLSL-Practice-With-Shadertoy/glsl-jupiter.jpg) -->
-<!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
 Getting started to use [Shadertoy](https://www.shadertoy.com/) to learn and practice GLSL. Here are the first few examples I've been playing around. Also got the shaders embedded in my blog page. Here I documented some of my exploration about the website and some best-practice.
 
 # Shadertoy First Try

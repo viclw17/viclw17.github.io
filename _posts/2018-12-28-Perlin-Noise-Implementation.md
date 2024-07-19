@@ -4,9 +4,6 @@ layout: post
 image: 2018-12-28-Perlin-Noise-Implementation/perlin0.jpg
 ---
 
-<!-- <img src="{{ site.url }}/images/2018-12-28-Perlin-Noise-Implementation/perlin0.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
 Study of raytracing has been progressing into the second book [Ray Tracing: the Next Week](http://in1weekend.blogspot.com/2016/01/ray-tracing-second-weekend.html), which is a little bit more advanced. This post is going to focus on some notes about Perlin Noise implementation.
 
 # Book Implementation Debug

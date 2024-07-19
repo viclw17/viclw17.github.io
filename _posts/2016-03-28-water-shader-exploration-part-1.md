@@ -4,10 +4,6 @@ layout: post
 image: 2016-03-28-water-shader-exploration-part-1/water2_optimized.gif
 ---
 
-<!-- ![]({{ site.url }}/images/2016-03-28-water-shader-exploration-part-1/water2.gif) -->
-
-<!-- <img src="{{ site.url }}/images/2016-03-28-water-shader-exploration-part-1/water2_optimized.gif" width="400" height="400" style="display:block; margin:auto;"> -->
-
 <figcaption style="text-align: center;">Final work w/ transparency and faint tint. </figcaption>
 <br />
 First try of making a water effect in Unity.

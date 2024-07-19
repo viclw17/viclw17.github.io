@@ -4,9 +4,6 @@ layout: post
 image: 2019-05-10-opengl-project-setup-and-boilerplate-code/test.png
 ---
 
-<!-- <img src="{{ site.url }}/images/2019-05-10-opengl-project-setup-and-boilerplate-code/test.png" width="400"  style="display:block; margin:auto;">
-<br> -->
-
 I had quite a journey setting up the environment for OpenGL development. Lots of research was done while I was solving all the problems and here I documented my version of approach.
 
 # Resources

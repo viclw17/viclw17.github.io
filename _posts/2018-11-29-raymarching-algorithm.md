@@ -4,9 +4,6 @@ layout: post
 image: 2018-11-29-raymarching-algorithm/raymarching-0.png
 ---
 
-<!-- <img src="{{ site.url }}/images/2018-11-29-raymarching-algorithm/raymarching-0.png" width="640"  style="display:block; margin:auto;">
-<br> -->
-
 [Shadertoy](https://www.shadertoy.com/view/4dKyRz) is an amazing place to see all sorts of creative shader demos and get inspired. I noticed that most of the shaders there that depict certain 3D geometries - simple or extremely complex - are drawn using **raymarching algorithm**.
 
 At first the algorithm sounds kind of magical, and the similarity of its name to *raytracing* keeps me wondering the difference. This time I want to dig deeper about it and get it documented for future reference.

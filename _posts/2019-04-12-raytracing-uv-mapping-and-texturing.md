@@ -3,8 +3,6 @@ title: Raytracing - UV Mapping and Texturing
 layout: post
 image: 2019-04-12-raytracing-uv-mapping-and-texturing/raytracing-texture.jpg
 ---
-<!-- <img src="{{ site.url }}/images/2019-04-12-raytracing-uv-mapping-and-texturing/raytracing-texture.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
 
 Chapter 3 and Chapter 5 study note of [Ray Tracing: the Next Week](http://in1weekend.blogspot.com/2016/01/ray-tracing-second-weekend.html). (Chapter 4 covered in previous post about Perlin Noise.) Implemented functionalities for generic solid texture and image texture mapping.
 

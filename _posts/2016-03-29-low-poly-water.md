@@ -4,8 +4,6 @@ layout: post
 image: 2016-03-29-low-poly-water/low_poly_water1_optimized.gif
 ---
 
-<!-- <img src="{{ site.url }}/images/2016-03-29-low-poly-water/low_poly_water1_optimized.gif" width="400" height="400" style="display:block; margin:auto;"> -->
-
 <figcaption style="text-align: center;">Low poly water mesh with unity standard specular material.</figcaption>
 <br />
 My first water shader exploration in unity started with trying to **make the water surface waving**. This required mesh manipulation through shader or scripts. By playing around it, I got to know more about what other effects I can try, and above is a little side-achievement -- a nice low poly water effect.

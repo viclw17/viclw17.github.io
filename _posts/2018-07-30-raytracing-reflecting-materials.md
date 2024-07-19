@@ -4,9 +4,6 @@ layout: post
 image: 2018-07-30-raytracing-reflecting-materials/raytracing-reflecting-0.jpg
 ---
 
-<!-- <img src="{{ site.url }}/images/2018-07-30-raytracing-reflecting-materials/raytracing-reflecting-0.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
 Chapter 8 study note. Breakdown topics about ```Material``` base class, types of reflection, vector maths for calculating mirror reflection ray and blurry reflection implementation.
 
 # Material Base Class

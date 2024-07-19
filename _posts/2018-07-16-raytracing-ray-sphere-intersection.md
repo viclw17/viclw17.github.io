@@ -2,8 +2,7 @@
 title: Raytracing - Ray Sphere Intersection
 layout: post
 ---
-<!-- <img src="https://farm5.staticflickr.com/4342/36550535442_3b9da55913_z.jpg" width="640" hight="480" style="display:block; margin:auto;"> -->
-<!-- <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Recursive_raytrace_of_a_sphere.png" width="480" hight="480" style="display:block; margin:auto;"> -->
+
 In raytracer, calculating ray - object intersection is very important on locating the hit point and producing correct color for the corresponding pixel. Sphere is always the best geometrical shape to start with as it is one of the simplest shape to describe mathematically. In this post I documented typical ```Ray``` class definition, ray-sphere intersection math breakdown, and code implementation. I will keep updating the post for solutions of other types of shapes.
 
 # Ray

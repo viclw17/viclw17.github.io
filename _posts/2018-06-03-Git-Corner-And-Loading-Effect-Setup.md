@@ -4,14 +4,6 @@ layout: post
 image: 2018-06-03-Git-Corner-And-Loading-Effect-Setup/github-corner.jpg
 ---
 
-<!---
-Featured image.
--->
-
-<!-- <img src="{{ site.url }}/images/2018-06-03-Git-Corner-And-Loading-Effect-Setup/github-corner.jpg" width="640"  style="display:block; margin:auto;">
-<br> -->
-
-<!-- <figcaption style="text-align: center;">First PBR rendering test, looking neat. </figcaption> -->
 Note for setting up [GitHub Corners](http://tholman.com/github-corners/) gadget on the web page to link to github repository, and for  formatting my [WebGL page](http://viclw17.github.io/apps/WebGL/MatCap_demo/index.html) with nice loading effect.
 
 For GitHub Corners, big thanks to the author [tholman](https://github.com/tholman/github-corners) . And about the loading effect I am using [PACE](http://github.hubspot.com/pace/docs/welcome/). Here is the code for modifying my WebGL html page to setup those gadgets:

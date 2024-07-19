@@ -4,9 +4,6 @@ layout: post
 image: 2022-02-01-unreal-engine-custom-node/cover.png
 ---
 
-<!-- <img src="{{ site.url }}/images/2022-02-01-unreal-engine-custom-node/cover.png">
-<br> -->
-
 Recently I've been playing with raymarching technique and trying to implement it in Unreal Engine material editor. As the algorithm requires a **for loop** meaning it can only be done using HLSL code with the Custom Node.
 
 There are many pitfalls using custom node especially when the code is getting complex. The **details panel code editor** is very primitive so we want to edit the code over in like **VSCode**; also more options added into the panel and I barely used before -- here I documented some of my **research and tests** for future reference.

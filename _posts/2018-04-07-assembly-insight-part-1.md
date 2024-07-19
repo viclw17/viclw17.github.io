@@ -2,6 +2,7 @@
 title: Assembly Insight - Part 1
 layout: post
 ---
+
 Just came across [this Gem](https://www.youtube.com/watch?v=yOyaJXpAYZQ&t=0s&list=WL&index=48) when browsing cat videos on Youtube. After watching it I decided to run through the case by myself on my mac to see how a C program is working under the hood. I also want to be a bit geeky this time - just use Vim to write raw C program, and use command line to compile the program and also run the executable. Everything in the terminal.
 
 # Compile and Run C Program
