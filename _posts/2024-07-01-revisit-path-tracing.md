@@ -71,6 +71,10 @@ I bumpped into this open courses [Rendering (186.101, 2021S)](https://youtube.co
 
 The course is really well structured and clear demonstrated, helped me comb through what I have read in the *pbrt* book and achieved better understanding.
 
+## Eric Veach's Paper
+PhD thesis by Eric Veach [Robust Monte Carlo Methods for Light Transport Simulation
+](https://graphics.stanford.edu/papers/veach_thesis/) is mentioned during the course. After scanning it I realize the course is heavily based on it, especially the demonstration on the 3 **Formulation of Light Transport Equations**. Leaving a reference here for future reading as it is such a dense material.
+
 # Intel Path-Tracing Workshop
 I paused my study for a while until I came across this material:
 
