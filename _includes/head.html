@@ -39,8 +39,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@viclw17">
   <meta name="twitter:creator" content="@viclw17">
-  <meta name="twitter:title" content="{% if page.title == 'Home' %}1000 Forms of Bunnies{% else %}{{page.title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.title == 'Home' %}{{ sie.description }}{% else %}{{ post.content | strip_html | truncate: 50 }}{% endif %}"">
+  <meta name="twitter:title" content="{% if page.title == 'Home' %}1000 Forms of Bunnies{% else %}{{ page.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.title == 'Home' %}{{ site.description }}{% else %}{{ post.content | strip_html | truncate: 50 }}{% endif %}">
   <meta name="twitter:image" content="{% if page.image != null %}https://viclw17.github.io/images/{{ page.image }}{% else %}https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg{% endif %}">
 
 
