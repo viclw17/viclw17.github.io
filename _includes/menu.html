@@ -1,10 +1,15 @@
 <div class="menu">
-  <nav class="menu-content">
-    {% for item in site.data.settings.menu %}
+  <!-- wrap inside div and float it -->
+  <div style="float:left;">
+    <nav class="menu-content">
+      {% for item in site.data.settings.menu %}
       <a href="{{ site.github.url }}/{{ item.url }}">{{ item.name }}</a>
-    {% endfor %}
-  </nav>
-  <nav class="social-icons">
-    {% include social-icons.html %}
-  </nav>
+      {% endfor %}
+    </nav>
+  </div>
+  <div style="float:right;">
+    <nav class="social-icons">
+      {% include social-icons.html %}
+    </nav>
+  </div>
 </div>
