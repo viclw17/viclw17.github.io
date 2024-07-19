@@ -1,7 +1,7 @@
 ---
 title: "Revisit Path Tracing"
 layout: post
-image: 2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg
+image: 2024-07-01-revisit-path-tracing/victor-li-render-final-msaa-result.jpg
 ---
 
 <!-- <img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\victor-li-render-final-msaa-result.jpg" width="480" style="display:block; margin:auto;"> -->

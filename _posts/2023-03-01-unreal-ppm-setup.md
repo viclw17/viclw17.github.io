@@ -1,7 +1,7 @@
 ---
 title: "Access Post Process Materials"
 layout: post
-image: 2023-03-01-unreal-ppm-setup\cover.png
+image: 2023-03-01-unreal-ppm-setup/cover.png
 ---
 
 Manipulating Post Processing Materials (PPM) and Post Processing Volume actor (PPV) in blueprint utility scripts could be tricky sometimes. Here I documented some tips for future reference.

@@ -1,7 +1,7 @@
 ---
 title: "Understand ListView of Editor Utility Widget"
 layout: post
-image: 2023-04-01-unreal-utility-widget-list-view\cover.png
+image: 2023-04-01-unreal-utility-widget-list-view/cover.png
 ---
 
 <!-- <img src="{{ site.url }}/images\2023-04-01-unreal-utility-widget-list-view\cover.png" style="display:block; margin:auto;"> -->
