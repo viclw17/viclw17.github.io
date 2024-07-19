@@ -26,15 +26,36 @@
 - https://jamstackthemes.dev/theme/planty/
 
 ## Snippets
-```hlml
-<br>
+### Image
+`style` to center the image
+gif is set to width 400
 
+``` html
 <img src="{{ site.url }}/images/ " style="display:block; margin:auto;">
-<figcaption style="text-align:center; font-size:15px; font-style:italic;"> </figcaption>
-
-<img src="{{ site.url }}/images/" style="display:block; margin:auto;">
 <img src="{{ site.url }}/images/" style="display:block; margin:auto;" width ="400;">
-
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/<shader id>?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"> </iframe>
-
 ```
+
+video
+``` html
+<iframe width="100%"  height="400" src="https://www.youtube.com/embed/<video id>" frameborder="0" allowfullscreen style="display:block; margin:auto;"></iframe>
+```
+
+shadertoy, fork the shader first before referring!
+``` html
+<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/<shader id>?gui=true&t=10&paused=true&muted=false" allowfullscreen style="display:block; margin:auto;"> </iframe>
+```
+
+caption
+
+``` html
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> </figcaption>
+```
+
+misc
+
+``` hlml
+<br>
+```
+
+# Tech
+- https://shopify.github.io/liquid/basics/introduction/
