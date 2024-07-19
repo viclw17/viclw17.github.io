@@ -11,23 +11,23 @@
   </title>
 
 <!-- HTML Meta Tags -->
-<title>Home</title>
-<meta name="description" content="victor’s tech art blog.">
+<!-- <title>Home</title>
+<meta name="description" content="victor’s tech art blog."> -->
 
 <!-- Facebook Meta Tags -->
 <!-- <meta property="og:url" content="https://viclw17.github.io/"> -->
 <meta property="og:type" content="blog">
-<meta name="title" property="og:title" content="1000 Forms of Bunnies">
-<meta name="image" property="og:image" content="https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg">
-<meta name="description" property="og:description" content="victor’s tech art blog.">
+<meta name="title" property="og:title" content="{{ page.title }}">
+<meta name="image" property="og:image" content="{% if page.image != null %}{{ page.image }}{% else %}https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg{% endif %}">
+<meta name="description" property="og:description" content="{{ site.description }}">
 
 <!-- Twitter Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
+<!-- <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="viclw17.github.io">
 <meta property="twitter:url" content="https://viclw17.github.io/">
 <meta name="twitter:title" content="1000 Forms of Bunnies">
 <meta name="twitter:image" content="https://viclw17.github.io/images/favicon/favicon_bunny_114.png">
-<meta name="twitter:description" content="victor’s tech art blog.">
+<meta name="twitter:description" content="victor’s tech art blog."> -->
 
 <!-- Meta Tags Generated via https://www.opengraph.xyz -->
 
