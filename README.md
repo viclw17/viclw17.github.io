@@ -2,32 +2,24 @@
 [1000 Forms Of Bunnies](https://viclw17.github.io/)
 
 ## Blog Tools
-- [Jekyll Doc](https://jekyllrb.com/docs/)
+- [GPT](https://chatgpt.com/)
+- [Post Inspector](https://www.linkedin.com/post-inspector/)
+- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists)
 - [Gif Optimization](https://ezgif.com/)
 - [Github Markdown](https://guides.github.com/features/mastering-markdown/#syntax)
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists)
-- [Google Analysis](https://analytics.google.com/analytics/web/#/embed/report-home/a75504070w113930148p119022570)
 - [Git Doc](https://git-scm.com/doc)
+- [Jekyll Doc](https://jekyllrb.com/docs/)
+- [Google Analysis](https://analytics.google.com/analytics/web/#/embed/report-home/a75504070w113930148p119022570)
 
 ## Ref.
-- https://lenpaul.github.io/Lagrange/getting-started
-- https://paulle.ca/how-to-start-a-blog-or-personal-website-using-jekyll-and-github-pages#import-your-jekyll-theme
-- https://github.com/StylishThemes/Syntax-Themes/tree/master/pygments
-- https://ddcode.net/2019/05/11/jekyll-serve-startup-reported-an-error-errorpermission-denied-bind2/
+- [Lagrange](https://lenpaul.github.io/Lagrange/getting-started)
+- [Adding OpenGraph previews to Jekyll](https://willhbr.net/2023/02/04/adding-opengraph-previews-to-jekyll/)
+- [How to Fix Your Link Previews on LinkedIn (Post Inspector Tips)](https://kinsta.com/blog/linkedin-debugger/)
 
-## Themes
-- https://github.com/LeNPaul/Lagrange
-- https://lenpaul.github.io/portfolio-jekyll-theme/
-- https://jamstackthemes.dev/theme/jekyll-jek/
-- https://jamstackthemes.dev/theme/jekyll-enjoyment-work/
-- https://jamstackthemes.dev/theme/jekyll-tale-theme/
-- https://jamstackthemes.dev/theme/jekyll-contrast/
-- http://jekyllthemes.org/themes/chalk/
-- https://jamstackthemes.dev/theme/planty/
 
 ## Snippets
 ### Image
-`style` to center the image
+`style` to center the image; 
 gif is set to width 400
 
 ``` html
@@ -59,3 +51,15 @@ misc
 
 # Tech
 - https://shopify.github.io/liquid/basics/introduction/
+- https://github.com/StylishThemes/Syntax-Themes/tree/master/pygments
+
+
+## Themes
+- https://github.com/LeNPaul/Lagrange
+- https://lenpaul.github.io/portfolio-jekyll-theme/
+- https://jamstackthemes.dev/theme/jekyll-jek/
+- https://jamstackthemes.dev/theme/jekyll-enjoyment-work/
+- https://jamstackthemes.dev/theme/jekyll-tale-theme/
+- https://jamstackthemes.dev/theme/jekyll-contrast/
+- http://jekyllthemes.org/themes/chalk/
+- https://jamstackthemes.dev/theme/planty/
