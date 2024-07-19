@@ -108,7 +108,7 @@ The current result has been pretty underwhelming - just **a model viewer** with 
 
 Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
 
-<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="100%"  height="400" frameborder="0" allow="fullscreen" style="display:block; margin:auto;" allowfullscreen></iframe>
+<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="100%"  height="400" frameborder="0" allowfullscreen style="display:block; margin:auto;" ></iframe>
 
 *^ I'm planning to write more posts about those real-time renderer projects, just as experiment notes...*
 
@@ -124,7 +124,7 @@ This is my current idea of my next project. :)
 It is lucky to land at
 [yumcyawiz's blog - OpenGL3.3でGPUパストレーサーを実装する](https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/) to find out someone achieved exactly the same goal!
 
-<iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" title="YouTube video player" frameborder="0" allow="fullscreen" allowfullscreen style="display:block; margin:auto;"></iframe>
+<iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" frameborder="0" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 His project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox) is an amazing example to look into, with even extra effort on integrating **Imgui** for more interactivity. Even more, his project is based on [GLSL-PathTracer](https://github.com/knightcrawler25/GLSL-PathTracer) which is offering more interactive features!
 
