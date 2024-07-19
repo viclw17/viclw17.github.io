@@ -13,36 +13,43 @@
 <!-- HTML Meta Tags -->
 <!-- <meta property="og:url" content="https://viclw17.github.io/"> -->
 <!-- <meta property="og:type" content="blog"> -->
-<meta name="title" property="og:title" content="
-  {% if page.title == 'Home' %}
-    1000 Forms of Bunnies
-  {% else %}
-    {{page.title }} 
-  {% endif %}">
-
-<meta name="image" property="og:image" content=" 
-  {% if page.image != null %}
-    https://viclw17.github.io/images/{{ page.image }}
-  {% else %}
-    https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg
+  <meta name="title" property="og:title" content="
+    {% if page.title == 'Home' %}
+      1000 Forms of Bunnies
+    {% else %}
+      {{page.title }} 
     {% endif %}">
 
-<meta name="description" property="og:description" content="
-  {% if page.title == 'Home' %}
-    {{ site.description }}
-  {% else %}
-    {{ post.content | strip_html | truncate: 50 }} 
-  {% endif %}">
+  <meta name="image" property="og:image" content=" 
+    {% if page.image != null %}
+      https://viclw17.github.io/images/{{ page.image }}
+    {% else %}
+      https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg
+      {% endif %}">
 
-<!-- Twitter Meta Tags -->
-<!-- <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="viclw17.github.io">
-<meta property="twitter:url" content="https://viclw17.github.io/">
-<meta name="twitter:title" content="1000 Forms of Bunnies">
-<meta name="twitter:image" content="https://viclw17.github.io/images/favicon/favicon_bunny_114.png">
-<meta name="twitter:description" content="victor’s tech art blog."> -->
+  <meta name="description" property="og:description" content="
+    {% if page.title == 'Home' %}
+      {{ site.description }}
+    {% else %}
+      {{ post.content | strip_html | truncate: 50 }} 
+    {% endif %}">
 
-<!-- Meta Tags Generated via https://www.opengraph.xyz -->
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@viclw17">
+  <meta name="twitter:creator" content="@viclw17">
+  <meta name="twitter:title" content="{% if page.title == 'Home' %}1000 Forms of Bunnies{% else %}{{page.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if page.title == 'Home' %}{{ sie.description }}{% else %}{{ post.content | strip_html | truncate: 50 }}{% endif %}"">
+  <meta name="twitter:image" content="{% if page.image != null %}https://viclw17.github.io/images/{{ page.image }}{% else %}https://viclw17.github.io/images/2016-05-01-MatCap-Shader-Showcase/matcap_bunnies.jpg{% endif %}">
+
+  <!-- Twitter Meta Tags -->
+  <!-- <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="viclw17.github.io">
+  <meta property="twitter:url" content="https://viclw17.github.io/">
+  <meta name="twitter:title" content="1000 Forms of Bunnies">
+  <meta name="twitter:image" content="https://viclw17.github.io/images/favicon/favicon_bunny_114.png">
+  <meta name="twitter:description" content="victor’s tech art blog."> -->
+  <!-- Meta Tags Generated via https://www.opengraph.xyz -->
 
   <link rel="stylesheet" type="text/css" href="{{ site.github.url }}/assets/css/main.css">
   <link rel="stylesheet" type="text/css" href="{{ site.github.url }}/assets/css/syntax.css">
