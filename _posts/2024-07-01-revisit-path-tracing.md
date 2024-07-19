@@ -100,18 +100,17 @@ At the meantime, I had another personal learning project going on to brush up my
 
 The current result has been pretty underwhelming - just **a model viewer** with basic lighting types support, done in **C++**:
 
+<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" width="100%" style="display:block; margin:auto;">
+
 - directional, point and spot light
 - *assimp* for model loading
 - *stb_image* for texture loading
-
-<img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl1.png" style="display:block; margin:auto;">
 
 <img src="{{ site.url }}/images\2024-07-01-revisit-path-tracing\opengl2.gif" width="400" height="400" style="display:block; margin:auto;">
 
 Later with extra digressing, I reimplemented the renderer in **Python** for the sake of playing with [PyOpenGL](https://pyopengl.sourceforge.net/) and [Glumpy](https://glumpy.github.io/) libraries, which support **PBR shading models**:
 
-<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="640" height="400" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="display:block; margin:auto;" allowfullscreen></iframe>
-<p><a href="https://vimeo.com/382872589">PBR Renderer with PyOpenGL</a> from <a href="https://vimeo.com/viclw17">Victor Li</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<iframe src="https://player.vimeo.com/video/382872589?h=098e80235c" width="100%"  height="400" frameborder="0" allow="fullscreen" style="display:block; margin:auto;" allowfullscreen></iframe>
 
 *^ I'm planning to write more posts about those real-time renderer projects, just as experiment notes...*
 
@@ -123,9 +122,11 @@ However, the shadertoy path tracing demos I referred above are very interactive 
 
 This is my current idea of my next project. :)
 
-# Another gold mine...
+# New inspiration...
 It is lucky to land at
 [yumcyawiz's blog - OpenGL3.3でGPUパストレーサーを実装する](https://blog.teastat.uk/post/2020/12/implementing-gpu-path-tracer-with-open-gl-3-3/) to find out someone achieved exactly the same goal!
+
+<iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" title="YouTube video player" frameborder="0" allow="fullscreen" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 His project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox) is an amazing example to look into, with even extra effort on integrating **Imgui** for more interactivity. Even more, his project is based on [GLSL-PathTracer](https://github.com/knightcrawler25/GLSL-PathTracer) which is offering more interactive features!
 
