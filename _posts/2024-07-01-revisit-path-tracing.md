@@ -1,7 +1,7 @@
 ---
 title: "Revisit Path Tracing"
 layout: post
-image: 2024-07-01-revisit-path-tracing/victor-li-render-final-msaa-result.jpg
+image: 2024-07-01-revisit-path-tracing/cover.jpg
 ---
 
 It's been a long time since last time I was learning the theories and implementation of raytracing by following the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently I finally decided to revisit the topic, since I have read so many related books and articles and also have improved a lot on personal tech stack that necessary for its implementation.
