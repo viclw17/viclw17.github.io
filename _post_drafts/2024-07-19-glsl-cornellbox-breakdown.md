@@ -4,6 +4,34 @@ type: article
 layout: post
 image: 2024-07-20-glsl-cornellbox-breakdown/cover.jpg
 ---
+This post first listed the common implement options for path tracing with examples. But the main goal is aiming to break down yumcyawiz's project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox). This project is a brilliant demo of path tracing implemented using GLSL shader code, but is presented interactively as a standalone executable using basic OpenGL and Imgui in C++. It is a great example for reviewing OpenGL workflow as well as path tracing application.
+
+# Path Tracing Implement Options
+During my researching, as a hobbist, there are many go-to ways to implement basic path tracing:
+- written in C++ from ground up, calculate pixel values and output PPM images, a few bookmarked examples are:
+  - RIOW
+  - [PBRT](https://github.com/mmp/pbrt-v3)
+  - [smallpt](https://www.kevinbeason.com/smallpt/)
+  - [Montelight](https://github.com/Smerity/montelight-cpp)
+  - [NanoRT](https://github.com/viclw17/nanort)
+  - [Luminox](https://github.com/yumcyaWiz/Luminox)
+  - [Aras' ToyPathTracer](https://github.com/aras-p/ToyPathTracer)
+
+This option is mainly for off-line rendering done solely on CPU. It usually takes long time - according to how optimized - for the result to converge and an image to produce. It is a good starting point to get into the implementation of all the theory, but should avoid looking into too much optimization techniques or advanced materials as a beginner. 
+
+- written in C++ for GPU rendering
+  - [Ray Tracing in One Weekend in CUDA](https://github.com/rogerallen/raytracinginoneweekendincuda)
+
+Can be challenging and requires GPU library knowledge
+
+- written in shader code like GLSL that running on GPU
+  - **Shadertoy**, has so many amazing path tracing demos done in 1 or few passes of fragment shader
+  - written in shader code but run through **Graphic API** like OpenGL, eg. [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox)
+
+This option could be difficult for people not familliar with shading languages, but with the power of GPU the pace tracing scens can be interactive and it may just take seconds for the result to converge. Sometimes with shader you can explore implicit modelling using SDF, and then path tracing for the shading, which can produce amazing images.
+
+---
+# Breakdown
 
 - Path tracing in GLSL shaders
 - OpenGL local application
@@ -29,7 +57,7 @@ If you're on Windows the OpenGL library opengl32.lib comes with the Microsoft SD
 ### glfw
 GLFW is a library, written in C, specifically targeted at OpenGL. GLFW gives us the bare necessities required for rendering goodies to the screen. It allows us to create an OpenGL context, define window parameters, and handle user input, which is plenty enough for our purposes.
 
-![alt text](image.png)
+![alt text](images/2024-07-19-glsl-cornellbox-breakdown/image.png)
 
 ### GLAD
 - initialize glad
