@@ -4,9 +4,9 @@ layout: post
 image: 2024-07-01-revisit-path-tracing/cover.jpg
 ---
 
-It's been a long time since last time I was learning the theories and implementation of raytracing by following the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently I finally decided to revisit the topic, since I have read so many related books and articles and also have improved a lot on personal tech stack that necessary for its implementation.
+It's been a long time since I last explored the theories and implementation of ray tracing through the amazing [Ray Tracing in One Weekend](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html). Recently, I decided to revisit the topic. I've read many related books and articles and have improved my tech stack necessary for its implementation.
 
-In this and the following posts I would like to write down my new understanding of the topic with references to all those great materials - probably for future re-revisit. It is fascinating to be able to discover new perspectives and nuances everytime taking another dive into the field. :)
+In this and upcoming posts, I plan to share my new understanding of the topic, referencing all the great materials I've encountered—possibly for future re-revisits. It's fascinating to discover new perspectives and nuances each time I dive back into this field.
 
 ---
 
