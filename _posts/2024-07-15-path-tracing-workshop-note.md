@@ -5,10 +5,14 @@ layout: post
 image: 2024-07-15-path-tracing-workshop-note/cover.png
 ---
 
-I haven't explored ray tracing and path tracing techniques in a while. Recently, I stumbled upon this cool workshop that got me excited about diving back into the topic. It's a chance for me to approach rendering and its implementation in a whole new way and document my journey along the process. :)
+I haven't explored ray tracing and path tracing techniques in a while. Recently, I stumbled upon this cool workshop that got me excited about diving back into the topic. It's a chance for me to approach path tracing and its implementation in a whole new way and document my journey along the process. :)
 
+In this post I will follow the structure of the workshop - as it provides a clear and less overwhelming roadmap - to document **one of the perspectives / implementations of path tracing**. I will refer to books and articles I've explored to expand parts that are important or interesting, and note down those deeper topics to cover in the future.
 
-# Intel Path-Tracing Workshop
+* This will become a table of contents (this text will be scrapped).
+{:toc}
+
+# About the Workshop
 - [Path-Tracing Workshop Part 1: Write a **Ray Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
 - [Path-Tracing Workshop Part 2: Write a **Path Tracer**](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
 
@@ -23,34 +27,36 @@ This workshop shows how to:
 - Implement the Monte Carlo integration, and use it to compute direct illumination.
 - Write your path tracer.
 
+And it contains:
+
+- Framework provided - shadertoy etc.
+- Scene provided - triangles only cornell box
+- Only diffuse surface
+- no textures
+- no acceleration structures - bvh
+- no clever sampling / denoising
+- running on GPUs because GLSL, so no graphics APIs
+
 More about the workshop from the author can be found on his [blog](https://momentsingraphics.de/PathTracingWorkshop.html).
 
-<!-- Course project result on shadertoy:
-
-<iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/Nlcczr?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe> -->
-
-# Ray Tracing
+# On *Ray Tracing*
 ## A tiny ray tracer
 Firstly, start with a fun trivia:  [Back of the Business Card Ray Tracers](https://www.realtimerendering.com/blog/back-of-the-business-card-ray-tracers/)
 
 <img src="https://www.realtimerendering.com/blog/wp-content/uploads/2021/10/image-2.png"  width="400" style="display:block; margin:auto;">
 
 ## Ray tracing vs Path tracing?
-- **Ray tracing** is a **technique for modeling light transport** for use in a wide variety of rendering algorithms (esp. Path tracing) for generating digital images. *Foundation of path tracing.*
+Then we need to clarify terms that are constantly misused in various contexts:
+
+- **Ray tracing** is a **technique for modeling light transport** for use in a wide variety of rendering algorithms (esp. Path tracing) for generating digital images. It's the *foundation of path tracing.*
 - **Path tracing** is a **Monte Carlo method** of rendering images of 3D scenes such that the **global illumination** is faithful to reality. *Path tracing is using ray tracing technique.*
 
 > Because ray tracing is so incredibly simple, it should have been an obvious choice for implementing global illumination in computer graphics. -- [A Ray-Tracing Pioneer Explains How He Stumbled into Global Illumination](https://blogs.nvidia.com/blog/ray-tracing-global-illumination-turner-whitted/), a good read by J. Turner Whitted
 
 More about ray tracing on Scratchapixel [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/ray-tracing-rendering-technique-overview.html)
 
-## Workshop goal keypoints
-- Framework provided - shadertoy etc.
-- Scene provided - triangles only cornell box
-- Only diffuse surface
-- no textures
--  no acceleration structures - bvh
-- no clever sampling/ denoising
-- running on GPUs because GLSL, so no graphics APIs
+
+
 
 ## GLSL refresher
 ### Features
@@ -103,7 +109,7 @@ struct triangle_t {
 };
 ```
 
-## Ray tracing
+## Ray trace the scene
 ### Intersection - Ray vs Triangle
 <img src="{{ site.url }}/images\2024-07-15-path-tracing-workshop-note\triangle.png" width="480" style="display:block; margin:auto;">
 
@@ -166,11 +172,15 @@ Note that the function outputs are in 3 ways:
 - `out triangle_t out_tri`: closest hit triangle
 - `out float out_t`: ray parameter at the intersection (if smaller than max ray length)
 
-# Path tracing
+# On *Path tracing*
 
 ## Global Illumination
 Surfaces can be lit directly, but also **indirectly**, via paths of **arbitrary length and directions**.
+
 Path tracing operation starts at camera, keep tracing done the bouncing rays (ray tracing) until finds a light source when it is lucky.
+
+### More from Scratchapixel
+[Global Illumination and Path Tracing](https://www.scratchapixel.com/lessons/3d-basic-rendering/global-illumination-path-tracing/introduction-global-illumination-path-tracing.html)
 
 ## Radiance
 $L_(x,w)$ is called radiance, which is *basically color* for the ray $x+tw$. 
@@ -232,7 +242,7 @@ $$E(p) = \frac{d\phi(p)}{dA}$$
 
 It is following **Lambert's cosine law**.
 
-## Rendering equation
+## Rendering Equation
 **Note: this is the over simplified version for the workshop, more at this [post](https://viclw17.github.io/2018/06/30/raytracing-rendering-equation):*
 
 $$L_o(x) = L{e}(x) + \frac{a(x)}{\pi} \int_{\Omega(x)}(L(x,w) n(x) \cdot w dw)$$
@@ -265,6 +275,10 @@ This is called a **Monte Carlo Estimator**, and when $N$ (the sampling times) ap
 The errors of the estimator is called *zero-mean noise*.
 
 *I will document the derivations of Monte Carlo in another post as it is such an important field in pace tracing implementation. Also I have to brush up probability theories for that...*
+
+### More from Scratchapixel
+- [Mathematical Foundations of Monte Carlo Methods](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-mathematical-foundations/quick-introduction-to-monte-carlo-methods.html)
+- [Monte Carlo Methods in Practice](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-in-practice/monte-carlo-rendering-practical-example.html)
 
 ### More from pbrt
 The expected value $E_p[f(x)]$ of a function $f$ is defined as **the average value of the function over some distribution** $p(x)$ over its domain $D$. Definition:
@@ -462,7 +476,7 @@ Now we have the final result:
 <iframe width="100%" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MflczB?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 
-# Thoughts
+# Final Thoughts
 My journey into ray tracing began with [Ray Tracing in One Weekend](https://viclw17.github.io/2018/07/17/raytracing-camera-and-msaa) and then I dove into [pbrt](https://viclw17.github.io/2024/07/01/revisit-path-tracing). Exploring pbrt constantly pushed me out of my comfort zone, urging me to dig deeper into its scientific and mathematical roots in path tracing and physically based rendering (pbr). This journey echoed my university days studying digital media and computer science—learning C++ programming, data structures, calculus, discrete math, probability theories, digital image processing, 3D art production, and more. Bringing these old concepts back with newfound relevance has been really rewarding :)
 
 I'm thankful to this workshop for helping me tie together all my reading and research. Big shout-out to the author, [Christoph Peters](https://momentsingraphics.de/PathTracingWorkshop.html).
