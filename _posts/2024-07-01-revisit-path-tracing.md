@@ -8,6 +8,15 @@ It's been a long time since I last explored the theories and implementation of r
 
 In this and upcoming posts, I plan to share my new understanding of the topic, referencing all the great materials I've encountered—possibly for future re-revisits. It's fascinating to discover new perspectives and nuances each time I dive back into this field.
 
+Table of contents
+- The PBRT Book
+- smallpt
+- Shadertoys
+- Classes - TU Wien
+- Intel Path-Tracing Workshop
+- Side Quest - Real-time Render Experiments
+- New inspiration...
+
 ---
 
 # PBRT
@@ -42,6 +51,7 @@ The [pbrt source code](https://github.com/mmp/pbrt-v4) is very complex to dig th
 ) on *scratchapixel.com* and its source code to learn more.
 
 ---
+
 # smallpt
 Another must visited place while I was doing my research was the [smallpt demo](https://www.kevinbeason.com/smallpt/) aka *small path tracer*.
 
@@ -55,9 +65,12 @@ I got the code built and run and produced some nice images. It is an amazing lea
 - Sampling Sphere light by Solid Angle
 - Shadow Ray, etc.
 
-There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand smallpt:
+# Shadertoys
+There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand path tracing through shade code. There is even porting of smallpt:
 
 <iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MclcR2?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
+
+The great thing of exploring path tracing via shaders is that the code is running on GPU which make the process very fast to see result and to experiment -- rather than those C++ implementations that takes long time for CPU to calculate the final image.
 
 # Classes - TU Wien
 All the peripheral reading and researching was pushing me to want to learn more - maybe through a different medium, instead of staying on grinding the book or guessing how the source code just magically works.
@@ -97,7 +110,7 @@ Course project result on shadertoy:
 
 <iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/MflczB?gui=true&t=10&paused=true&muted=true" allowfullscreen style="display:block; margin:auto;"></iframe>
 
-# Side Quest - Real-time Rendering
+# Side Quest - Real-time Render Experiments
 At the meantime, I had another personal learning project going on to brush up my **OpenGL** knowledge and probably write a real-time renderer.
 
 The current result has been pretty underwhelming - just **a model viewer** with basic lighting types support, done in **C++**:
