@@ -8,14 +8,8 @@ It's been a long time since I last explored the theories and implementation of r
 
 In this and upcoming posts, I plan to share my new understanding of the topic, referencing all the great materials I've encountered—possibly for future re-revisits. It's fascinating to discover new perspectives and nuances each time I dive back into this field.
 
-Table of contents
-- The PBRT Book
-- smallpt
-- Shadertoys
-- Classes - TU Wien
-- Intel Path-Tracing Workshop
-- Side Quest - Real-time Render Experiments
-- New inspiration...
+* This will become a table of contents (this text will be scrapped).
+{:toc}
 
 ---
 
@@ -93,7 +87,6 @@ I paused my study for a while until I came across this material:
 
 - [Path-Tracing Workshop Part 1: Write a Ray Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-1.html#gs.c74n6i)
 - [Path-Tracing Workshop Part 2: Write a Path Tracer](https://www.intel.com/content/www/us/en/developer/videos/path-tracing-workshop-part-2.html#gs.c74p8h)
-
 
 This workshop shows how to:
 
