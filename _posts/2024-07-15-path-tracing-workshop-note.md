@@ -51,11 +51,38 @@ Then we need to clarify terms that are constantly misused in various contexts:
 - **Ray tracing** is a **technique for modeling light transport** for use in a wide variety of rendering algorithms (esp. Path tracing) for generating digital images. It's the *foundation of path tracing.*
 - **Path tracing** is a **Monte Carlo method** of rendering images of 3D scenes such that the **global illumination** is faithful to reality. *Path tracing is using ray tracing technique.*
 
+<!-- ![alt text](https://www.scratchapixel.com/images/ray-tracing-refresher/rt-setup2.png?) -->
+
 > Because ray tracing is so incredibly simple, it should have been an obvious choice for implementing global illumination in computer graphics. -- [A Ray-Tracing Pioneer Explains How He Stumbled into Global Illumination](https://blogs.nvidia.com/blog/ray-tracing-global-illumination-turner-whitted/), a good read by J. Turner Whitted
 
-More about ray tracing on Scratchapixel [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/ray-tracing-rendering-technique-overview.html)
+**Ray tracing** itself is sufficient to produce interesting renders -- like the Whitted Ray Tracing algorithm, but the result **will not be a physically accurate render** that has **global illumination**, which is where path tracing come into play. 
 
+No matter what, the Whitted algorithm is still the classical example of an algorithm that uses ray tracing to produce photo-realistic computer-generated images. Even though we can see the result is very CG-like:
 
+<img src="https://www.scratchapixel.com/images/ray-tracing-refresher/rt-result.png" style="display:block; margin:auto;" width ="400;">
+
+<img src="https://www.scratchapixel.com/images/ray-tracing-refresher/rt-recursive.png" style="display:block; margin:auto;" width ="400;">
+
+More articles on the topic:
+
+- [Overview of the Ray-Tracing Rendering Technique](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/ray-tracing-rendering-technique-overview.html)
+- [Light Transport Algorithms and Ray-Tracing: Whitted Ray-Tracing](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/light-transport-ray-tracing-whitted.html)
+- [An Integrator for Whitted Ray Tracing - pbrt](https://pbr-book.org/3ed-2018/Introduction/pbrt_System_Overview#AnIntegratorforWhittedRayTracing)
+
+What effects are captured by path tracing that are not captured by ray tracing? Here is [one of the best explaination](https://computergraphics.stackexchange.com/questions/2457/what-effects-does-path-tracing-capture-that-recursive-ray-tracing-does-not) I came across:
+
+Generally speaking, path tracing **removes a number of assumptions** that ray tracing makes. 
+
+- Ray tracing usually **assumes that there is no indirect lighting** (or that indirect lighting can be approximated by **a constant function**), because handling indirect lighting would require casting many additional rays whenever you shade an intersection point. 
+- Ray tracing usually **assumes that there is no non-glossy reflection (or called diffuse reflection)**, because while it is fairly easy to handle glossy/mirror reflection (you reflect the ray and continue with the ray tracing), if you have **non-glossy specular reflection** you have a problem very much like indirect lighting: you need to trace a bunch more rays and then do lighting wherever those rays hit. 
+- Ray tracing also usually **assumes that there are no area lights**, because it is very cheap to cast a single ray towards a light to determine if an intersection point is in shadow, but if you have an area light you generally need to **cast multiple rays towards different points on the area light** to determine the amount that the intersection point is shadowed.
+- And as soon as you need to break any of those assumptions with ray tracing, you now have a **sampling problem**: you need to decide **how to distribute the many additional rays you need to trace** in order to get an accurate result that doesn't have noticeable aliasing.
+
+<img src="https://www.scratchapixel.com/images/shading-intro2/shad2-results3.png" style="display:block; margin:auto;" width ="500;">
+
+More articles on the topic:
+
+- [Global Illumination and Path Tracing](https://www.scratchapixel.com/lessons/3d-basic-rendering/global-illumination-path-tracing/introduction-global-illumination-path-tracing.html)
 
 
 ## GLSL refresher
