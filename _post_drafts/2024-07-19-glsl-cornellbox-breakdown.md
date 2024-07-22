@@ -6,9 +6,10 @@ image: 2024-07-20-glsl-cornellbox-breakdown/cover.jpg
 ---
 This post first listed the common implement options for path tracing with examples. But the main goal is aiming to break down yumcyawiz's project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox). This project is a brilliant demo of path tracing implemented using GLSL shader code, but is presented interactively as a standalone executable using basic OpenGL and Imgui in C++. It is a great example for reviewing OpenGL workflow as well as path tracing application.
 
-# Path Tracing Implement Options
+# Path Tracing Implement Choices
 During my researching, as a hobbist, there are many go-to ways to implement basic path tracing:
-- written in C++ from ground up, calculate pixel values and output PPM images, a few bookmarked examples are:
+
+- Written in C++ from ground up, calculate pixel values and output images file(eg. PPM), a few bookmarked examples are:
   - RIOW
   - [PBRT](https://github.com/mmp/pbrt-v3)
   - [smallpt](https://www.kevinbeason.com/smallpt/)
@@ -17,18 +18,20 @@ During my researching, as a hobbist, there are many go-to ways to implement basi
   - [Luminox](https://github.com/yumcyaWiz/Luminox)
   - [Aras' ToyPathTracer](https://github.com/aras-p/ToyPathTracer)
 
-This option is mainly for off-line rendering done solely on CPU. It usually takes long time - according to how optimized - for the result to converge and an image to produce. It is a good starting point to get into the implementation of all the theory, but should avoid looking into too much optimization techniques or advanced materials as a beginner. 
+This option is mainly for off-line rendering done solely on CPU, with less interactivity. It usually takes long time - according to how optimized - for the result to converge and an image to produce. It is a good starting point to get into the implementation of all the theories.
 
-- written in C++ for GPU rendering
+- Written in C++ with direct GPU programming:
   - [Ray Tracing in One Weekend in CUDA](https://github.com/rogerallen/raytracinginoneweekendincuda)
 
-Can be challenging and requires GPU library knowledge
+This option can be challenging and requires knowledge on GPU programming libraries.
 
-- written in shader code like GLSL that running on GPU
+- Written in shader code like GLSL that running on GPU:
   - **Shadertoy**, has so many amazing path tracing demos done in 1 or few passes of fragment shader
-  - written in shader code but run through **Graphic API** like OpenGL, eg. [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox)
+  - written in shader code but run through local **Graphic API** like OpenGL, eg. [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox)
 
-This option could be difficult for people not familliar with shading languages, but with the power of GPU the pace tracing scens can be interactive and it may just take seconds for the result to converge. Sometimes with shader you can explore implicit modelling using SDF, and then path tracing for the shading, which can produce amazing images.
+This option could be difficult for people not familliar with shading languages, but with the power of GPU the path tracing scene can be interacted via user inputs (but not real-time!) and it may just take seconds for the result to converge with **progressive rendering**. With shader you can also explore modeling using SDF, and then shade the scene using path tracing.
+
+<iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" frameborder="0" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 ---
 # Breakdown
