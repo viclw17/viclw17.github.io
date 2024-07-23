@@ -40,8 +40,27 @@ This option could be difficult for people are not familliar with shading languag
 
 ---
 
+
 # Breakdown
-The project is built in C++ to launch a `GLFWwindow`. In the while() main app loop, it created an **Imgui frame** for all the UI, and called `renderer -> render()` function to render path tracing in the GLSL shaders. 
+The project launches a `GLFWwindow` from `main()`, in `main.h` 
+
+In the **main app while-loop** of the GLFW window, it creates an **Imgui frame** and draws all the UI elements. It then calls `renderer -> render()` function which is doing the most heavy-lifting.
+
+The `Renderer::render()` in `renderer.h` is initializing all the **C++ objects**, as well as setting up all the **OpenGL drawing objects and shaders objects**. Then it draws the result of **GLSL path tracing** to the screen quad, based on several switch cases.
+
+`Rectangle` in `rectangle.h` is setting up the only **OpenGL geometry objects** - a quad; and functions to draw and destroy it.
+
+`Scene` in `scene.h` contains instructions of setting up the cornell box scene, from geometry properties to their transform and materials parameters. 
+
+To do that, it reserves a memory blocks `SceneBlock`, `Primitive`, `Material` and `Light` to cache all the scene description data - most them are `int`, `float` and `glm::vec3`. 
+
+Note that it is only packing up the data with an organized interface, and eventually the data is sent to shaders at `Renderer` to put into use.
+
+Camera in camera.h, is similar. It reserves a memory block `CameraBlock`, and defines function for the math operations to move and orbit it.
+
+Finally, the rest of the path tracing is done purely in fragment shaders, which I will cover in part 2.
+
+
 
 # External packages:
 - Imgui
@@ -50,19 +69,14 @@ The project is built in C++ to launch a `GLFWwindow`. In the while() main app lo
 - GLM
 - GLSL-Shader-Includes
 
-<!-- ![alt text]({{ site.url }}/images/2024-07-19-glsl-cornellbox-breakdown/image.png) -->
 <img src="{{ site.url }}/images\2024-07-19-glsl-cornellbox-breakdown\image.png" width="400" style="display:block; margin:auto;">
 
-## OpenGL library on Windows
-If you're on Windows the OpenGL library opengl32.lib comes with the Microsoft SDK, which is installed by default when you install Visual Studio. Since this chapter uses the VS compiler and is on windows we add opengl32.lib to the linker settings. 
+<!-- ## OpenGL library on Windows -->
+<!-- If you're on Windows the OpenGL library opengl32.lib comes with the Microsoft SDK, which is installed by default when you install Visual Studio. -->
 
-## GLFW
-GLFW is a library, written in C, specifically targeted at OpenGL. GLFW gives us the bare necessities required for rendering goodies to the screen. It allows us to create an OpenGL context, define window parameters, and handle user input, which is plenty enough for our purposes.
+<!-- GLFW is a library, written in C, specifically targeted at OpenGL. GLFW gives us the bare necessities required for rendering goodies to the screen. It allows us to create an OpenGL context, define window parameters, and handle user input, which is plenty enough for our purposes. -->
 
-## GLAD
-
-## GLM
-<!-- [text](https://learnopengl.com/Getting-started/Transformations) -->
+<!-- [GLM](https://learnopengl.com/Getting-started/Transformations) -->
 
 # main.cpp
 A good starting point would be the [example_glfw_opengl3](https://github.com/ocornut/imgui/tree/master/examples/example_glfw_opengl3) of Imgui in the repository. It offers a good template I believe this project is based on.
@@ -158,6 +172,130 @@ while (!glfwWindowShouldClose(window)) {
 - shutdown Imgui
 - destroy renderer object
 - shutdown GL window
+# renderer.h
+Define the class of `Renderer`. It holds references to:
+
+- sample number
+- *GlobalBlock object*
+- Camera object
+- Scene object
+- Rectangle object
+- id of GL texture objects: `accumTexture`, `stateTexture`, `accumFBO` (Frame Buffer Object)
+- id of GL UBO (Uniform Buffer Object)
+- Shader objects (pt_shader)
+- enum variable, RenderMode (Render, Normal, Depth, Albedo, UV), for visualization
+- enum variable, Integrator (right now only focus on PT)
+- enum variable, SceneType 
+
+Note that the renderer simply only render 1 quad (prepared by Rectangle class) to the screen, and all path tracing render is done in fragment shader.
+
+## Renderer()
+
+On construction, the constructor will firstly initialize all the objects above. It will also setup/generate those **GL objects** and track their ids with those id variables.
+
+Texture objects:
+
+```c
+// setup accumulate texture
+glGenTextures(1, &accumTexture);
+glBindTexture(GL_TEXTURE_2D, accumTexture);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, 0);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glBindTexture(GL_TEXTURE_2D, 0);
+```
+
+Here it also setup a special texture:
+```c
+// setup RNG state texture
+glGenTextures(1, &stateTexture);
+glBindTexture(GL_TEXTURE_2D, stateTexture);
+// reserve a container *seed* of size of the full pixel amount
+std::vector<uint32_t> seed(width * height);
+std::random_device rnd_dev;
+std::mt19937 mt(rnd_dev());
+std::uniform_int_distribution<uint32_t> dist(1, std::numeric_limits<uint32_t>::max());
+// fill each element of *seed* with a random number
+for (unsigned int i = 0; i < seed.size(); ++i) {
+  seed[i] = dist(mt);
+}
+glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, seed.data());
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glBindTexture(GL_TEXTURE_2D, 0);
+```
+
+Frame buffer obj:
+```c
+// setup accumulate FBO
+glGenFramebuffers(1, &accumFBO);
+glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
+glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, accumTexture, 0);
+glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, stateTexture, 0);
+GLuint attachments[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+glDrawBuffers(2, attachments);
+glBindFramebuffer(GL_FRAMEBUFFER, 0);
+```
+
+Setup UBOs - globalUBO, cameraUBO, sceneUBO:
+```c
+// setup UBO
+glGenBuffers(1, &globalUBO);
+glBindBuffer(GL_UNIFORM_BUFFER, globalUBO);
+glBufferData(GL_UNIFORM_BUFFER, sizeof(GlobalBlock), &global, GL_DYNAMIC_DRAW);
+glBindBuffer(GL_UNIFORM_BUFFER, 0);
+// ...
+glBindBufferBase(GL_UNIFORM_BUFFER, 0, globalUBO);
+// ...
+```
+
+Next is to send those uniforms and GL objects into shader programs (like pt_shader):
+```c
+// set uniforms
+pt_shader.setUniformTexture("accumTexture", accumTexture, 0);
+pt_shader.setUniformTexture("stateTexture", stateTexture, 1);
+pt_shader.setUBO("GlobalBlock", 0);
+pt_shader.setUBO("CameraBlock", 1);
+pt_shader.setUBO("SceneBlock", 2);
+// ...
+output_shader.setUniformTexture("accumTexture", accumTexture, 0);
+```
+
+`destroy()` function is calling those GL functions to delete object:
+
+```c
+glDeleteTextures(1, &accumTexture);
+glDeleteFramebuffers(1, &accumFBO);
+glDeleteBuffers(1, &globalUBO);
+
+pt_shader.destroy();
+
+rectangle.destroy();
+```
+ 
+Few other member functions:
+- glm::vec3 getCameraPosition();
+- void setFOV(float fov);
+- void moveCamera(const glm::vec3& v)
+- void orbitCamera(float dTheta, float dPhi)
+
+## Render::render()
+`render()` function is firstly defining glViewport(). Then it switches by **RenderMode** enum - here we focus on mode **Render**. Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
+
+Then it switches by **Integrator** enum - here we focus on PT: `rectangle.draw(pt_shader)`.
+
+This will draw one pass of the path tracing result, which equal to pick one sample. Then it increments the samples count: `samples++`
+
+Remember to unbound FBO by `glBindFramebuffer(GL_FRAMEBUFFER, 0)`
+
+Because we are doing progressive rendering here, the accumFBO - just as its name - is accumulating all sampled path tracing frams and now it will divide the sum by sample count to draw to the output shader:
+
+```c
+// output
+output_shader.setUniform("samplesInv", 1.0f / samples);
+rectangle.draw(output_shader);
+```
+
 
 # shader.h
 It defined the infrastructure class `Shader` to configure OpenGL shader objects.
@@ -449,129 +587,6 @@ class Camera {
 };
 ```
 
-# renderer.h
-Define the class of `Renderer`. It holds references to:
-
-- sample number
-- *GlobalBlock object*
-- Camera object
-- Scene object
-- Rectangle object
-- id of GL texture objects: `accumTexture`, `stateTexture`, `accumFBO` (Frame Buffer Object)
-- id of GL UBO (Uniform Buffer Object)
-- Shader objects (pt_shader)
-- enum variable, RenderMode (Render, Normal, Depth, Albedo, UV), for visualization
-- enum variable, Integrator (right now only focus on PT)
-- enum variable, SceneType 
-
-Note that the renderer simply only render 1 quad (prepared by Rectangle class) to the screen, and all path tracing render is done in fragment shader.
-
-## Renderer()
-
-On construction, the constructor will firstly initialize all the objects above. It will also setup/generate those **GL objects** and track their ids with those id variables.
-
-Texture objects:
-
-```c
-// setup accumulate texture
-glGenTextures(1, &accumTexture);
-glBindTexture(GL_TEXTURE_2D, accumTexture);
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, 0);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-glBindTexture(GL_TEXTURE_2D, 0);
-```
-
-Here it also setup a special texture:
-```c
-// setup RNG state texture
-glGenTextures(1, &stateTexture);
-glBindTexture(GL_TEXTURE_2D, stateTexture);
-// reserve a container *seed* of size of the full pixel amount
-std::vector<uint32_t> seed(width * height);
-std::random_device rnd_dev;
-std::mt19937 mt(rnd_dev());
-std::uniform_int_distribution<uint32_t> dist(1, std::numeric_limits<uint32_t>::max());
-// fill each element of *seed* with a random number
-for (unsigned int i = 0; i < seed.size(); ++i) {
-  seed[i] = dist(mt);
-}
-glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, seed.data());
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-glBindTexture(GL_TEXTURE_2D, 0);
-```
-
-Frame buffer obj:
-```c
-// setup accumulate FBO
-glGenFramebuffers(1, &accumFBO);
-glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
-glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, accumTexture, 0);
-glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, stateTexture, 0);
-GLuint attachments[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
-glDrawBuffers(2, attachments);
-glBindFramebuffer(GL_FRAMEBUFFER, 0);
-```
-
-Setup UBOs - globalUBO, cameraUBO, sceneUBO:
-```c
-// setup UBO
-glGenBuffers(1, &globalUBO);
-glBindBuffer(GL_UNIFORM_BUFFER, globalUBO);
-glBufferData(GL_UNIFORM_BUFFER, sizeof(GlobalBlock), &global, GL_DYNAMIC_DRAW);
-glBindBuffer(GL_UNIFORM_BUFFER, 0);
-// ...
-glBindBufferBase(GL_UNIFORM_BUFFER, 0, globalUBO);
-// ...
-```
-
-Next is to send those uniforms and GL objects into shader programs (like pt_shader):
-```c
-// set uniforms
-pt_shader.setUniformTexture("accumTexture", accumTexture, 0);
-pt_shader.setUniformTexture("stateTexture", stateTexture, 1);
-pt_shader.setUBO("GlobalBlock", 0);
-pt_shader.setUBO("CameraBlock", 1);
-pt_shader.setUBO("SceneBlock", 2);
-// ...
-output_shader.setUniformTexture("accumTexture", accumTexture, 0);
-```
-
-`destroy()` function is calling those GL functions to delete object:
-
-```c
-glDeleteTextures(1, &accumTexture);
-glDeleteFramebuffers(1, &accumFBO);
-glDeleteBuffers(1, &globalUBO);
-
-pt_shader.destroy();
-
-rectangle.destroy();
-```
- 
-Few other member functions:
-- glm::vec3 getCameraPosition();
-- void setFOV(float fov);
-- void moveCamera(const glm::vec3& v)
-- void orbitCamera(float dTheta, float dPhi)
-
-## Render::render()
-`render()` function is firstly defining glViewport(). Then it switches by **RenderMode** enum - here we focus on mode **Render**. Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
-
-Then it switches by **Integrator** enum - here we focus on PT: `rectangle.draw(pt_shader)`.
-
-This will draw one pass of the path tracing result, which equal to pick one sample. Then it increments the samples count: `samples++`
-
-Remember to unbound FBO by `glBindFramebuffer(GL_FRAMEBUFFER, 0)`
-
-Because we are doing progressive rendering here, the accumFBO - just as its name - is accumulating all sampled path tracing frams and now it will divide the sum by sample count to draw to the output shader:
-
-```c
-// output
-output_shader.setUniform("samplesInv", 1.0f / samples);
-rectangle.draw(output_shader);
-```
 
 TBC
 
