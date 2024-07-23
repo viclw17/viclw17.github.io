@@ -37,50 +37,124 @@ This option could be difficult for people are not familliar with shading languag
 <iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" frameborder="0" allowfullscreen style="display:block; margin:auto;"></iframe>
 
 ---
+
 # Breakdown
+The project is built in C++ to launch a `GLFWwindow`. In the while() main app loop, it created an **Imgui frame** for all the UI, and called `renderer -> render()` function to render path tracing in the GLSL shaders. 
 
-- Path tracing in GLSL shaders
-- OpenGL local application
-- Imgui to add interactive UI
-
-External packages:
-- GLAD
+# External packages:
+- Imgui
 - GLFW
+- GLAD
 - GLM
 - GLSL-Shader-Includes
-- Imgui
 
-# main.cpp
-## handleInput
-## main
-- init glfw
-- setup window and context
-[text](https://learnopengl.com/Getting-started/Creating-a-window)
-
-### OpenGL library on Windows
+## OpenGL library on Windows
 If you're on Windows the OpenGL library opengl32.lib comes with the Microsoft SDK, which is installed by default when you install Visual Studio. Since this chapter uses the VS compiler and is on windows we add opengl32.lib to the linker settings. 
 
-### glfw
+## GLFW
 GLFW is a library, written in C, specifically targeted at OpenGL. GLFW gives us the bare necessities required for rendering goodies to the screen. It allows us to create an OpenGL context, define window parameters, and handle user input, which is plenty enough for our purposes.
 
 ![alt text](images/2024-07-19-glsl-cornellbox-breakdown/image.png)
 
-### GLAD
+## GLAD
 - initialize glad
 
 ### GLM
 [text](https://learnopengl.com/Getting-started/Transformations)
 
+# main.cpp
+A good starting point would be the [example_glfw_opengl3](https://github.com/ocornut/imgui/tree/master/examples/example_glfw_opengl3) of Imgui in the repository. It offers a good template I believe this project is based on.
+
+<img src="{{ site.url }}/images\2024-07-19-glsl-cornellbox-breakdown\imgui_example.png" width="640" style="display:block; margin:auto;">
+
+<!-- ## handleInput -->
+## main()
+- [Creating A Window](https://learnopengl.com/Getting-started/Creating-a-window)
+
+```c
+// init glfw
+
+// set glfw error callback
+
+// setup window and context
+glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // Required on Mac
+
+GLFWwindow* window =
+    glfwCreateWindow(1000, 1000, "GLSL CornellBox", nullptr, nullptr);
+
+// set glfw window error
+if (!window) {
+  std::cerr << "failed to create window" << std::endl;
+  std::exit(EXIT_FAILURE);
+}
+
+glfwMakeContextCurrent(window);
+
+// initialize glad
+```
 - setup imgui context
-- set up renderer ```renderer = std::make_unique<Renderer>(1000, 1000);```
+- setup Dear ImGui style
+- set up renderer 
+
+``` c
+renderer = std::make_unique<Renderer>(1000, 1000);
+```
 
 ### main app loop
-    - imgui, ```ImGui::Begin("Renderer");``` ... ```ImGui::End();```
-    - ```renderer->render();```
-    - ```imgui::Render()```
-    - ```glfwSwapBuffers(window);```
+```c
+// main app loop
+  while (!glfwWindowShouldClose(window)) {
+    glfwPollEvents();
 
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 
+    ImGui::Begin("Renderer");
+    {
+      // def gui design and hook it with the renderer settings like:
+      // renderer->resize();
+      // renderer->setRenderMode();
+      // renderer->setIntegrator();
+      // renderer->setSceneType();
+      // renderer->getSamples();
+      // renderer->getCameraPosition();
+      // renderer->getCameraFOV();
+      // renderer->setFOV();
+      // ...
+
+    }
+    ImGui::End();
+
+    // Handle Input
+    handleInput(window, io);
+
+    // Rendering
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    renderer->render();
+
+    // ImGui Rendering
+    int display_w, display_h;
+    glfwGetFramebufferSize(window, &display_w, &display_h);
+
+    glViewport(0, 0, display_w, display_h);
+
+    ImGui::Render();
+
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // gl
+    glfwSwapBuffers(window);
+  }
+```
+- shutdown Imgui
+- destroy renderer object
+- shutdown GL window
 
 # rectangle.h
 basically the shader output screen
