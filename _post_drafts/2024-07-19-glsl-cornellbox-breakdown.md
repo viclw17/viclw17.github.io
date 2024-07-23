@@ -4,12 +4,15 @@ type: article
 layout: post
 image: 2024-07-20-glsl-cornellbox-breakdown/cover.jpg
 ---
-This post first listed the common implement options for path tracing with examples. But the main goal is aiming to break down yumcyawiz's project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox). This project is a brilliant demo of path tracing implemented using GLSL shader code, but is presented interactively as a standalone executable using basic OpenGL and Imgui in C++. It is a great example for reviewing OpenGL workflow as well as path tracing application.
+This post first listed the common implement choices for path tracing with resources. But the main goal is aiming to break down yumcyawiz's project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox). This project is a brilliant demo of path tracing implemented using GLSL shader code, but is presented interactively as a standalone executable using basic OpenGL and Imgui in C++. It is a great example for reviewing OpenGL workflow as well as path tracing implementation.
 
-# Path Tracing Implement Choices
-During my researching, as a hobbist, there are many go-to ways to implement basic path tracing:
+* This will become a table of contents (this text will be scrapped).
+{:toc}
 
-- Written in C++ from ground up, calculate pixel values and output images file(eg. PPM), a few bookmarked examples are:
+# Explore Path Tracing Implement Choices
+During my research, as a hobbist there are many go-to ways to implement basic path tracing:
+
+- Write in C++ from ground up, calculate pixel values and output images file(eg. PPM), a few bookmarked examples are:
   - RIOW
   - [PBRT](https://github.com/mmp/pbrt-v3)
   - [smallpt](https://www.kevinbeason.com/smallpt/)
@@ -18,18 +21,18 @@ During my researching, as a hobbist, there are many go-to ways to implement basi
   - [Luminox](https://github.com/yumcyaWiz/Luminox)
   - [Aras' ToyPathTracer](https://github.com/aras-p/ToyPathTracer)
 
-This option is mainly for off-line rendering done solely on CPU, with less interactivity. It usually takes long time - according to how optimized - for the result to converge and an image to produce. It is a good starting point to get into the implementation of all the theories.
+This option is mainly for off-line rendering done solely on CPU, with less interactivity. It usually takes long time - according to how optimized - for the result to converge and an image to be generated. But this is the most straightforward approach in computer graphics research as well as in the industries.
 
-- Written in C++ with direct GPU programming:
+- Utilize direct GPU programming:
   - [Ray Tracing in One Weekend in CUDA](https://github.com/rogerallen/raytracinginoneweekendincuda)
 
 This option can be challenging and requires knowledge on GPU programming libraries.
 
-- Written in shader code like GLSL that running on GPU:
-  - **Shadertoy**, has so many amazing path tracing demos done in 1 or few passes of fragment shader
-  - written in shader code but run through local **Graphic API** like OpenGL, eg. [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox)
+- Write in shader code like GLSL/HLSL that is running on GPU:
+  - **Shadertoy**, has so many amazing path tracing demos done in 1 or few passes through fragment shader
+  - written in shader code but run through local **Graphic API** like OpenGL, eg. [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox) or [GLSL-PathTracer](https://github.com/knightcrawler25/GLSL-PathTracer).
 
-This option could be difficult for people not familliar with shading languages, but with the power of GPU the path tracing scene can be interacted via user inputs (but not real-time!) and it may just take seconds for the result to converge with **progressive rendering**. With shader you can also explore modeling using SDF, and then shade the scene using path tracing.
+This option could be difficult for people are not familliar with shading languages, but with the power of GPU the path tracing scene can be interacted via user inputs (but not real-time!) and it may just take seconds for the result to converge with **progressive rendering**. With shader you can also explore modeling using SDF, and then shade the scene using path tracing.
 
 <iframe width="100%"  height="400" src="https://www.youtube.com/embed/-dmQk2q3FTo?si=Kgzeyq-2eKlO2gQx" frameborder="0" allowfullscreen style="display:block; margin:auto;"></iframe>
 
