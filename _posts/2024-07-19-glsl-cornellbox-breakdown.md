@@ -79,12 +79,13 @@ Finally, the rest of the path tracing is done purely in fragment shaders, which 
 <!-- [GLM](https://learnopengl.com/Getting-started/Transformations) -->
 
 # main.cpp
-A good starting point would be the [example_glfw_opengl3](https://github.com/ocornut/imgui/tree/master/examples/example_glfw_opengl3) of Imgui in the repository. It offers a good template I believe this project is based on.
+After some research, I found a good starting point would be the [example_glfw_opengl3](https://github.com/ocornut/imgui/tree/master/examples/example_glfw_opengl3) of Imgui in the repository. It offers a good template I believe this project is based on.
 
 <img src="{{ site.url }}/images\2024-07-19-glsl-cornellbox-breakdown\imgui_example.png" width="640" style="display:block; margin:auto;">
 
 <!-- ## handleInput -->
 ## main()
+### Create OpenGL Window
 - [Creating A Window](https://learnopengl.com/Getting-started/Creating-a-window)
 
 ```c
@@ -111,15 +112,16 @@ glfwMakeContextCurrent(window);
 
 // initialize glad
 ```
-- setup imgui context
-- setup Dear ImGui style
-- set up renderer 
+- setup Imgui context
+- setup ImGui style
+
+### Create the renderer
 
 ``` c
 renderer = std::make_unique<Renderer>(1000, 1000);
 ```
 
-### main app loop
+### The main app loop
 ```c
 // main app loop
 while (!glfwWindowShouldClose(window)) {
@@ -132,7 +134,8 @@ while (!glfwWindowShouldClose(window)) {
 
   ImGui::Begin("Renderer");
   {
-    // def gui design and hook it with the renderer settings like:
+    // def imgui design and hook it with the renderer settings like:
+
     // renderer->resize();
     // renderer->setRenderMode();
     // renderer->setIntegrator();
@@ -149,19 +152,15 @@ while (!glfwWindowShouldClose(window)) {
   // Handle Input
   handleInput(window, io);
 
-  // Rendering
+  // Render
   glClear(GL_COLOR_BUFFER_BIT);
-
   renderer->render();
 
-  // ImGui Rendering
+  // ImGui Render
   int display_w, display_h;
   glfwGetFramebufferSize(window, &display_w, &display_h);
-
   glViewport(0, 0, display_w, display_h);
-
   ImGui::Render();
-
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
   // gl
@@ -169,19 +168,23 @@ while (!glfwWindowShouldClose(window)) {
 }
 ```
 
+after the loop:
+
 - shutdown Imgui
 - destroy renderer object
 - shutdown GL window
+  
 # renderer.h
 Define the class of `Renderer`. It holds references to:
 
 - sample number
-- *GlobalBlock object*
+- *GlobalBlock memory struct*
 - Camera object
 - Scene object
 - Rectangle object
-- id of GL texture objects: `accumTexture`, `stateTexture`, `accumFBO` (Frame Buffer Object)
-- id of GL UBO (Uniform Buffer Object)
+- id of GL texture objects: `accumTexture`, `stateTexture`, `accumFBO`(Frame Buffer Object)
+- id of GL UBO (Uniform Buffer Object): `globalUBO`, `cameraUBO`, `sceneUBO`
+- Rectangle object
 - Shader objects (pt_shader)
 - enum variable, RenderMode (Render, Normal, Depth, Albedo, UV), for visualization
 - enum variable, Integrator (right now only focus on PT)
@@ -190,7 +193,6 @@ Define the class of `Renderer`. It holds references to:
 Note that the renderer simply only render 1 quad (prepared by Rectangle class) to the screen, and all path tracing render is done in fragment shader.
 
 ## Renderer()
-
 On construction, the constructor will firstly initialize all the objects above. It will also setup/generate those **GL objects** and track their ids with those id variables.
 
 Texture objects:
@@ -205,20 +207,26 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 glBindTexture(GL_TEXTURE_2D, 0);
 ```
 
-Here it also setup a special texture:
+Here it also setup a special texture, to save random number generator state for every single pixel:
 ```c
 // setup RNG state texture
 glGenTextures(1, &stateTexture);
 glBindTexture(GL_TEXTURE_2D, stateTexture);
+
 // reserve a container *seed* of size of the full pixel amount
 std::vector<uint32_t> seed(width * height);
 std::random_device rnd_dev;
 std::mt19937 mt(rnd_dev());
+
+// Produces random integer values i, uniformly distributed on the closed interval [a,b], that is, 
+// distributed according to the discrete probability function
 std::uniform_int_distribution<uint32_t> dist(1, std::numeric_limits<uint32_t>::max());
+
 // fill each element of *seed* with a random number
 for (unsigned int i = 0; i < seed.size(); ++i) {
   seed[i] = dist(mt);
 }
+
 glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, seed.data());
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -237,19 +245,23 @@ glDrawBuffers(2, attachments);
 glBindFramebuffer(GL_FRAMEBUFFER, 0);
 ```
 
-Setup UBOs - globalUBO, cameraUBO, sceneUBO:
+Setup UBOs - `globalUBO`, `cameraUBO`, `sceneUBO`:
 ```c
 // setup UBO
+// GlobalBlock
 glGenBuffers(1, &globalUBO);
 glBindBuffer(GL_UNIFORM_BUFFER, globalUBO);
 glBufferData(GL_UNIFORM_BUFFER, sizeof(GlobalBlock), &global, GL_DYNAMIC_DRAW);
 glBindBuffer(GL_UNIFORM_BUFFER, 0);
-// ...
+// CameraBlock...
+// SceneBlock...
+
 glBindBufferBase(GL_UNIFORM_BUFFER, 0, globalUBO);
-// ...
+// CameraBlock...
+// SceneBlock...
 ```
 
-Next is to send those uniforms and GL objects into shader programs (like pt_shader):
+Next is to send those GL objects into shader programs(pt_shader) via uniforms:
 ```c
 // set uniforms
 pt_shader.setUniformTexture("accumTexture", accumTexture, 0);
@@ -265,30 +277,84 @@ output_shader.setUniformTexture("accumTexture", accumTexture, 0);
 
 ```c
 glDeleteTextures(1, &accumTexture);
+//...
 glDeleteFramebuffers(1, &accumFBO);
+//...
 glDeleteBuffers(1, &globalUBO);
 
 pt_shader.destroy();
+//...
 
 rectangle.destroy();
 ```
  
-Few other member functions:
-- glm::vec3 getCameraPosition();
-- void setFOV(float fov);
+Few functions for camera object will send camera parameters into OpenGL:
+
+- glm::vec3 getCameraPosition()
+- void setFOV(float fov)
 - void moveCamera(const glm::vec3& v)
 - void orbitCamera(float dTheta, float dPhi)
 
+for example:
+
+```c
+void moveCamera(const glm::vec3& v) {
+  camera.move(v);
+  glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+  glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(CameraBlock), &camera.params);
+  glBindBuffer(GL_UNIFORM_BUFFER, 0);
+  clear_flag = true;
+}
+```
+
+Few getter/setter functions:
+```c
+  RenderMode getRenderMode() const { return mode; }
+
+  void setRenderMode(const RenderMode& mode) {
+    this->mode = mode;
+    clear();
+  }
+
+  Integrator getIntegrator() const { return integrator; }
+
+  void setIntegrator(const Integrator& integrator) {
+    this->integrator = integrator;
+    clear();
+  }
+
+  SceneType getSceneType() const { return scene_type; }
+
+  void setSceneType(const SceneType& scene_type) {
+    this->scene_type = scene_type;
+
+    // recreate scene
+    scene.setScene(scene_type);
+
+    // send scene data
+    glBindBuffer(GL_UNIFORM_BUFFER, sceneUBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(SceneBlock), &scene.block);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    clear();
+  }
+```
+
+Note that `setSceneType()` will send scene data into OpenGL.
+
+
 ## Render::render()
-`render()` function is firstly defining glViewport(). Then it switches by **RenderMode** enum - here we focus on mode **Render**. Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
+`render()` function calls glViewport() first, then it switches by **RenderMode** enum - here we focus on mode **Render**. 
 
-Then it switches by **Integrator** enum - here we focus on PT: `rectangle.draw(pt_shader)`.
+Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
 
-This will draw one pass of the path tracing result, which equal to pick one sample. Then it increments the samples count: `samples++`
+Then it switches by **Integrator** enum - here we focus on **PT**: `rectangle.draw(pt_shader)`.
+
+This will draw one pass of the path tracing result, which equals to sample once of the rendering equation. Then it increments the samples count: `samples++`
 
 Remember to unbound FBO by `glBindFramebuffer(GL_FRAMEBUFFER, 0)`
 
-Because we are doing progressive rendering here, the accumFBO - just as its name - is accumulating all sampled path tracing frams and now it will divide the sum by sample count to draw to the output shader:
+Because we are doing **progressive rendering** here, the accumFBO - just as its name - is accumulating all sampled path tracing frames and in the end it will divide the sum by sample count and draw to the output shader:
 
 ```c
 // output
@@ -296,12 +362,11 @@ output_shader.setUniform("samplesInv", 1.0f / samples);
 rectangle.draw(output_shader);
 ```
 
-
 # shader.h
-It defined the infrastructure class `Shader` to configure OpenGL shader objects.
+It defines the infrastructure class `Shader` to configure OpenGL shader objects.
 
 ## Shader()
-Constructor is taking in **shader file paths**, then **compile** shaders and **link** the shaders.
+Constructor is taking in **shader file paths**, then it will **compile** and **link** the shaders. These are all standard boilerplate code.
 
 Compile shader:
 
@@ -398,7 +463,7 @@ void setUBO(const std::string& block_name, GLuint binding_number) const {
 ```
 
 # rectangle.h
-Define the `Rectangle` class to prepare to draw the screen quad.
+Define the `Rectangle` class to prepare and draw the screen quad. This is basically the only OpenGL geometry we need to construct and send to GPU.
 
 ## Rectangle()
 ```c
@@ -446,7 +511,6 @@ class Rectangle {
   ```
 
   ```c
-
   void destroy() {
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
@@ -460,11 +524,17 @@ class Rectangle {
     glBindVertexArray(0);
     shader.deactivate();
   }
-};
 ```
 
 # scene.h
-`Scene` class contains definition of the Cornell Box.
+`Scene` class contains definition of the Cornell Box. It is a pure C++ class, data are packed and later sent into OpenGL by `Renderer`.
+
+It defines several **memory-aligned struct** to **pack all the scene description data**:
+-  `Primitive`
+-  `Material`
+-  `Light`
+  
+`SceneBlock` will be the top level container contains all data packs above:
 
 ```c
 struct alignas(16) Primitive {
@@ -505,13 +575,46 @@ enum class SceneType {
 };
 ```
 
+`setScene()` will clear the `SceneBlock`, and based on switch cases of scene type recreates the scene data. Here we focus on `SceneType.Original`, which calls `setupCornellBoxOriginal()`. 
+
+Afterward it will `init()` the scene. `setupCornellBoxOriginal()` will call a lot of `addPrimitive()` and `addMaterial()` and keep track of the `n_materials` `n_primitives` and `n_lights`. These integers are used as id and assigned for all the corresponding scene elements - prims(geo) or lights.
+
+
+
+`setupCornellBoxOriginal()` will create and fill `SceneBlock` with the required Primitive, Material, Light for the scene.
+
 ```c
 class Scene {
  private:
-  void setupCornellBoxOriginal() {  }
+  void setupCornellBoxOriginal() //...
+  // ...
 
+  void init() {
+    // set primitive id
+    for (int i = 0; i < n_primitives; ++i) {
+      block.primitives[i].id = i;
+    }
 
-  void init() {}
+    // set lights
+    int n_lights = 0;
+    for (int i = 0; i < n_primitives; ++i) {
+      const Primitive& primitive = block.primitives[i];
+      const Material& material = block.materials[primitive.material_id];
+      if (material.le != glm::vec3(0)) {
+        Light light;
+        light.primID = primitive.id;
+        light.le = material.le;
+
+        block.lights[n_lights] = light;
+        n_lights++;
+      }
+    }
+
+    // set number of materials, primitives, lights
+    block.n_materials = n_materials;
+    block.n_primitives = n_primitives;
+    block.n_lights = n_lights;
+  }
 
   void clear() {
     n_primitives = 0;
@@ -523,30 +626,37 @@ class Scene {
   int n_materials;
   SceneBlock block;
 
-  void addPrimitive(const Primitive& primitive) {}
+  void addPrimitive(const Primitive& primitive) {
+    block.primitives[n_primitives] = primitive;
+    n_primitives++;
+  }
 
-  void addMaterial(const Material& material) {}
+  void addMaterial(const Material& material) {
+    block.materials[n_materials] = material;
+    n_materials++;
+  }
 
-  static Primitive createSphere(const glm::vec3& center, float radius) {}
+  static Primitive createSphere(const glm::vec3& center, float radius) // ...
 
-  static Primitive createPlane(const glm::vec3& leftCornerPoint,
-                               const glm::vec3& right, const glm::vec3& up) {}
+  static Primitive createPlane(const glm::vec3& leftCornerPoint, const glm::vec3& right, const glm::vec3& up) // ...
 
-  static Material createDiffuse(const glm::vec3& kd) {}
+  static Material createDiffuse(const glm::vec3& kd) // ...
 
-  static Material createMirror(const glm::vec3& kd) {}
+  static Material createMirror(const glm::vec3& kd) // ...
 
-  static Material createGlass(const glm::vec3& kd) {}
+  static Material createGlass(const glm::vec3& kd) // ...
 
-  static Material createLight(const glm::vec3& le) {}
+  static Material createLight(const glm::vec3& le) // ...
 
-  Scene() : n_primitives(0), n_materials(0) {}
+  Scene() : n_primitives(0), n_materials(0) // ...
 
-  void setScene(const SceneType& scene_type) {}
+  void setScene(const SceneType& scene_type) // ...
 };
 ```
 
 # camera.h
+For defining `Camera` class. Also a pure C++ class, data are packed and later sent into OpenGL by `Renderer`.
+
 ```c
 struct alignas(16) CameraBlock {
   alignas(16) glm::vec3 camPos;
@@ -562,7 +672,9 @@ struct alignas(16) CameraBlock {
         camRight(camRight),
         camUp(camUp) {}
 };
+```
 
+```c
 class Camera {
  public:
   CameraBlock params;
@@ -579,15 +691,15 @@ class Camera {
     setFOV(fov);
   }
 
-  void setFOV(float fov) {}
+  void setFOV(float fov) //...
 
-  void move(const glm::vec3& v) {}
+  void move(const glm::vec3& v) //...
 
-  void orbit(float dTheta, float dPhi) {}
+  void orbit(float dTheta, float dPhi) //...
 };
 ```
 
-
+# Summary
 TBC
 
 
