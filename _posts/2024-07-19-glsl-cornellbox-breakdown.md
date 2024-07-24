@@ -749,9 +749,5 @@ class Camera {
 };
 ```
 
-# Summary
-TBC
-
-
-
+Moving onto next note to break down the pace tracing implementation on the GLSL shader side. :)
 
