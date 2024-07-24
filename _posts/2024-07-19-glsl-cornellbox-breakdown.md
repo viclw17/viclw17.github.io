@@ -290,12 +290,14 @@ rectangle.destroy();
  
 Few functions for camera object will send camera parameters into OpenGL:
 
-- glm::vec3 getCameraPosition()
-- void setFOV(float fov)
-- void moveCamera(const glm::vec3& v)
-- void orbitCamera(float dTheta, float dPhi)
+- `glm::vec3 getCameraPosition()`
+- `void setFOV(float fov)`
+- `void moveCamera(const glm::vec3& v)`
+- `void orbitCamera(float dTheta, float dPhi)`
 
-for example:
+Note that the `camera.move(v)` function call which is defined in Camera class is doing the actual math and calculation, over here the result is being sent into GPU via shader uniforms `camera.params`. 
+
+Example: 
 
 ```c
 void moveCamera(const glm::vec3& v) {
@@ -322,7 +324,11 @@ Few getter/setter functions:
     this->integrator = integrator;
     clear();
   }
+```
 
+Note that `setSceneType()` will be the one that sends scene data into OpenGL.
+
+```c
   SceneType getSceneType() const { return scene_type; }
 
   void setSceneType(const SceneType& scene_type) {
@@ -340,19 +346,33 @@ Few getter/setter functions:
   }
 ```
 
-Note that `setSceneType()` will send scene data into OpenGL.
-
-
 ## Render::render()
-`render()` function calls glViewport() first, then it switches by **RenderMode** enum - here we focus on mode **Render**. 
+`render()` function calls `glViewport()` first, then it switches by **RenderMode** enum - here we focus on mode **Render**. 
 
 Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
 
 Then it switches by **Integrator** enum - here we focus on **PT**: `rectangle.draw(pt_shader)`.
 
-This will draw one pass of the path tracing result, which equals to sample once of the rendering equation. Then it increments the samples count: `samples++`
+Note that the draw function is from `Rectangle` class, which will activate the passed-in shader object and basically draw the quad onto the screen with its fragment shader that doing the real path tracing.
 
-Remember to unbound FBO by `glBindFramebuffer(GL_FRAMEBUFFER, 0)`
+```c
+// from rectangle.h
+  void draw(const Shader& shader) const {
+    shader.activate(); // glUseProgram(program)
+
+    glBindVertexArray(VAO); // bind VAO of the quad
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0); // unbind
+
+    shader.deactivate();
+  }
+```
+
+This will draw one pass of the path tracing result, which equals to **sample once of the rendering equation**. 
+
+Then it increments the samples count by one each loop: `samples++`
+
+Remember to unbind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, 0)`
 
 Because we are doing **progressive rendering** here, the accumFBO - just as its name - is accumulating all sampled path tracing frames and in the end it will divide the sum by sample count and draw to the output shader:
 
@@ -361,6 +381,30 @@ Because we are doing **progressive rendering** here, the accumFBO - just as its 
 output_shader.setUniform("samplesInv", 1.0f / samples);
 rectangle.draw(output_shader);
 ```
+
+## Render::clear()
+```c
+  void clear() {
+    // clear accumTexture
+    glBindTexture(GL_TEXTURE_2D, accumTexture);
+    std::vector<GLfloat> data(3 * global.resolution.x * global.resolution.y);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, global.resolution.x,
+                    global.resolution.y, GL_RGB, GL_FLOAT, data.data());
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    // update texture uniforms
+    pt_shader.setUniformTexture("accumTexture", accumTexture, 0);
+    pt_nee_shader.setUniformTexture("accumTexture", accumTexture, 0);
+    bdpt_shader.setUniformTexture("accumTexture", accumTexture, 0);
+    output_shader.setUniformTexture("accumTexture", accumTexture, 0);
+
+    // reset samples
+    samples = 0;
+  }
+```
+
+## Render::resize()
+
 
 # shader.h
 It defines the infrastructure class `Shader` to configure OpenGL shader objects.
@@ -402,7 +446,7 @@ void compileShader() {
 Link shader:
 
 ```c
-  void linkShader() {
+void linkShader() {
   // Link Shader Program
   program = glCreateProgram();
   glAttachShader(program, vertex_shader);
@@ -422,8 +466,13 @@ Link shader:
 }
 ```
 
-Helper functions to active/deactive shaders:
+Helper functions to destroy, active/deactive shaders:
 ```c
+void destroy() {
+  glDeleteShader(vertex_shader);
+  glDeleteShader(fragment_shader);
+  glDeleteProgram(program);
+}
 void activate() const { glUseProgram(program); }
 void deactivate() const { glUseProgram(0); }
 ```
