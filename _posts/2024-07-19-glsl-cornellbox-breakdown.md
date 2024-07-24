@@ -579,13 +579,6 @@ class Rectangle {
 # scene.h
 `Scene` class contains definition of the Cornell Box. It is a pure C++ class, data are packed and later sent into OpenGL by `Renderer`.
 
-It defines several **memory-aligned struct** to **pack all the scene description data**:
--  `Primitive`
--  `Material`
--  `Light`
-  
-`SceneBlock` will be the top level container contains all data packs above:
-
 ```c
 struct alignas(16) Primitive {
   int id;                                 // 4
@@ -625,11 +618,63 @@ enum class SceneType {
 };
 ```
 
+It defines several **memory-aligned struct** to **pack all the scene description data**:
+-  `Primitive`
+-  `Material`
+-  `Light`
+  
+
+`global.frag` shader has the corresponding definitions of those structs:
+```c
+struct Material {
+    int brdf_type;
+    vec3 kd;
+    vec3 le;
+};
+
+struct Primitive {
+    int id;
+    int type;
+    vec3 center;
+    float radius;
+    vec3 leftCornerPoint;
+    vec3 up;
+    vec3 right;
+    int material_id;
+};
+
+struct Light {
+    int primID;
+    vec3 le;
+};
+```
+
+`SceneBlock` will be the top level container contains all data packs above.
+
+`uniform.frag` shader has the corresponding definitions of `SceneBlock`'s **uniform block layout**, to utilize UBO - Uniform buffer objects:
+
+- More to learn at [Advanced GLSL - Uniform buffer objects](https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL)
+
+```c
+const int MAX_N_MATERIALS = 100;
+const int MAX_N_PRIMITIVES = 100;
+const int MAX_N_LIGHTS = 100;
+
+layout(std140) uniform SceneBlock {
+  int n_materials;
+  int n_primitives;
+  int n_lights;
+  Material materials[MAX_N_MATERIALS];
+  Primitive primitives[MAX_N_PRIMITIVES];
+  Light lights[MAX_N_LIGHTS];
+};
+```
+
+
+
 `setScene()` will clear the `SceneBlock`, and based on switch cases of scene type recreates the scene data. Here we focus on `SceneType.Original`, which calls `setupCornellBoxOriginal()`. 
 
 Afterward it will `init()` the scene. `setupCornellBoxOriginal()` will call a lot of `addPrimitive()` and `addMaterial()` and keep track of the `n_materials` `n_primitives` and `n_lights`. These integers are used as id and assigned for all the corresponding scene elements - prims(geo) or lights.
-
-
 
 `setupCornellBoxOriginal()` will create and fill `SceneBlock` with the required Primitive, Material, Light for the scene.
 
@@ -748,6 +793,20 @@ class Camera {
   void orbit(float dTheta, float dPhi) //...
 };
 ```
+
+`uniform.frag` shader has the corresponding definitions of `CameraBlock`'s **uniform block layout**
+
+```c
+layout(std140) uniform CameraBlock {
+  vec3 camPos;
+  vec3 camForward;
+  vec3 camRight;
+  vec3 camUp;
+  float a;
+} camera;
+```
+
+---
 
 Moving onto next note to break down the pace tracing implementation on the GLSL shader side. :)
 
