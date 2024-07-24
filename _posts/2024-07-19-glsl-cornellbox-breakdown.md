@@ -1,5 +1,5 @@
 ---
-title: "GLSL Cornell Box Project Breakdown - Part 1"
+title: "Study Notes: GLSL CornellBox Breakdown - Part 1"
 type: article
 layout: post
 
