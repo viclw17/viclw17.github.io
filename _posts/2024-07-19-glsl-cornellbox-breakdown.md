@@ -56,7 +56,7 @@ The constructor of `Renderer` class in `renderer.h` is initializing all the **C+
 
 `Camera` class in `camera.h` reserves a memory block `CameraBlock`, and defines functions for the math operations to move and orbit it.
 
-Finally, the rest of the path tracing is done purely in |GLSL fragment shaders, which I will cover in part 2.
+Finally, the rest of the path tracing is done purely in GLSL fragment shaders, which I will cover in part 2.
 
 
 
