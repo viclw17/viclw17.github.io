@@ -44,21 +44,19 @@ This option could be difficult for people are not familliar with shading languag
 # Breakdown
 The project launches a `GLFWwindow` from `main()`, in `main.h` 
 
-In the **main app while-loop** of the GLFW window, it creates an **Imgui frame** and draws all the UI elements. It then calls `renderer -> render()` function which is doing the most heavy-lifting.
+In the **main app while-loop** of the GLFW window, it creates an **Imgui frame** and draws all the UI elements. It then calls `renderer -> render()` which is doing the most heavy-lifting.
 
-The `Renderer::render()` in `renderer.h` is initializing all the **C++ objects**, as well as setting up all the **OpenGL drawing objects and shaders objects**. Then it draws the result of **GLSL path tracing** to the screen quad, based on several switch cases.
+The constructor of `Renderer` class in `renderer.h` is initializing all the **C++ objects**, as well as setting up all the **OpenGL drawing objects and shaders objects**. Then it draws the result of **GLSL path tracing** to the screen quad, based on several switch cases.
 
-`Rectangle` in `rectangle.h` is setting up the only **OpenGL geometry objects** - a quad; and functions to draw and destroy it.
+`Shader` class in `shader.h` prepares infrastructure for OpenGL shader compiling and linking.
 
-`Scene` in `scene.h` contains instructions of setting up the cornell box scene, from geometry properties to their transform and materials parameters. 
+`Rectangle` in `rectangle.h` sets up the only **OpenGL geometry objects** - a quad; and functions to draw and destroy it.
 
-To do that, it reserves a memory blocks `SceneBlock`, `Primitive`, `Material` and `Light` to cache all the scene description data - most them are `int`, `float` and `glm::vec3`. 
+`Scene` class in `scene.h` contains instructions of setting up the cornell box scene, from geometry properties to their transform and materials parameters. It reserves several memory blocks `SceneBlock`, `Primitive`, `Material` and `Light` to cache all the scene description data - mainly `int`, `float` and `glm::vec3`. Note that it is only packing up the data with an organized way, and eventually the data is sent to shaders at `Renderer` to put into use.
 
-Note that it is only packing up the data with an organized interface, and eventually the data is sent to shaders at `Renderer` to put into use.
+`Camera` class in `camera.h` reserves a memory block `CameraBlock`, and defines functions for the math operations to move and orbit it.
 
-Camera in camera.h, is similar. It reserves a memory block `CameraBlock`, and defines function for the math operations to move and orbit it.
-
-Finally, the rest of the path tracing is done purely in fragment shaders, which I will cover in part 2.
+Finally, the rest of the path tracing is done purely in |GLSL fragment shaders, which I will cover in part 2.
 
 
 
@@ -187,15 +185,15 @@ Define the class of `Renderer`. It holds references to:
 - Rectangle object
 - Shader objects (pt_shader)
 - enum variable, RenderMode (Render, Normal, Depth, Albedo, UV), for visualization
-- enum variable, Integrator (right now only focus on PT)
-- enum variable, SceneType 
+- enum variable, Integrator (PT)
+- enum variable, SceneType (Original Cornell Box Scene)
 
-Note that the renderer simply only render 1 quad (prepared by Rectangle class) to the screen, and all path tracing render is done in fragment shader.
+Note that the renderer simply only render 1 quad (prepared by Rectangle class) to the screen.
 
 ## Renderer()
 On construction, the constructor will firstly initialize all the objects above. It will also setup/generate those **GL objects** and track their ids with those id variables.
 
-Texture objects:
+### Create Texture Objects
 
 ```c
 // setup accumulate texture
@@ -233,7 +231,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 glBindTexture(GL_TEXTURE_2D, 0);
 ```
 
-Frame buffer obj:
+### Create Frame Buffer Object
 ```c
 // setup accumulate FBO
 glGenFramebuffers(1, &accumFBO);
@@ -245,6 +243,7 @@ glDrawBuffers(2, attachments);
 glBindFramebuffer(GL_FRAMEBUFFER, 0);
 ```
 
+### Create Uniform Buffer Objects
 Setup UBOs - `globalUBO`, `cameraUBO`, `sceneUBO`:
 ```c
 // setup UBO
@@ -261,6 +260,7 @@ glBindBufferBase(GL_UNIFORM_BUFFER, 0, globalUBO);
 // SceneBlock...
 ```
 
+### Send GL Objects to Shader Uniforms
 Next is to send those GL objects into shader programs(pt_shader) via uniforms:
 ```c
 // set uniforms
@@ -287,7 +287,8 @@ pt_shader.destroy();
 
 rectangle.destroy();
 ```
- 
+
+### Send Camera Param to Shader 
 Few functions for camera object will send camera parameters into OpenGL:
 
 - `glm::vec3 getCameraPosition()`
@@ -326,6 +327,7 @@ Few getter/setter functions:
   }
 ```
 
+### Send Scene Data to Shader
 Note that `setSceneType()` will be the one that sends scene data into OpenGL.
 
 ```c
@@ -346,7 +348,7 @@ Note that `setSceneType()` will be the one that sends scene data into OpenGL.
   }
 ```
 
-## Render::render()
+## Renderer::render()
 `render()` function calls `glViewport()` first, then it switches by **RenderMode** enum - here we focus on mode **Render**. 
 
 Then we bind FBO by `glBindFramebuffer(GL_FRAMEBUFFER, accumFBO)`, which will get the drawing ready. 
@@ -403,16 +405,13 @@ rectangle.draw(output_shader);
   }
 ```
 
-## Render::resize()
-
-
 # shader.h
 It defines the infrastructure class `Shader` to configure OpenGL shader objects.
 
 ## Shader()
 Constructor is taking in **shader file paths**, then it will **compile** and **link** the shaders. These are all standard boilerplate code.
 
-Compile shader:
+### Compile shaders
 
 ```c
 void compileShader() {
@@ -443,7 +442,7 @@ void compileShader() {
 }
 ```
 
-Link shader:
+### Link shaders
 
 ```c
 void linkShader() {
@@ -477,6 +476,7 @@ void activate() const { glUseProgram(program); }
 void deactivate() const { glUseProgram(0); }
 ```
 
+### Set Uniforms Functions
 Then it prepares more helper functions to set **uniforms** values in the shader. This is a typical practice and those functions are defined for **every single data type**:
 
 - `glUniform1i`
@@ -515,6 +515,7 @@ void setUBO(const std::string& block_name, GLuint binding_number) const {
 Define the `Rectangle` class to prepare and draw the screen quad. This is basically the only OpenGL geometry we need to construct and send to GPU.
 
 ## Rectangle()
+Define vertices to draw the screen quad and send all the related objects to OpenGL.
 ```c
 class Rectangle {
  private:
