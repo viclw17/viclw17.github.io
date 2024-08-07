@@ -1,0 +1,301 @@
+---
+title: "Study Notes: GLSL CornellBox Breakdown - Part 2"
+type: article
+layout: post
+
+---
+This post is the second part of my study notes on breaking down yumcyawiz's project [glsl330-cornellbox](https://github.com/yumcyaWiz/glsl330-cornellbox). This time will focus on the shader side of the renderer and look into the real implementation of path tracing in GLSL.
+
+* This will become a table of contents (this text will be scrapped).
+{:toc}
+
+---
+# Overview
+
+The author breaks the shaders into multiple small bite pieces and have them included into the main shader. This makes the implementation very structured and it is even closely assemble the architecture of PBRT, which helped me a lot to have a bird's eyes view of the system.
+
+# Vertex shader `rect.vert`
+`rect.vert` is the only vertex shader needed in the application to process the quad mesh on the screen.
+
+```
+#version 330 core
+layout (location = 0) in vec3 vPos;
+layout (location = 1) in vec2 vtexCoord;
+
+out vec2 texCoord;
+
+void main() {
+  texCoord = vtexCoord;
+  gl_Position = vec4(vPos, 1.0);
+}
+```
+
+It defined 2 **input vertex attributes** to receive data from CPU on vertex positions and vertex texture coordinates (UV). Vertex positions are sent into `gl_position` in shader and UV is passed down the pipeline to fragment shader stage by using `out` keyword.
+
+The data preparation (initialization) are done in `rectangle.h` in constructor `Rectangle()`. That includes:
+
+- create and bind **vertex array object** `VAO`, which stores instruction of using vertex data
+- create and bind **vertex buffer object** `VBO`, which stores the real vertices data in GPU's memory
+- copy vertices array into the buffer (VBO) for OpenGL to use (glBufferData)
+- create and bind **element buffer object** `EBO`, which stores vertex indices
+- then set **vertex attributes pointers** (glVertexAttribPointer)
+
+and the drawing is done in `Rectangle::draw()`:
+
+- activate shader program
+- bind VAO
+- draw elements
+- unbind VAO
+- deactivate shader program
+
+More details on [Hello Triangle - learnopengl.com](https://learnopengl.com/Getting-started/Hello-Triangle)
+
+
+
+# Fragment shader `pt.frag`
+## Overview and main() function
+This is the main shader contains function `computeRadiance(in Ray ray_in)` that calculate the path tracing result.
+
+It includes many other shader files whichs should be mentioned here:
+
+- global.frag that contains declaration of math constants and structs - PI, Ray, IntersectInfo, Material, Primitive, Light, etc.
+- uniform.frag that contains uniform variables and blocks declaration - accumTexture, stateTexture, GlobalBlock, CameraBlock, SceneBlock
+
+```c
+uniform sampler2D accumTexture;
+uniform usampler2D stateTexture;
+
+layout(std140) uniform GlobalBlock {
+  uvec2 resolution;
+  float resolutionYInv;
+};
+
+layout(std140) uniform CameraBlock {
+  vec3 camPos;
+  vec3 camForward;
+  vec3 camRight;
+  vec3 camUp;
+  float a;
+} camera;
+
+const int MAX_N_MATERIALS = 100;
+const int MAX_N_PRIMITIVES = 100;
+const int MAX_N_LIGHTS = 100;
+
+layout(std140) uniform SceneBlock {
+  int n_materials;
+  int n_primitives;
+  int n_lights;
+  Material materials[MAX_N_MATERIALS];
+  Primitive primitives[MAX_N_PRIMITIVES];
+  Light lights[MAX_N_LIGHTS];
+};
+```
+
+- rng.frag for random number generator
+  - uint xorshift32(inout XORShift32_state state)
+  - float random()
+  - void setSeed(in vec2 uv)
+- raygen.frag
+  - Ray rayGen()
+- util.frag 
+  - float atan2()
+  - vec3 worldToLocal()
+  - vec3 localToWorld()
+- intersect.frag
+  - bool intersectSphere()
+  - bool intersectPlane()
+- closest_hit.frag
+  - bool intersect_each()
+  - bool intersect()
+- sampling.frag
+  - vec3 sampleHemisphere()
+  - vec3 sampleCosineHemisphere()
+  - vec3 samplePlane()
+  - vec3 sampleSphere()
+  - vec3 samplePointOnPrimitive()
+- brdf.frag
+  - float fresnel()
+  - vec3 BRDF()
+  - vec3 sampleBRDF()
+
+These functions will be broken down later when necessary.
+
+Shader started at `main()` function. It receives UV `texCoord` passed down by vertex shader.
+
+```c
+void main() {
+    // set RNG seed
+    setSeed(texCoord);
+
+    // generate initial ray
+    vec2 uv = (2.0*(gl_FragCoord.xy + vec2(random(), random())) - resolution) * resolutionYInv;
+    uv.y = -uv.y;
+    float pdf;
+    Ray ray = rayGen(uv, pdf);
+    float cos_term = dot(camera.camForward, ray.direction);
+
+    // accumulate sampled color on accumTexture
+    vec3 radiance = computeRadiance(ray) / pdf;
+    color = texture(accumTexture, texCoord).xyz + radiance * cos_term;
+
+    // save RNG state on stateTexture
+    state = RNG_STATE.a;
+}
+```
+
+The shader also defines 2 uniform attributes for output:
+
+```c
+layout (location = 0) out vec3 color;
+layout (location = 1) out uint state;
+```
+
+On CPU side, the 2 uniform are set by
+
+```c
+// set uniforms
+pt_shader.setUniformTexture("accumTexture", accumTexture, 0);
+pt_shader.setUniformTexture("stateTexture", stateTexture, 1);
+```
+
+`XORShift32_state RNG_STATE` is defined in `global.frag`. It is set by `setSeed()` by sampling a `stateTexture` with texture coordinate. `stateTexture` is a texture uniform passed in from CPU. It was initially setup in `Renderer()` in `renderer.h` with `uniform_int_distribution`.
+
+In the end the random value is saved back to stateTexture (of each texel)
+
+uv on the camera plane is calculated relative to the defined resolution, and flipped on Y.
+
+Camera ray is generated by rayGen(uv, pdf). pdf is filled with probabily weight of the generated ray. (need more research on this step)
+
+Computed radiance value then divides pdf from ray generation, and added into the accumTexture value, after scaled by cosine term.
+
+## Compute Radiance 
+This code is using the similar approach of [Notes from A Path Tracing Workshop](https://viclw17.github.io/2024/07/15/path-tracing-workshop-note) since they both implement path tracing in shader code that do not support recursion.
+
+First, initialize couple of variables to be updated down the process:
+- float russian_roulette_prob = 1
+- vec3 color = vec3(0)
+- vec3 throughput = vec3(1)
+
+Entering main for loop, it will loop till MAX_DEPTH.
+
+### Russian Roulette
+At the beginning of each loop, generate a random float between 0 and 1, if it is larger than russian_roulette_prob, break the loop or terminate the path. If the loop is not broken, divide the throughput by russian_roulette_prob, which equals to scaling up the throughput.
+
+```c
+if(random() >= russian_roulette_prob) {
+    break; // this path ends here
+}
+```
+
+At the end of each loop, if ray intersects the scene, after the newly calculated throughput is ready, we get the max element of throughput (because it is a RGB value), and set that to be the newly updated russian_roulette_prob.
+
+```c
+float throughput_max_element = max(max(throughput.x, throughput.y), throughput.z);
+russian_roulette_prob = min(throughput_max_element, 1.0);
+```
+
+The theory behind it is better to understand heuristically - as the light keeps bouncing and the path keeps growing, the rarity of later bounces is growing continuously. Here we are choosing russian_roulette_prob dynamically by computing it at each bounce according to possible color contribution, aka throughput. The more light bounces, the smaller the throughput, the smaller russian_roulette_prob will be set (min(throughput_max_element, 1.0)), and more possible that the random value drawn is larger than it then break the loop. When it didn't fail on the if check, the division by p compensates for times where we miss the path.
+
+### Evaluate radiance
+When ray intersects the scene, get the hitPrimitive and hitMaterial from IntersectInfo. 
+
+If the hitMaterial emissive is larger than 0, meaning its object is a light source and we will count its color to the final radiance contribution and terminate the path.
+
+```c
+if(any(greaterThan(hitMaterial.le, vec3(0)))) {
+    color += throughput * hitMaterial.le;
+    break;
+}
+```
+
+If not hitting a light source, we sample the BRDF of the hit surface. 
+
+Note that wo is the vector of bounced light leaving/heading OUT of the surface, and wi is the vector of bounced light arriving/heading IN the surface. Hence the O and I indicators. Since ray is shooting from the camera toward the scene that means wo is the opposite direction of ray:
+
+```c
+vec3 wo = -ray.direction;
+vec3 wo_local = worldToLocal(wo, info.dpdu, info.hitNormal, info.dpdv);
+```
+
+BRDF sampling:
+
+```c
+ // BRDF Sampling
+float pdf;
+vec3 wi_local;
+
+// material contains type ID, kd, le emissive
+vec3 brdf = sampleBRDF(wo_local, wi_local, hitMaterial, pdf);
+
+// prevent NaN
+if(pdf == 0.0) {
+    break;
+}
+
+vec3 wi = localToWorld(wi_local, info.dpdu, info.hitNormal, info.dpdv);
+
+// update throughput
+float cos_term = abs(wi_local.y);
+throughput *= brdf * (1 / pdf) * cos_term;
+```
+
+Here we can see throughput is scaling down by BRDF, by sampling pdf, and by surface cosine.
+
+In the end, if not intersecting anything, simply:
+
+```c
+if(intersect(ray, info)) { //...
+} else {
+    color += throughput * vec3(0);
+    break;
+}
+
+return color;
+```
+
+# Output shader
+accumTexture is sampled at this stage and samplesInv uniform is passed in to normalize the result by divising the sample amount. 
+
+```c
+#version 330 core
+
+uniform float samplesInv;
+uniform sampler2D accumTexture;
+
+in vec2 texCoord;
+out vec4 fragColor;
+
+void main() {
+  vec3 color = texture(accumTexture, texCoord).xyz * samplesInv;
+  fragColor = vec4(pow(color, vec3(0.4545)), 1.0);
+}
+```
+
+
+```c
+void render() {
+    // ...
+    switch (mode) {
+        case RenderMode::Render:
+        glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
+        switch (integrator) {
+            case Integrator::PT:
+            rectangle.draw(pt_shader);
+            break;
+        }
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        // update samples
+        samples++;
+
+        // output
+        output_shader.setUniform("samplesInv", 1.0f / samples);
+        rectangle.draw(output_shader);
+        break;
+
+// ...
+}
+```
+
+TBC
