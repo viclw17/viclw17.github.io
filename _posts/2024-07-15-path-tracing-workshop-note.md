@@ -434,7 +434,13 @@ In the loop, we:
 trace next intersecting point and update to use it as the next ray trace origin; 
 gather $T \cdot L_e$ into the radiance;
 sample a random direction to use it as the next ray trace direction;
-update throughput weight by multiplying it with $a(x_{j+1}) \cdot 2\cdot (n(x_{j+1}) \cdot w_{j+1})$, (which is basically BRDF information)
+update throughput weight by multiplying it with 
+
+$$a(x_{j+1}) \cdot 2\cdot (n(x_{j+1}) \cdot w_{j+1})$$
+
+which is basically the aggragation of **BRDF information** AND the **Monte Carlo factor of dividing the pdf**
+
+Note that, $1/\pi$ from BRDF and $\frac{1}{1/(2\pi)}$ from Monte Carlo multiply into **2**.
 
 ```glsl
 // Performs path tracing: It starts with the given ray. If this ray intersects
