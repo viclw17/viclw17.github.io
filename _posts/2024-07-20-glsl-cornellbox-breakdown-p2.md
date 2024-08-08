@@ -1,4 +1,4 @@
----
+#.#.---
 title: "Study Notes: GLSL CornellBox Breakdown - Part 2"
 type: article
 layout: post
@@ -351,7 +351,7 @@ Ray rayGen(in vec2 uv, out float pdf) {
 }
 ```
 
-Note that the ray direction is picked by pointing from camPos to pixel position on the screen sensorPos. 
+Note that the ray direction is picked by pointing from pixel position on the screen sensorPos to pinholePos.
 
 # BRDF sampling `brdf.frag`
 
