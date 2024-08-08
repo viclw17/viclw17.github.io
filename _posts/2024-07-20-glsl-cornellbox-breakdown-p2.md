@@ -335,8 +335,81 @@ void render() {
 ```
 
 # Ray generation `raygen.frag`
+Here breakdown some details in camera ray generation function. Note that all camPos, camForward etc. vectors are passed in by CameraBlock uniform (located in uniform.frag). 
+
+```c
+Ray rayGen(in vec2 uv, out float pdf) {
+    vec3 pinholePos = camPos + 1.7071067811865477 * camForward;
+    vec3 sensorPos = camPos + uv.x * camRight + uv.y * camUp;
+
+    Ray ray;
+    ray.origin = camPos;
+    ray.direction = normalize(pinholePos - sensorPos);
+    float cosineTheta = dot(ray.direction, camForward);
+    pdf = 1.0 / pow(cosineTheta, 3.0);
+    return ray;
+}
+```
+
+Note that the ray direction is picked by pointing from camPos to pixel position on the screen sensorPos. 
 
 # BRDF sampling `brdf.frag`
+
+```c
+vec3 sampleBRDF(in vec3 wo, out vec3 wi, in Material material, out float pdf) {
+    switch(material.brdf_type) {
+    // lambert
+    case 0:
+        // receiving sample pdf
+        // then pass back out to caller
+        wi = sampleCosineHemisphere(random(), random(), pdf);
+        // return albedo, kd kf
+        return material.kd * PI_INV;
+        break;
+
+    // mirror
+    case 1:
+        pdf = 1.0;
+        wi = reflect(-wo, vec3(0, 1, 0));
+        return material.kd / abs(wi.y);
+        break;
+
+    // glass
+    case 2:
+        pdf = 1.0;
+
+        // set appropriate normal and ior
+        vec3 n = vec3(0, 1, 0);
+        float ior1 = 1.0;
+        float ior2 = 1.5;
+        if(wo.y < 0.0) {
+            n = vec3(0, -1, 0);
+            ior1 = 1.5;
+            ior2 = 1.0;
+        }
+        float eta = ior1 / ior2;
+
+        // fresnel
+        float fr = fresnel(wo, ior1, ior2);
+
+        // reflection
+        if(random() < fr) {
+            wi = reflect(-wo, n);
+        }
+        // refract
+        else {
+            wi = refract(-wo, n, eta);
+            // total reflection
+            if(wi == vec3(0)) {
+                wi = reflect(-wo, n);
+            }
+        }
+
+        return material.kd / abs(wi.y);
+        break;
+    }
+}
+```
 
 # Final thoughts
 
