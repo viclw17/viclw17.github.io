@@ -471,6 +471,10 @@ void main() {
 
 This part took me a while to chase down an explanation. It is still making my head spin but I will leave those notes here for future revisit.
 
+More resources:
+- [9.1  Getting the PDF of a Light](https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html#samplinglightsdirectly/gettingthepdfofalight)
+- [14.2.2 Sampling Shapes](https://www.pbr-book.org/3ed-2018/Light_Transport_I_Surface_Reflection/Sampling_Light_Sources#SamplingShapes)
+
 
 <!-- > Although most cameras are substantially more complex than the pinhole camera, it is a convenient starting point for simulation. The most important function of the camera is to define the portion of the scene that will be recorded onto the film. In Figure 1.2, we can see how connecting the pinhole to the edges of the film creates a double pyramid that extends into the scene. Objects that are not inside this pyramid cannot be imaged onto the film. Because actual cameras image a more complex shape than a pyramid, we will refer to the region of space that can potentially be imaged onto the film as the **viewing volume**.
 
