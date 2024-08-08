@@ -353,16 +353,59 @@ Ray rayGen(in vec2 uv, out float pdf) {
 
 Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is moved forward by a small amount from the camera position. Sensor position is at z = camPos, so this way `normalize(pinholePos - sensorPos)` will guarantee the ray is shooting into the scene.
 
-Although the radiance is arriving at the pinhole which is a point, the energy is actually then distributed across the sensor plane to form the image. At this stage it works like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which contains a great explanation for the *pdf* in the code above.
+Although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with differential solid angle (direction) not differential area. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane. 
+
+There is a ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
+
+
+$$dw = \frac{ dA cos \theta} {r^2}$$
+
+$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
+
+
+
+I found this also works like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which also contains a great explanation for the *pdf* in the code above.
 
 > ... differential area $dA$ is converted to differential solid angle $dw$ by multiplying by a $cos \theta$ factor and dividing by the squared distance. 
 > 
 > Because the plane we are integrating over is at $z = 1$, the distance from the origin to a point on the plane is equal to $1/cos\theta$ and thus the aggregate factor is $cos^3\theta$;
 
-More on the conversion at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea) for:
+Therefore, the generated camera ray has its special pdf relative to solid angle (direction). We can call it pdfDir to be the same as PBRT:
 
-$$dw = \frac{ dA cos \theta} {r^2}$$
 
+```c
+// src\cameras\perspective.cpp
+void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
+                               Float *pdfDir) const {
+
+    // ...
+
+    // Compute lens area of perspective camera
+    Float lensArea = lensRadius != 0 ? (Pi * lensRadius * lensRadius) : 1;
+    *pdfPos = 1 / lensArea;
+    *pdfDir = 1 / (A * cosTheta * cosTheta * cosTheta);
+}
+```
+
+Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated, so the end result radiance have to divide this pdf:
+
+```c
+void main() {
+    // ...
+
+    float pdf;
+    Ray ray = rayGen(uv, pdf);
+    float cos_term = dot(camForward, ray.direction);
+
+    // accumulate sampled color on accumTexture
+    vec3 radiance = computeRadiance(ray) / pdf;
+    color = texture(accumTexture, texCoord).xyz + radiance * cos_term;
+
+    // ...
+}
+```
+
+This part took me a while to chase down an explanation. It is still making my head spin but I will leave those notes here for future revisit.
 
 
 <!-- > Although most cameras are substantially more complex than the pinhole camera, it is a convenient starting point for simulation. The most important function of the camera is to define the portion of the scene that will be recorded onto the film. In Figure 1.2, we can see how connecting the pinhole to the edges of the film creates a double pyramid that extends into the scene. Objects that are not inside this pyramid cannot be imaged onto the film. Because actual cameras image a more complex shape than a pyramid, we will refer to the region of space that can potentially be imaged onto the film as the **viewing volume**.
@@ -375,6 +418,9 @@ $$dw = \frac{ dA cos \theta} {r^2}$$
 
 
 # BRDF sampling `brdf.frag`
+The code separate the BRDF evaluation, and switches it by 3 classic material types - lambert, mirror and glass.
+
+Note that the sampling of the lambert surface is also done here which will provides the corresponding pdf. The pdf will be passed outside into path tracing loop and used for monte carlo estimation by dividing it.
 
 ```c
 vec3 sampleBRDF(in vec3 wo, out vec3 wi, in Material material, out float pdf) {
