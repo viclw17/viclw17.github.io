@@ -1,4 +1,4 @@
-#.#.---
+---
 title: "Study Notes: GLSL CornellBox Breakdown - Part 2"
 type: article
 layout: post
