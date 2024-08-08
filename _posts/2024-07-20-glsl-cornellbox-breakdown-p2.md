@@ -339,7 +339,7 @@ Here breakdown some details in camera ray generation function. Note that all cam
 
 ```c
 Ray rayGen(in vec2 uv, out float pdf) {
-    vec3 pinholePos = camPos + 1.7071067811865477 * camForward;
+    vec3 pinholePos = camPos + 1.7071067811865477 * camForward; //?
     vec3 sensorPos = camPos + uv.x * camRight + uv.y * camUp;
 
     Ray ray;
@@ -351,7 +351,28 @@ Ray rayGen(in vec2 uv, out float pdf) {
 }
 ```
 
-Note that the ray direction is picked by pointing from pixel position on the screen sensorPos to pinholePos.
+Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is moved forward by a small amount from the camera position. Sensor position is at z = camPos, so this way `normalize(pinholePos - sensorPos)` will guarantee the ray is shooting into the scene.
+
+Although the radiance is arriving at the pinhole which is a point, the energy is actually then distributed across the sensor plane to form the image. At this stage it works like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which contains a great explanation for the *pdf* in the code above.
+
+> ... differential area $dA$ is converted to differential solid angle $dw$ by multiplying by a $cos \theta$ factor and dividing by the squared distance. 
+> 
+> Because the plane we are integrating over is at $z = 1$, the distance from the origin to a point on the plane is equal to $1/cos\theta$ and thus the aggregate factor is $cos^3\theta$;
+
+More on the conversion at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea) for:
+
+$$dw = \frac{ dA cos \theta} {r^2}$$
+
+
+
+<!-- > Although most cameras are substantially more complex than the pinhole camera, it is a convenient starting point for simulation. The most important function of the camera is to define the portion of the scene that will be recorded onto the film. In Figure 1.2, we can see how connecting the pinhole to the edges of the film creates a double pyramid that extends into the scene. Objects that are not inside this pyramid cannot be imaged onto the film. Because actual cameras image a more complex shape than a pyramid, we will refer to the region of space that can potentially be imaged onto the film as the **viewing volume**.
+
+> Another way to think about the pinhole camera is to **place the film plane in front of the pinhole** but at the same distance (Figure 1.3). Note that connecting the hole to the film defines exactly the same viewing volume as before. Of course, this is not a practical way to build a real camera, but **for simulation purposes it is a convenient abstraction**. When the film (or image) plane is in front of the pinhole, the pinhole is frequently referred to as the eye.
+
+> Therefore, an important task of the camera simulator is to take a point on the image and generate rays along which incident light will contribute to that image location. Because a ray consists of an origin point and a direction vector, this task is particularly simple for the pinhole camera model of Figure 1.3: it uses the pinhole for the origin and the vector from the pinhole to the imaging plane as the ray’s direction. -- From PBRT[text](https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#CamerasandFilm) -->
+
+
+
 
 # BRDF sampling `brdf.frag`
 
