@@ -335,7 +335,7 @@ void render() {
 ```
 
 # Ray generation `raygen.frag`
-Here breakdown some details in camera ray generation function. Note that all camPos, camForward etc. vectors are passed in by CameraBlock uniform (located in uniform.frag). 
+Here breakdown some details in camera ray generation function. Note that all `camPos`, `camForward` etc. vectors are passed in by `CameraBlock` uniform (located in uniform.frag). 
 
 ```c
 Ray rayGen(in vec2 uv, out float pdf) {
@@ -351,7 +351,7 @@ Ray rayGen(in vec2 uv, out float pdf) {
 }
 ```
 
-Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is moved forward by a small amount from the camera position. Sensor position is at z = camPos, so this way `normalize(pinholePos - sensorPos)` will guarantee the ray is shooting into the scene.
+Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is moved forward by a small amount from the camera position. Sensor position is at `z = camPos`, so this way `normalize(pinholePos - sensorPos)` will guarantee **the ray is shooting into the scene**.
 
 Although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with differential solid angle (direction) not differential area. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane. 
 
@@ -362,9 +362,9 @@ $$dw = \frac{ dA cos \theta} {r^2}$$
 
 $$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
 
+In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
 
-
-I found this also works like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which also contains a great explanation for the *pdf* in the code above.
+I found a similar scenario like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which also contains a great explanation for the derication of *pdf* in the code above.
 
 > ... differential area $dA$ is converted to differential solid angle $dw$ by multiplying by a $cos \theta$ factor and dividing by the squared distance. 
 > 
@@ -374,7 +374,7 @@ Therefore, the generated camera ray has its special pdf relative to solid angle 
 
 
 ```c
-// src\cameras\perspective.cpp
+// PBRT - src\cameras\perspective.cpp
 void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
                                Float *pdfDir) const {
 
@@ -387,7 +387,7 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 }
 ```
 
-Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated, so the end result radiance have to divide this pdf:
+Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf:
 
 ```c
 void main() {
