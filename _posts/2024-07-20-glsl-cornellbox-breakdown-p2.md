@@ -424,7 +424,7 @@ There is a ratio between differential solid angle and differential area which is
 
 $$dw = \frac{ dA cos \theta} {r^2}$$
 
-$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
+$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
 
 In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
 
@@ -476,11 +476,15 @@ More resources:
 - [14.2.2 Sampling Shapes](https://www.pbr-book.org/3ed-2018/Light_Transport_I_Surface_Reflection/Sampling_Light_Sources#SamplingShapes)
 
 
-<!-- > Although most cameras are substantially more complex than the pinhole camera, it is a convenient starting point for simulation. The most important function of the camera is to define the portion of the scene that will be recorded onto the film. In Figure 1.2, we can see how connecting the pinhole to the edges of the film creates a double pyramid that extends into the scene. Objects that are not inside this pyramid cannot be imaged onto the film. Because actual cameras image a more complex shape than a pyramid, we will refer to the region of space that can potentially be imaged onto the film as the **viewing volume**.
+<!-- 
+
+> Although most cameras are substantially more complex than the pinhole camera, it is a convenient starting point for simulation. The most important function of the camera is to define the portion of the scene that will be recorded onto the film. In Figure 1.2, we can see how connecting the pinhole to the edges of the film creates a double pyramid that extends into the scene. Objects that are not inside this pyramid cannot be imaged onto the film. Because actual cameras image a more complex shape than a pyramid, we will refer to the region of space that can potentially be imaged onto the film as the **viewing volume**.
 
 > Another way to think about the pinhole camera is to **place the film plane in front of the pinhole** but at the same distance (Figure 1.3). Note that connecting the hole to the film defines exactly the same viewing volume as before. Of course, this is not a practical way to build a real camera, but **for simulation purposes it is a convenient abstraction**. When the film (or image) plane is in front of the pinhole, the pinhole is frequently referred to as the eye.
 
-> Therefore, an important task of the camera simulator is to take a point on the image and generate rays along which incident light will contribute to that image location. Because a ray consists of an origin point and a direction vector, this task is particularly simple for the pinhole camera model of Figure 1.3: it uses the pinhole for the origin and the vector from the pinhole to the imaging plane as the ray’s direction. -- From PBRT[text](https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#CamerasandFilm) -->
+> Therefore, an important task of the camera simulator is to take a point on the image and generate rays along which incident light will contribute to that image location. Because a ray consists of an origin point and a direction vector, this task is particularly simple for the pinhole camera model of Figure 1.3: it uses the pinhole for the origin and the vector from the pinhole to the imaging plane as the ray’s direction. -- From PBRT[text](https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#CamerasandFilm) 
+
+-->
 
 
 
