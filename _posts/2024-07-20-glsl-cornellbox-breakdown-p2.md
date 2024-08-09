@@ -501,11 +501,49 @@ More resources:
 # BRDF sampling `brdf.frag`
 The code separate the BRDF evaluation, and switches it by 3 classic material types - lambert, mirror and glass.
 
-Note that the sampling of the lambert surface is also done here which will provides the corresponding pdf. The pdf will be passed outside into path tracing loop and used for monte carlo estimation by dividing it.
+Note that the sampling of the lambert surface is also done here which will provides the corresponding *pdf*. The *pdf* will be passed outside into **path tracing main loop** and used for monte carlo estimation by dividing it.
 
-It also outputs the bounced ray direction wi.
+It also outputs the bounced ray direction *wi*.
+
+`sampleCosineHemisphere(random(), random(), pdf)` is in `sampling.frag` and is taking in random values from `random()` in `rng.frag`:
 
 ```c
+// sampling.frag
+vec3 sampleCosineHemisphere(in float u, in float v, out float pdf) {
+    float theta = 0.5 * acos(clamp(1.0 - 2.0 * u, -1.0, 1.0));
+    float phi = 2.0 * PI * v;
+    float y = cos(theta);
+    pdf = y * PI_INV;
+    return vec3(cos(phi) * sin(theta), y, sin(phi) * sin(theta));
+}
+```
+
+The random function requires `RNG_STATE`, which is set by `setSeed(texCoord)` in main function, which samples the random state texture `stateTexture`. Since frag shader is running per each pixel, this will make each pixel has its unique seed.
+
+```c
+// rng.frag
+uint xorshift32(inout XORShift32_state state) {
+    uint x = state.a;
+    x ^= x << 13u;
+    x ^= x >> 17u;
+    x ^= x << 5u;
+    state.a = x;
+    return x;
+}
+
+float random() {
+    return float(xorshift32(RNG_STATE)) * 2.3283064e-10;
+}
+
+void setSeed(in vec2 uv) {
+    RNG_STATE.a = texture(stateTexture, uv).x;
+}
+```
+
+`material.kd` here is the albedo of the lambert surface. 
+
+```c
+// brdf.frag
 vec3 sampleBRDF(in vec3 wo, out vec3 wi, in Material material, out float pdf) {
     switch(material.brdf_type) {
     // lambert
@@ -564,4 +602,6 @@ vec3 sampleBRDF(in vec3 wo, out vec3 wi, in Material material, out float pdf) {
 
 # Final thoughts
 
-TBC
+By breaking down this project, I refreshed my basic OpenGL knowledge and revisited the GLSL path tracing workshop I previously covered. This project follows a similar implementation but incorporates additional optimization techniques, such as Russian Roulette. The shader code is well-organized and modular, mirroring the structure of PBRT. This project has integrated many of my learning resources. I plan to revisit the code and potentially extend it with more path tracing techniques or additional primitive/material support.
+
+END
