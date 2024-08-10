@@ -5,4 +5,12 @@ But the code here are very well refactored and are splitted into multiple files 
 
 They are mainly fragment shaders for pixel value calculation. There is only one vertex shader for setting up the rectangle.
 
-## pt.frag
+# TU Wien notes
+rendering equation recap
+direct lighting
+path tracing v0.5
+sample distribution
+russian roulette
+bsdf interface
+path tracing v1.0
+
