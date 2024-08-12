@@ -49,6 +49,8 @@ The [pbrt source code](https://github.com/mmp/pbrt-v4) is very complex to dig th
 # smallpt
 Another must visited place while I was doing my research was the [smallpt demo](https://www.kevinbeason.com/smallpt/) aka *small path tracer*.
 
+<img src="https://www.kevinbeason.com/smallpt/result640.jpg" width="600" style="display:block; margin:auto;">
+
 > smallpt is a global illumination renderer. It is 99 lines of C++, is open source, and renders the above scene using unbiased Monte Carlo path tracing.
 
 The [Presentation slides](https://docs.google.com/open?id=0B8g97JkuSSBwUENiWTJXeGtTOHFmSm51UC01YWtCZw) is very helpful for following the code.
@@ -58,6 +60,11 @@ I got the code built and run and produced some nice images. It is an amazing lea
 - Russian Roulette
 - Sampling Sphere light by Solid Angle
 - Shadow Ray, etc.
+
+# Montelight
+Yet another C++ implementation of path tracing with great [code base](https://github.com/Smerity/montelight-cpp) and [Annotated Code Overview](https://smerity.com/montelight-cpp/code_overview.html).
+
+<img src="https://smerity.com/montelight-cpp/img/montage_passes_annotated.png" width="600" style="display:block; margin:auto;">
 
 # Shadertoys
 There are also many cool path tracing **shadertoys** I was exploring, which helped me on trying to understand path tracing through shade code. There is even porting of smallpt:
