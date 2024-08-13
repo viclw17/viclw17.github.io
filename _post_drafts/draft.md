@@ -1,24 +1,86 @@
-# GLSL Shaders
-This part is very similar to Path Tracing Workshop I've covered.
-
-But the code here are very well refactored and are splitted into multiple files based on their goals. They form a great mind map for the path tracing system I've studied so far.
-
-They are mainly fragment shaders for pixel value calculation. There is only one vertex shader for setting up the rectangle.
-
 # TU Wien notes
-rendering equation recap
-direct lighting
-path tracing v0.5
-sample distribution
-russian roulette
-bsdf interface
-path tracing v1.0
 
-drand48 is a Linux function, not a standard C++ function. 
+## 01_light
 
+- we have to sum up all the light. yes that is an **integral**.
+- we have to sum up from all direction, that is a 
+**hemisphere**
+
+---
+
+$$L_i(x) = \int_\Omega L_i(x,w)cos(\theta_x)dw$$
+
+light arriving at point x
+
+light from direction w - **by ray tracing**
+
+differential solid angle dw
+
+> irradiance
+
+---
+
+solid angle: projected area on unit sphere. full solid angle is 4pi
+
+---
+
+relationship between a surface patch and the solid angle
+
+$$dw = \frac{dAcos\theta}{r^2}$$
+
+---
+
+$$L_i^{[l]}(x) = \int_{S_l} L_e^{[l]}(y) cos(\theta_x) \frac{cos\theta_y}{r^2} dA_y$$
+
+light from source [l] arriving at point x
+
+light intensity at position y on the surface
+
+$$\frac{cos\theta_y}{r^2} dA_y = dw$$
+
+---
+
+radiance L = flux per unit projected area per unit solid angle
+
+$$L = \frac{d\Phi}{dA^\perp dw}$$
+
+radiance is a density over both space and angle.
+
+---
+
+$$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
+
+light going in direction v, viewing
+
+material modelled by BRDF
+
+> how much light is reflected from a **given direction** into **another given direction** at a **given position**, and in which wavelengths
+
+light from direction w 
+
+differential solid angle dw
+
+---
+
+white furnace test, energy conservation
+
+(set $L_i$ to 1 and check $L_e \leq 1$)
+
+... we can derive: f_r or a white diffuse material is 1/pi
+
+
+
+
+## 03_rendering equation
 Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
-## recursive formulation
+---
+
+recap light integral: compute the light which is going into direction v, integrate over hemisphere, check all directions for incoming light, cosine weighting anf material.
+
+---
+
+### recursive formulation
 
 $$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
@@ -33,7 +95,7 @@ $L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 ---
 
-## operator formulation
+### operator formulation
 
 $$L = L_e + TL$$
 
@@ -57,7 +119,7 @@ This equation reaches an equilibrium after infinite time / iterations, after whi
 
 ---
 
-## path integral formulation
+### path integral formulation
 So the path integral formulation is really just an integral which integrates over all surfaces at the same time
 
 ---
@@ -89,3 +151,15 @@ $$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\the
 
 fj is a product of several factors, the light emission Le, which is simply the brightness of the light at position x0, geometry factors between each pair of vertices G, the scattering factors fs for each inner vertex (reflection point), which model the material, and finally the importance emission from the camera We.
 
+
+## 04_path tracing
+### path tracing roadmap
+- rendering equation recap
+- direct lighting
+- path tracing v0.5
+- sample distribution
+- russian roulette
+- bsdf interface
+- path tracing v1.0
+
+drand48 is a Linux function, not a standard C++ function. 
