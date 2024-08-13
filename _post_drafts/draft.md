@@ -14,3 +14,74 @@ russian roulette
 bsdf interface
 path tracing v1.0
 
+drand48 is a Linux function, not a standard C++ function. 
+
+Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
+
+## recursive formulation
+
+$$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
+
+---
+
+$$L(x_1 \rightarrow v) = E(x_1 \rightarrow v) + \int_{\Omega_1} f_r(x_1,w_1 \rightarrow v) L(x_1 \leftarrow w_1) cos(\theta_x) dw_1$$
+
+$$L(x_1 \rightarrow w_2) = E(x_2 \rightarrow w_2) + \int_{\Omega_2} f_r(x_2,w \rightarrow w_2) L(x_2 \leftarrow w) cos(\theta_x) dw$$
+
+$L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$
+
+$$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
+---
+
+## operator formulation
+
+$$L = L_e + TL$$
+
+T: light transport operator
+
+$$T = KG$$
+
+K: local scattering operator, $L_o = KL_i$, turn incoming radiance into outgoing radiance, material
+
+G: propagation operator, $L_i = GL_o$, turn outgoing radiance into incoming radiance, ray-tracing
+
+$$L = (I-T)^{-1} L_e$$
+
+$S = (I-T)^{-1}$ solution operator
+
+$$S = (I-T)^{-1} = I + T +T^2+...$$
+
+$$L = E + TE+T^2E+..., |T^k|\leq 1$$
+
+This equation reaches an equilibrium after infinite time / iterations, after which it gives us the solution for the light distribution in the scene.
+
+---
+
+## path integral formulation
+So the path integral formulation is really just an integral which integrates over all surfaces at the same time
+
+---
+
+https://computergraphics.stackexchange.com/questions/9015/rendering-equation-in-terms-of-paths-rather-than-directions
+
+https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#
+
+> 16.1 The Path-Space Measurement Equation
+In light of the path integral form of the LTE from Equation (14.16), it’s useful to go back and formally describe the quantity that is being estimated when we compute pixel values for an image. Not only does this let us see how to apply the LTE to a wider set of problems than just computing 2D images (e.g., to precomputing scattered radiance distributions at the vertices of a polygonal model), but this process also leads us to a key theoretical mechanism for understanding the bidirectional path tracing and photon mapping algorithms in this chapter. 
+
+https://pbr-book.org/3ed-2018/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation#IntegraloverPaths
+
+https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras
+
+---
+
+$$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
+$$\bar{x} = x_0 x_1...x_k$$
+$$d_\mu(\bar{x}) = dA(x_0) dA(x_1) ... dA(x_k)$$
+
+$$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)G(x_0 \rightarrow x_1)f_s(x_0 \rightarrow x_1 \rightarrow x_2)...W_e^{(j)}(x_{k-1} \rightarrow x_k)$$
+
+$$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\theta_i')|}{||x-x'||^2}$$
+
+fj is a product of several factors, the light emission Le, which is simply the brightness of the light at position x0, geometry factors between each pair of vertices G, the scattering factors fs for each inner vertex (reflection point), which model the material, and finally the importance emission from the camera We.
+
