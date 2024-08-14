@@ -243,3 +243,56 @@ Improving our scene intersection tests
 - Optimized traversal strategies
 
 Support spectacular specular, glossy and transparent materials
+
+# pbrt code notes
+## RayIntegrator::EvaluatePixelSample
+```c
+void RayIntegrator::EvaluatePixelSample
+
+    // Initialize _CameraSample_ for current sample
+    Filter filter = camera.GetFilm().GetFilter();
+    CameraSample cameraSample = GetCameraSample(sampler, pPixel, filter);
+
+    // Generate camera ray for current sample
+    pstd::optional<CameraRayDifferential> cameraRay = camera.GenerateRayDifferential(cameraSample, lambda);
+
+
+    SampledSpectrum L(0.);
+    // Evaluate radiance along camera ray
+    L = cameraRay->weight * Li(...)
+
+    // Add camera ray's contribution to image
+    camera.GetFilm().AddSample(pPixel, L, lambda, &visibleSurface, cameraSample.filterWeight);
+```
+
+## Integrator classes
+```c
+class ImageTileIntegrator : public Integrator
+    void Render();
+
+    // pure
+    virtual void EvaluatePixelSample(Point2i pPixel, 
+                                    int sampleIndex, 
+                                    Sampler sampler, 
+                                    ScratchBuffer &scratchBuffer) = 0;
+
+
+class RayIntegrator : public ImageTileIntegrator
+    // real
+    void EvaluatePixelSample
+
+    // pure
+    virtual SampledSpectrum Li(RayDifferential ray, 
+                            SampledWavelengths &lambda, 
+                            Sampler sampler, 
+                            ScratchBuffer &scratchBuffer, 
+                            VisibleSurface *visibleSurface)  const = 0;
+
+
+class SimplePathIntegrator : public RayIntegrator
+    // real
+    SampledSpectrum Li
+
+    static std::unique_ptr<SimplePathIntegrator> Create(...)
+
+```
