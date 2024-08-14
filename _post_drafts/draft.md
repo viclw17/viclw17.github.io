@@ -170,4 +170,41 @@ $f_j$ is a product of several factors:
 - bsdf interface
 - path tracing v1.0
 
-drand48 is a Linux function, not a standard C++ function. 
+> drand48 is a Linux function, not a standard C++ function. 
+
+
+$$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
+
+
+The **path integral form** used a single integral for each bounce!
+
+$L(x \rightarrow v) = E_x $
+
+$+ \int_\Omega f_r E_{x'}cos(\theta_\omega)dw$
+
+$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; dw'dw$
+
+$ + ...$
+
+---
+
+$L(x \rightarrow v) = E_x $
+
+$+ \int_{\Omega_1} \; f_r \; E_{x'} \; cos(\theta_\omega) \; d\mu({\bar x})$
+
+$+ \int_{\Omega_2} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; d\mu({\bar x})$
+
+$ + ...$
+
+---
+
+Economize on samples –squeeze out whatever we can
+- Better sampling strategies (importance sampling)
+- Exploiting light source sampling (next-event estimation)
+- Combining sampling strategies (multiple importance sampling)
+
+Improving our scene intersection tests
+- Build spatial acceleration structures
+- Optimized traversal strategies
+
+Support spectacular specular, glossy and transparent materials
