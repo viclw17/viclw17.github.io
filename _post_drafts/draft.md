@@ -80,7 +80,7 @@ recap light integral: compute the light which is going into direction v, integra
 
 ---
 
-### recursive formulation
+### 1 recursive formulation
 
 $$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
@@ -95,7 +95,7 @@ $L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 ---
 
-### operator formulation
+### 2 operator formulation
 
 $$L = L_e + TL$$
 
@@ -119,7 +119,7 @@ This equation reaches an equilibrium after infinite time / iterations, after whi
 
 ---
 
-### path integral formulation
+### 3 path integral formulation
 So the path integral formulation is really just an integral which integrates over all surfaces at the same time
 
 ---
@@ -142,14 +142,22 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 ---
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
+
 $$\bar{x} = x_0 x_1...x_k$$
+
 $$d_\mu(\bar{x}) = dA(x_0) dA(x_1) ... dA(x_k)$$
 
 $$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)G(x_0 \rightarrow x_1)f_s(x_0 \rightarrow x_1 \rightarrow x_2)...W_e^{(j)}(x_{k-1} \rightarrow x_k)$$
 
 $$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\theta_i')|}{||x-x'||^2}$$
 
-fj is a product of several factors, the light emission Le, which is simply the brightness of the light at position x0, geometry factors between each pair of vertices G, the scattering factors fs for each inner vertex (reflection point), which model the material, and finally the importance emission from the camera We.
+$f_j$ is a product of several factors:
+- the light emission $L_e$, which is simply the brightness of the light at position $x_0$ 
+- geometry factors between each pair of vertices -- $G$
+- the scattering factors $f_s$ for each inner vertex (reflection point), which model the material
+- and finally the importance emission from the camera $W_e$.
+
+
 
 
 ## 04_path tracing
