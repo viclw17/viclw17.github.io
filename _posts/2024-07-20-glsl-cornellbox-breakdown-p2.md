@@ -426,16 +426,14 @@ Ray rayGen(in vec2 uv, out float pdf) {
 
 Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `z = camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
-From my understanding, although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with **differential solid angle (direction)** not **differential area (patch of surface)**. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane. 
 
-There is a ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
+Note that the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$:
 
 
-$$dw = \frac{ dA cos \theta} {r^2}$$
+<!-- From my understanding, although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with **differential solid angle (direction)** not **differential area (patch of surface)**. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane.  
+-->
 
-$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
-
-In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
+<!-- 
 
 ---
 
@@ -463,9 +461,23 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 }
 ```
 
-*More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras).
+*More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras). 
 
-Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf:
+-->
+
+> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [source: https://graphics.stanford.edu/wikis/cs348b-07/Assignment3](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
+
+
+The ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
+
+
+$$dw = \frac{ dA cos \theta} {r^2}$$
+
+$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
+
+In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
+
+<!-- (my thought:) Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf: -->
 
 ```c
 void main() {
@@ -483,11 +495,17 @@ void main() {
 }
 ```
 
+Note that here radiance also have to multiply by cosine term. More detailed explanation can refer to this amazing article:
+
+<embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf">
+
 *This part took me a while to chase down a plausible explanation. May have to revist in the future.
+
 
 <!-- More resources:
 - [9.1  Getting the PDF of a Light from RIOW](https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html#samplinglightsdirectly/gettingthepdfofalight)
-- [14.2.2 Sampling Shapes from PBRT](https://www.pbr-book.org/3ed-2018/Light_Transport_I_Surface_Reflection/Sampling_Light_Sources#SamplingShapes) -->
+- [14.2.2 Sampling Shapes from PBRT](https://www.pbr-book.org/3ed-2018/Light_Transport_I_Surface_Reflection/Sampling_Light_Sources#SamplingShapes) 
+-->
 
 <!-- 
 About pinhole camera:
@@ -497,8 +515,9 @@ About pinhole camera:
 > Another way to think about the pinhole camera is to **place the film plane in front of the pinhole** but at the same distance (Figure 1.3). Note that connecting the hole to the film defines exactly the same viewing volume as before. Of course, this is not a practical way to build a real camera, but **for simulation purposes it is a convenient abstraction**. When the film (or image) plane is in front of the pinhole, the pinhole is frequently referred to as the eye.
 
 > Therefore, an important task of the camera simulator is to take a point on the image and generate rays along which incident light will contribute to that image location. Because a ray consists of an origin point and a direction vector, this task is particularly simple for the pinhole camera model of Figure 1.3: it uses the pinhole for the origin and the vector from the pinhole to the imaging plane as the ray’s direction. -- From PBRT[text](https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#CamerasandFilm) 
-
 -->
+
+
 
 # BRDF sampling `brdf.frag`
 The code separate the BRDF evaluation, and switches it by 3 classic material types - lambert, mirror and glass.
