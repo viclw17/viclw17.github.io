@@ -4,7 +4,7 @@ type: article
 layout: post
 image: 2024-08-15-pbr-math-dump/thomas-t-OPpCbAAKWv8-unsplash.jpg
 ---
-A post of all mathmatical descriptions for rendering and path tracing theories that I found inspiring. Mainly based on the open courses [Rendering (186.101, 2021S) by TU Wien](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr) with referenced to *pbrt*.
+A post of all mathmatical descriptions for rendering and path tracing theories that I found inspiring. Mainly based on the open courses [Rendering (186.101, 2021S) by TU Wien](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr), and with references to *pbrt*.
 
 * This will become a table of contents (this text will be scrapped).
 {:toc}
@@ -88,19 +88,13 @@ TBC
 # Rendering equation
 Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
----
-
-Recap light integral: compute the light which is going into direction v, integrate over hemisphere, check all directions for incoming light, cosine weighting anf material.
-
----
-
-## 1. recursive formulation
+## 1. Recursive formulation
 
 ### Recap light integral
 
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
-Compute the light which is going into direction $v$, integrate over $hemisphere$, check all directions for $incoming light$, $cosine weighting$ and $material$
+Compute the light which is going into direction $v$, integrate over $hemisphere$, check all directions for **incoming light**, **cosine weighting** and **material**
 
 Add light emittance, now we have recursive formulation:
 
@@ -118,7 +112,7 @@ Generally:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 
-### 2. operator formulation
+### 2. Operator formulation
 
 $$L = L_e + TL$$
 
@@ -144,7 +138,7 @@ This equation reaches an equilibrium after infinite time / iterations, after whi
 
 ---
 
-### 3 path integral formulation
+### 3 Path integral formulation
 So the path integral formulation is really just an integral which integrates over all surfaces at the same time
 
 ---
