@@ -424,8 +424,12 @@ Ray rayGen(in vec2 uv, out float pdf) {
 }
 ```
 
-The ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
+A pinhole camera:
 
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjrwIkySdrKNsVVzRvCQlQLLDT8dCIifDbag&s" style="display:block; margin:auto;" width="400">
+
+
+The ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
 Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$ which confused me a lot. 
 
@@ -434,24 +438,25 @@ After a long time research, I found some explanations:
 From pbrt [
 5.4.1 The Camera Measurement Equation](https://www.pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging#TheCameraMeasurementEquation):
 
-> Given the **incident radiance** function, we can define the **irradiance at a point** on the **film plane**. If we start with the definition of irradiance in terms of radiance, Equation (4.7), we can then convert from an **integral over solid angle** to an **integral over area** using Equation (4.9).
+> Given the **incident radiance** function, we can define the **irradiance at a point** on the **film plane**. If we start with the definition of **irradiance in terms of radiance**, Equation (4.7), we can then convert from an **integral over solid angle** to an **integral over area** using Equation (4.9).
 
 $$E(p,n)=\int_\Omega L_i(p,w) |cos\theta|dw_i \;\;\; (4.7)$$
 
 $$dw = \frac{ dA cos \theta} {r^2} \;\;\; (4.9)$$
 
-The ratio between differential solid angle and differential area (4.9) is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea). In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
+The ratio between differential solid angle and differential area (4.9) is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea). In other words, radiance arriving on a point/_small_ surface patch $dA$ (aka a pixel) is in proportion to the radiance arriving from a direction $dw$.
 
->  This gives us the irradiance for a point on the film plane:
+>  This gives us the **irradiance for a point on the film plane**:
 
 $$E(p) = \int_AL_i(p,p') \frac{|cos\theta'|}{\|p'-p\|^2} |cos\theta|dA$$
 
-The perpendicular distance between the back of the lens (pinhole) and the film is z, so $\|p'-p\| = \frac{z}{cos\theta}, \; \theta' = \theta$, so
-
-$$E(p) = \int_AL_i(p,p') \frac{|cos^3\theta|}{z^2} |cos\theta| dA$$
-
+The perpendicular distance between the back of the lens (z coordinate of `pinholePos` for our case) and the film (z coordinate of `sensorPos`) is $z$, so $\|p'-p\| = \frac{z}{cos\theta}, \; \theta' = \theta$ because:
 
 <img src="{{ site.url }}/images/2024-07-20-glsl-cornellbox-breakdown-p2\IMG_1002.jpeg" style="display:block; margin:auto;" width="300">
+
+put all together:
+
+$$E(p) = \int_AL_i(p,p') \frac{|cos^3\theta|}{z^2} |cos\theta| dA$$
 
 More detailed explanation can refer to this amazing article [Why You Weight Your Camera Rays the Way You Probably Did](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf). And similar quote from [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3):
 
@@ -469,7 +474,7 @@ $$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta
 
 -->
 
-Set z = 1 for the camera model:
+Set $z = 1$ for the camera model:
 
 >  For pinhole apertures, we compute the intersection with a plane arbitrarily set at  to get a point along the ray leaving the camera before performing the projection. [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras)
 
@@ -490,6 +495,9 @@ void main() {
     // ...
 }
 ```
+
+More from [
+5.4.1 The Camera Measurement Equation](https://www.pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging#TheCameraMeasurementEquation):
 
 > For cameras where the extent of the film is relatively large with respect to the distance z, the $cos^4(\theta)$ term can meaningfully reduce the incident irradiance—this factor also contributes to **vignetting**. 
 
