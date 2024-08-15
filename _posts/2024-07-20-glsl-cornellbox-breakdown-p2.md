@@ -424,10 +424,12 @@ Ray rayGen(in vec2 uv, out float pdf) {
 }
 ```
 
-Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `z = camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
+The ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
 
-Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. After a long time research, I found some explanations:
+Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$ which confused me a lot. 
+
+After a long time research, I found some explanations:
 
 From pbrt [
 5.4.1 The Camera Measurement Equation](https://www.pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging#TheCameraMeasurementEquation):
