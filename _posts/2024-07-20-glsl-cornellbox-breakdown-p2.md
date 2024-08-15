@@ -451,9 +451,11 @@ $$E(p) = \int_AL_i(p,p') \frac{|cos^3\theta|}{z^2} |cos\theta| dA$$
 
 <img src="{{ site.url }}/images/2024-07-20-glsl-cornellbox-breakdown-p2\IMG_1002.jpeg" style="display:block; margin:auto;" width="300">
 
-More detailed explanation can refer to this amazing [article](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf):
+More detailed explanation can refer to this amazing article [Why You Weight Your Camera Rays the Way You Probably Did](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf). And similar quote from [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3):
 
-> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
+> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight **before adding the contribution to the Film**. 
+
+> **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the **irradiance integral**. Note that the weight depends upon the sampling scheme used. 
 
 <!--
 <embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf"> -->
@@ -465,7 +467,11 @@ $$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta
 
 -->
 
-Set z = 1 for the camera model. So the generated camera ray has a _pdf_ of $\frac{1}{cos^3(\theta)}$ that the computed radiance have to divide; then the same **cosine term** have to multiply the radiance to get **the real unbiased result**, which in total is equivalent to multiply $cos^4(\theta)$:
+Set z = 1 for the camera model:
+
+>  For pinhole apertures, we compute the intersection with a plane arbitrarily set at  to get a point along the ray leaving the camera before performing the projection. [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras)
+
+So the generated camera ray has a _pdf_ of $\frac{1}{cos^3(\theta)}$ that the computed radiance have to divide; then the same **cosine term** have to multiply the radiance to get **the real unbiased result**, which in total is equivalent to multiply $cos^4(\theta)$:
 
 ```c
 void main() {
@@ -522,13 +528,8 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 *More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras). 
 -->
 
-
-
 <!-- (my thought:) Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf: 
 -->
-
-
-
 
 <!-- More resources:
 - [9.1  Getting the PDF of a Light from RIOW](https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html#samplinglightsdirectly/gettingthepdfofalight)
@@ -544,8 +545,6 @@ About pinhole camera:
 
 > Therefore, an important task of the camera simulator is to take a point on the image and generate rays along which incident light will contribute to that image location. Because a ray consists of an origin point and a direction vector, this task is particularly simple for the pinhole camera model of Figure 1.3: it uses the pinhole for the origin and the vector from the pinhole to the imaging plane as the ray’s direction. -- From PBRT[text](https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm#CamerasandFilm) 
 -->
-
-
 
 # BRDF sampling `brdf.frag`
 The code separate the BRDF evaluation, and switches it by 3 classic material types - lambert, mirror and glass.
