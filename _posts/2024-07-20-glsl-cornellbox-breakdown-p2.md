@@ -442,14 +442,14 @@ The ratio between differential solid angle and differential area (4.9) is mentio
 
 >  This gives us the irradiance for a point on the film plane:
 
-$$E(p) = \int_AL_i(p,p') \frac{|cos\theta'|}{||p'-p||^2} |cos\theta|dA$$
+$$E(p) = \int_AL_i(p,p') \frac{|cos\theta'|}{\|p'-p\|^2} |cos\theta|dA$$
 
-The perpendicular distance between the back of the lens (pinhole) and the film is z, so $|p'-p| = \frac{z}{cos\theta}, \; \theta' = \theta$, so
+The perpendicular distance between the back of the lens (pinhole) and the film is z, so $\|p'-p\| = \frac{z}{cos\theta}, \; \theta' = \theta$, so
 
 $$E(p) = \int_AL_i(p,p') \frac{|cos^3\theta|}{z^2} |cos\theta| dA$$
 
 
-<img src="{{ site.url }}/images/2024-07-20-glsl-cornellbox-breakdown-p2\IMG_1002.jpeg" style="display:block; margin:auto;" width="400">
+<img src="{{ site.url }}/images/2024-07-20-glsl-cornellbox-breakdown-p2\IMG_1002.jpeg" style="display:block; margin:auto;" width="300">
 
 More detailed explanation can refer to this amazing [article](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf):
 
