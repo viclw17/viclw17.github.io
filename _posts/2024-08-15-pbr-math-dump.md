@@ -36,9 +36,8 @@ $$dw = \frac{dAcos\theta}{r^2}$$
 
 ## Light integral over the surface
 Integrate over a single light surface:
+
 $$L_i^{[l]}(x) = \int_{S_l} L_e^{[l]}(y) cos(\theta_x) \frac{cos\theta_y}{r^2} dA_y$$
-
-
 
 - light from source $[l]$ arriving at point $x$
 - light intensity at position $y$ on the surface
@@ -74,9 +73,7 @@ $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 - light from direction $w$
 - differential solid angle $dw$
 
-
 ## Furnace test
-
 White furnace test, energy conservation
 
 (set $L_i$ to 1 and check $L_e \leq 1$)
