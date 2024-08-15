@@ -427,8 +427,18 @@ Ray rayGen(in vec2 uv, out float pdf) {
 Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `z = camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
 
-Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. Here is an explanation:
+Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. After a long time research, I found some  nice explanations:
 
+From pbrt [
+5.4.1 The Camera Measurement Equation](https://www.pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging#TheCameraMeasurementEquation):
+
+> Given the incident radiance function, we can define the irradiance at a point on the film plane. If we start with the definition of irradiance in terms of radiance, Equation (4.7), we can then convert from an integral over solid angle to an integral over area using Equation (4.9). This gives us the irradiance for a point on the film plane
+
+The ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
+
+$$dw = \frac{ dA cos \theta} {r^2}$$
+
+$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
 
 <!-- From my understanding, although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with **differential solid angle (direction)** not **differential area (patch of surface)**. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane.  
 -->
@@ -463,17 +473,12 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 *More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras). 
 -->
 
-> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [source: https://graphics.stanford.edu/wikis/cs348b-07/Assignment3](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
-
-The ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
-
-$$dw = \frac{ dA cos \theta} {r^2}$$
-
-$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
+> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
 
 In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
 
-<!-- (my thought:) Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf: -->
+<!-- (my thought:) Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf: 
+-->
 
 ```c
 void main() {
@@ -491,9 +496,10 @@ void main() {
 }
 ```
 
-Note that here radiance also have to multiply by cosine term. More detailed explanation can refer to this amazing article:
+Note that here radiance also have to multiply by cosine term. More detailed explanation can refer to this amazing [article](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf)
 
-<embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf">
+<!--
+<embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf"> -->
 
 *This part took me a while to chase down a plausible explanation. May have to revist in the future.
 
