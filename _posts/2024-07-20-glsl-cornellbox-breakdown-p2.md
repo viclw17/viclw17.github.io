@@ -427,14 +427,13 @@ Ray rayGen(in vec2 uv, out float pdf) {
 Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `z = camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
 
-Note that the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$:
+Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. Here is an explanation:
 
 
 <!-- From my understanding, although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with **differential solid angle (direction)** not **differential area (patch of surface)**. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane.  
 -->
 
 <!-- 
-
 ---
 
 I found a similar scenario like [12.2.2 Texture Projection Lights](https://www.pbr-book.org/4ed/Light_Sources/Point_Lights#TextureProjectionLights) from PBRT, which also contains a great explanation for the derication of *pdf* in the code above.
@@ -462,14 +461,11 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 ```
 
 *More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras). 
-
 -->
 
 > GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [source: https://graphics.stanford.edu/wikis/cs348b-07/Assignment3](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
 
-
 The ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
-
 
 $$dw = \frac{ dA cos \theta} {r^2}$$
 
