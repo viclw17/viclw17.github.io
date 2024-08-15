@@ -66,6 +66,7 @@ Radiance is a density over both space and angle.
 
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
+- $L_e(x,v)$ is **exitant light** going towards direction $v$ from point $x$
 - light going in direction $v$ (the viewing direction)
 - materials is modelled by BRDF $f_r$ 
 
@@ -93,21 +94,29 @@ Recap light integral: compute the light which is going into direction v, integra
 
 ---
 
-### 1. recursive formulation
+## 1. recursive formulation
+
+### Recap light integral
+
+$$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
+
+Compute the light which is going into direction $v$, integrate over $hemisphere$, check all directions for $incoming light$, $cosine weighting$ and $material$
+
+Add light emittance, now we have recursive formulation:
 
 $$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
----
+### Expanding the recursion
 
 $$L(x_1 \rightarrow v) = E(x_1 \rightarrow v) + \int_{\Omega_1} f_r(x_1,w_1 \rightarrow v) L(x_1 \leftarrow w_1) cos(\theta_x) dw_1$$
 
 $$L(x_1 \rightarrow w_2) = E(x_2 \rightarrow w_2) + \int_{\Omega_2} f_r(x_2,w \rightarrow w_2) L(x_2 \leftarrow w) cos(\theta_x) dw$$
 
-$L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$
+$$ where, \;\; L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$$
+
+Generally:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
-
----
 
 ### 2. operator formulation
 
