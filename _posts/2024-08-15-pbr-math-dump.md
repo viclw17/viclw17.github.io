@@ -83,17 +83,17 @@ White furnace test, energy conservation
 
 TBC
 
-<!-- 
+
 # Rendering equation
 Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
 ---
 
-recap light integral: compute the light which is going into direction v, integrate over hemisphere, check all directions for incoming light, cosine weighting anf material.
+Recap light integral: compute the light which is going into direction v, integrate over hemisphere, check all directions for incoming light, cosine weighting anf material.
 
 ---
 
-### 1 recursive formulation
+### 1. recursive formulation
 
 $$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
@@ -109,21 +109,23 @@ $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v)
 
 ---
 
-### 2 operator formulation
+### 2. operator formulation
 
 $$L = L_e + TL$$
 
-T: light transport operator
+- T: light transport operator
 
 $$T = KG$$
 
-K: local scattering operator, $L_o = KL_i$, turn incoming radiance into outgoing radiance, material
+- K: local scattering operator, $L_o = KL_i$, turn incoming radiance into outgoing radiance, material
 
-G: propagation operator, $L_i = GL_o$, turn outgoing radiance into incoming radiance, ray-tracing
+- G: propagation operator, $L_i = GL_o$, turn outgoing radiance into incoming radiance, ray-tracing
 
 $$L = (I-T)^{-1} L_e$$
 
-$S = (I-T)^{-1}$ solution operator
+$$S = (I-T)^{-1}$$
+
+- S: solution operator
 
 $$S = (I-T)^{-1} = I + T +T^2+...$$
 
@@ -171,4 +173,4 @@ $f_j$ is a product of several factors:
 - the scattering factors $f_s$ for each inner vertex (reflection point), which model the material
 - and finally the importance emission from the camera $W_e$. 
 
--->
+TBC
