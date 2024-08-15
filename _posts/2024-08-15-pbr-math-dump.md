@@ -63,6 +63,7 @@ Radiance is a density over both space and angle.
 - All relevant quantities (irradiance, etc.) can be derived from radiance
 
 ## BRDF
+
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
 - light going in direction $v$ (the viewing direction)
