@@ -427,18 +427,67 @@ Ray rayGen(in vec2 uv, out float pdf) {
 Note that the ray direction is picked by pointing from pixel position on the screen `sensorPos` to `pinholePos`. Here it seems the pinhole position is **moved forward** by a small amount(?) from the camera position. Sensor position is at `z = camPos`, so this way `ray.direction = normalize(pinholePos - sensorPos)` will guarantee **the camera ray is shooting into the scene**.
 
 
-Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. After a long time research, I found some  nice explanations:
+Interestingly, the generated camera ray here has a _pdf_ as $\frac{1}{cos^3(\theta)}$. After a long time research, I found some explanations:
 
 From pbrt [
 5.4.1 The Camera Measurement Equation](https://www.pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging#TheCameraMeasurementEquation):
 
-> Given the incident radiance function, we can define the irradiance at a point on the film plane. If we start with the definition of irradiance in terms of radiance, Equation (4.7), we can then convert from an integral over solid angle to an integral over area using Equation (4.9). This gives us the irradiance for a point on the film plane
+> Given the **incident radiance** function, we can define the **irradiance at a point** on the **film plane**. If we start with the definition of irradiance in terms of radiance, Equation (4.7), we can then convert from an **integral over solid angle** to an **integral over area** using Equation (4.9).
 
-The ratio between differential solid angle and differential area which is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea):
+$$E(p,n)=\int_\Omega L_i(p,w) |cos\theta|dw_i \;\;\; (4.7)$$
 
+$$dw = \frac{ dA cos \theta} {r^2} \;\;\; (4.9)$$
+
+The ratio between differential solid angle and differential area (4.9) is mentioned in PBRT at [4.2.3 Integrals over Area](https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals#IntegralsoverArea). In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
+
+>  This gives us the irradiance for a point on the film plane:
+
+$$E(p) = \int_AL_i(p,p') \frac{|cos\theta'|}{||p'-p||^2} |cos\theta|dA$$
+
+The perpendicular distance between the back of the lens (pinhole) and the film is z, so $|p'-p| = \frac{z}{cos\theta}, \; \theta' = \theta$, so
+
+$$E(p) = \int_AL_i(p,p') \frac{|cos^3\theta|}{z^2} |cos\theta| dA$$
+
+
+<img src="{{ site.url }}/images/2024-07-20-glsl-cornellbox-breakdown-p2\IMG_1002.jpeg" style="display:block; margin:auto;" width="400">
+
+More detailed explanation can refer to this amazing [article](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf):
+
+> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
+
+<!--
+<embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf"> -->
+
+<!-- 
 $$dw = \frac{ dA cos \theta} {r^2}$$
 
-$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$
+$$dA = \frac{ dw r^2 } {cos \theta} = \frac{ dw (1 / cos \theta)^2 } {cos \theta} = \frac{ dw } {cos^3 \theta}$$ 
+
+-->
+
+Set z = 1 for the camera model. So the generated camera ray has a _pdf_ of $\frac{1}{cos^3(\theta)}$ that the computed radiance have to divide; then the same **cosine term** have to multiply the radiance to get **the real unbiased result**, which in total is equivalent to multiply $cos^4(\theta)$:
+
+```c
+void main() {
+    // ...
+
+    float pdf;
+    Ray ray = rayGen(uv, pdf);
+    float cos_term = dot(camForward, ray.direction);
+
+    // accumulate sampled color on accumTexture
+    vec3 radiance = computeRadiance(ray) / pdf;
+    color = texture(accumTexture, texCoord).xyz + radiance * cos_term;
+
+    // ...
+}
+```
+
+> For cameras where the extent of the film is relatively large with respect to the distance z, the $cos^4(\theta)$ term can meaningfully reduce the incident irradiance—this factor also contributes to **vignetting**. 
+
+> ... Although these factors apply to all of the camera models introduced in this chapter, they are only included in the implementation of the RealisticCamera. The reason is purely pragmatic: most renderers do not model this effect, so omitting it from the simpler camera models makes it easier to compare images rendered by pbrt with those rendered by other systems.
+
+*This part took me a while to chase down a plausible explanation. May have to revist in the future.
 
 <!-- From my understanding, although the radiance is arriving at the pinhole which is a point, the energy is actually distributed across the sensor plane to form the image. Radiance is evaluated with **differential solid angle (direction)** not **differential area (patch of surface)**. As the image is formed on a plane rather than a sphere surface, radiance coming from each ray is contributing different amount to each pixel on the image plane.  
 -->
@@ -473,35 +522,12 @@ void PerspectiveCamera::Pdf_We(const Ray &ray, Float *pdfPos,
 *More details at [16.1.1 Sampling Cameras](https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#SamplingCameras). 
 -->
 
-> GenerateRay returns a weight for the generated ray. The radiance incident along the ray from the scene is modulated by this weight before adding the contribution to the Film. **You will need to compute the correct weight to ensure that the irradiance estimate produced by pbrt is unbiased.** That is, the expected value of the estimate is the actual value of the irradiance integral. Note that the weight depends upon the sampling scheme used. [Source](https://graphics.stanford.edu/wikis/cs348b-07/Assignment3)
 
-In other words, radiance arriving on a point (dA) aka a pixel is in proportion to the radiance arriving from a direction (dw).
 
 <!-- (my thought:) Each camera ray has a particular probability density ralative to direction, which is what radiance is evaluated; so the end result radiance have to divide this pdf: 
 -->
 
-```c
-void main() {
-    // ...
 
-    float pdf;
-    Ray ray = rayGen(uv, pdf);
-    float cos_term = dot(camForward, ray.direction);
-
-    // accumulate sampled color on accumTexture
-    vec3 radiance = computeRadiance(ray) / pdf;
-    color = texture(accumTexture, texCoord).xyz + radiance * cos_term;
-
-    // ...
-}
-```
-
-Note that here radiance also have to multiply by cosine term. More detailed explanation can refer to this amazing [article](https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf)
-
-<!--
-<embed src="https://graphics.stanford.edu/courses/cs348b-06/homework4/cameraexplained.pdf" style="display:block; margin:auto; " width="600" height="400" type="application/pdf"> -->
-
-*This part took me a while to chase down a plausible explanation. May have to revist in the future.
 
 
 <!-- More resources:
