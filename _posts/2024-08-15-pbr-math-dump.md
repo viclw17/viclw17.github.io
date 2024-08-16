@@ -24,6 +24,11 @@ $$L_i(x) = \int_\Omega L_i(x,w)cos(\theta_x)dw$$
 
 > this is irradiance.
 
+<img src="https://www.researchgate.net/profile/Randall-Rauwendaal/publication/258008934/figure/fig4/AS:655141531303937@1533209321138/Irradiance-integrates-the-total-incident-light-over-the-hemisphere-O-and-is-measured-in.png" style="display:block; margin:auto;" width="300">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"><a href="https://www.researchgate.net/publication/258008934_Voxel_Based_Indirect_Illumination_using_Spherical_Harmonics" style="color:lightgrey">Source</a> </figcaption>
+
+> Irradiance integrates the total incident light over the hemisphere Ω and is measured in watts per meter squared [W · m −2 ].
+
 ## Solid angle
 - Projected area on unit sphere. 
 - Full solid angle is $4\pi$. 
