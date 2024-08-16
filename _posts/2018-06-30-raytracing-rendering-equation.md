@@ -12,7 +12,7 @@ Where the journey of physically based rendering begins.
 # The Rendering Equation
 The physical basis for the rendering equation is the **law of conservation of energy**. Assuming that L denotes radiance, we have that at each particular position and direction, the outgoing light (Lo) is the sum of the emitted light (Le) and the reflected light. The reflected light itself is the sum from all directions of the incoming light (Li) multiplied by the surface reflection and cosine of the incident angle.
 
-_[Source](https://blog.demofox.org/2016/09/21/path-tracing-getting-started-with-diffuse-and-emissive/)_
+_[Source: Path Tracing – Getting Started With Diffuse and Emissive - The blog at the bottom of the sea](https://blog.demofox.org/2016/09/21/path-tracing-getting-started-with-diffuse-and-emissive/)_
 
 $$L_o( \omega_o)= L_e(\omega_o)+\int_{\Omega}{f(\omega_i, \omega_o)L_i(\omega_i)(\omega_i \cdot n)\mathrm{d}\omega_i}$$
 
@@ -32,8 +32,7 @@ The above equation is one type of simplified versions, and here is the a more ex
 <br>
 <img src="https://i.redd.it/802mndge03t01.png" width="500" style="display:block; margin:auto;">
 <div style="text-align:center">
-<a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">source</a>
+<a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">Source: Rendering equation explained - Reddit by r/visualizedmath</a>
 </div>
 <br>
 
-TBC
