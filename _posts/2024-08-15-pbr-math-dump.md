@@ -283,7 +283,9 @@ $$L(x \rightarrow v) = E_x$$
 
 $$+ \int_\Omega f_r \; E_{x'} \; cos(\theta_\omega)dw$$
 
-$$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; dw'dw$$
+$$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \;\; E_{x''} \;\; cos(\theta_{\omega'})cos(\theta_w) \;\; dw'dw$$
+
+$$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; \int_{\Omega''} f_r'' \;\; E_{x'''} \;\; cos(\theta_{\omega''})cos(\theta_w')cos(\theta_w) \;\; dw''dw'dw$$
 
 $$ + ... $$
 
@@ -291,7 +293,7 @@ Compare it with the **path integral fomulation**
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
 
-$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infin}} f_j(\bar{x}) d_\mu(\bar{x})$$
+$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infty}} f_j(\bar{x}) d_\mu(\bar{x})$$
 
 The **path integral form** used **a single integral for each bounce**!
 
@@ -315,9 +317,26 @@ $$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})co
 
 $$ + ... $$
 
-pull the sum to the front, we achieve using a single sum for integration with recursion. 
+Pull the sum to the front, we achieve using a single sum for integration with recursion. 
 
+Pseudocode:
 
+```c
+for (i = 0; i < N; i++)
+  v_inv = camera.gen_ray(px, py)
+  pixel_color += Li(v_inv, 0)
+pixel_color /= N
+
+function Li(v_inv, D)
+  if (D >= NUM_BOUNCES)
+    return 0
+  x = scene.trace(v_inv)
+  f = x.emit
+  omega, prob = hemisphere_uniform_world(x)
+  r = make_ray(x, omega)
+  f += x.alb/pi * Li(r, D+1) * dot(x.normal, omega)/prob
+  return f
+```
 
 
 
