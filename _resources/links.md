@@ -6,5 +6,3 @@
 
 - https://www.reedbeta.com/blog/reading-veach-thesis/
 - https://ameye.dev/notes/sampling-the-hemisphere/
-
-- https://fruty.io/2018/03/05/the-rendering-equation-explained/
