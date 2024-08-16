@@ -151,7 +151,6 @@ This equation reaches an equilibrium after infinite time / iterations, after whi
 
 ## 3. Path integral formulation
 
-
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
 
 - $I_j$ is measurement for a sensor element aka pixel
@@ -188,6 +187,12 @@ $f_j$ is a product of several factors:
 
 So the path integral formulation is really just an integral which **integrates over all surfaces at the same time**.
 
+$$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
+
+$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infin}} f_j(\bar{x}) d_\mu(\bar{x})$$
+
+
+
 
 <!-- https://computergraphics.stackexchange.com/questions/9015/rendering-equation-in-terms-of-paths-rather-than-directions
 
@@ -209,7 +214,7 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 # Path tracing
 <!-- https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer -->
 
-## path tracing roadmap
+## Path tracing roadmap
 - rendering equation recap
 - direct lighting
 - path tracing v0.5
@@ -222,33 +227,52 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 
 ## Direct lighting
 
+$$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
+
 Simplify notation:
 
-$$E(x \rightarrow v) \; to \; E_x$$
+- $E(x \rightarrow v) \; to \; E_x$
 
-$$f(x,w \rightarrow v) \; to \; 1/\pi$$
-
-for direct lighting, stop after the first bounce
+- $f(x,w \rightarrow v) \; to \; 1/\pi$
 
 $$L(x \rightarrow v) = E_x + \int_\Omega \frac{1}{\pi} E_y \; cos(\theta_\omega)dw$$
 
-use uniform hemisphere sampling
+For direct lighting, **stop after the first bounce**.
 
-resulting w is in local coordinate frame, z axis is normal to surface
+Replace indefinite integral with Monte Carlo integral:
 
-to intersec scene, rays have to be in world space
+$$ L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N \left( \frac{1}{\pi} E_y \; cos(\theta_{\omega_i}) \frac{1}{p(w_i)} \right) $$
 
-use coordinate transform between local and world
+### Uniform hemisphere sampling
+- For each $w$, draw 2 uniform random numbers $x1,x2$ in range $[0, 1)$
+- Calculate $cos(\theta) = x_1, \; sin(\theta) = \sqrt{1−cos^2(\theta)}$
+- Calculate $cos(\phi) = cos(2\pi x_2) , \; sin(\phi)=sin(2\pi x_2)$
+- $w=Vector3(cos(\phi)sin(\theta),sin(\phi)sin(\theta),cos(\theta) )$
+- $p(w) = \frac{1}{2\pi}$
 
-## Indirect lightng with RE
+Note that resulting $w$ is in **local coordinate frame**, z axis is normal to surface. To intersect scene, rays have to be in **world space**. Use coordinate transform between local and world.
 
-expand the recursive integral 
+## Indirect lighting
+
+$$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
+
+Simplify notation:
+
+- $E(x \rightarrow v) \; to \; E_x$
+
+- $f(x,w \rightarrow v) \; to \; f_r$
+
+then expand the recursive integral:
 
 $$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
 
-## Sample Distribution
+Turning into Monte Carlo integration:
 
-flatten the integral
+$$L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N f_r \; \left( E_{x'} + \frac{1}{N} \sum_{j=1}^N f_{r'} \; ... \; cos(\theta_{\omega_j'})\frac{1}{p(w_j')} \right) \; cos(\theta_{\omega_i})\frac{1}{p(w_i)}$$
+
+## Reconsider sample distribution
+
+Flatten the integral
 
 $$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
 
@@ -262,6 +286,12 @@ $$+ \int_\Omega f_r \; E_{x'} \; cos(\theta_\omega)dw$$
 $$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; dw'dw$$
 
 $$ + ... $$
+
+Compare it with the **path integral fomulation**
+
+$$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
+
+$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infin}} f_j(\bar{x}) d_\mu(\bar{x})$$
 
 The **path integral form** used **a single integral for each bounce**!
 
@@ -285,7 +315,7 @@ $$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})co
 
 $$ + ... $$
 
-pull the sum to the front, achieve using a single sum for integration with recursion. 
+pull the sum to the front, we achieve using a single sum for integration with recursion. 
 
 
 
