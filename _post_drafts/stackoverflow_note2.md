@@ -1,4 +1,7 @@
-#### notes
+# Rendering equation in terms of paths rather than directions
+
+https://computergraphics.stackexchange.com/questions/9015/rendering-equation-in-terms-of-paths-rather-than-directions
+
 This is a very good question. There is a common misconception that Monte Carlo, or integration is applied "recursively" on the rendering equation. 
 
 That is not what's happening. 
