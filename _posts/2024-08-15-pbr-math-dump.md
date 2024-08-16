@@ -207,7 +207,7 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 
 
 # Path tracing
-https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer
+<!-- https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer -->
 
 ## path tracing roadmap
 - rendering equation recap
@@ -220,19 +220,39 @@ https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Trac
 
 <!-- > drand48 is a Linux function, not a standard C++ function.  -->
 
-## Direct lighting with RE
+## Direct lighting
+
+Simplify notation:
+
+$$E(x \rightarrow v) \; to \; E_x$$
+
+$$f(x,w \rightarrow v) \; to \; 1/\pi$$
+
+for direct lighting, stop after the first bounce
 
 $$L(x \rightarrow v) = E_x + \int_\Omega \frac{1}{\pi} E_y \; cos(\theta_\omega)dw$$
 
+use uniform hemisphere sampling
+
+resulting w is in local coordinate frame, z axis is normal to surface
+
+to intersec scene, rays have to be in world space
+
+use coordinate transform between local and world
+
 ## Indirect lightng with RE
+
+expand the recursive integral 
 
 $$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
 
 ## Sample Distribution
 
+flatten the integral
+
 $$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
 
-rewrite this one big integral:
+into:
 
 
 $$L(x \rightarrow v) = E_x$$
@@ -242,8 +262,6 @@ $$+ \int_\Omega f_r \; E_{x'} \; cos(\theta_\omega)dw$$
 $$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; dw'dw$$
 
 $$ + ... $$
-
----
 
 The **path integral form** used **a single integral for each bounce**!
 
@@ -267,7 +285,7 @@ $$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})co
 
 $$ + ... $$
 
-pull the sum to the front...
+pull the sum to the front, achieve using a single sum for integration with recursion. 
 
 
 
