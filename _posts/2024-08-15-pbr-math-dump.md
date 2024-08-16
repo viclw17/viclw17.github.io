@@ -34,6 +34,8 @@ Relationship between a surface patch and the solid angle:
 
 $$dw = \frac{dAcos\theta}{r^2}$$
 
+<img src="{{ site.url }}/images\2024-08-15-pbr-math-dump\Screenshot 2024-08-15 185234.png" style="display:block; margin:auto;" width="400">
+
 ## Light integral over the surface
 Integrate over a single light surface:
 
@@ -117,6 +119,8 @@ Generally:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 
+<img src="{{ site.url }}/images/2024-08-15-pbr-math-dump/Screenshot 2024-08-15 183630.png" style="display:block; margin:auto;" width="400">
+
 ## 2. Operator formulation
 
 $$L = L_e + TL$$
@@ -137,18 +141,26 @@ $$S = (I-T)^{-1}$$
 
 $$S = (I-T)^{-1} = I + T +T^2+...$$
 
-$$L = E + TE+T^2E+..., |T^k|\leq 1$$
+$$L = E + TE+T^2E+\;..., \;\;|T^k|\leq 1$$
 
 This equation reaches an equilibrium after infinite time / iterations, after which it gives us the solution for the light distribution in the scene.
 
 ## 3. Path integral formulation
-So the path integral formulation is really just an integral which integrates over all surfaces at the same time
+
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
+
+- $I_j$ is measurement for a sensor element aka pixel
+- $\Omega$ set of all transport paths at all lengths
+- $f_j$ measurement contribution function
+- $\bar{x}$ path between light source and sensor
+- $\mu$ measure on $\Omega$
 
 $$\bar{x} = x_0 x_1...x_k$$
 
 $$d_\mu(\bar{x}) = dA(x_0) dA(x_1) ... dA(x_k)$$
+
+measurement contribution function:
 
 $$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)G(x_0 \rightarrow x_1)f_s(x_0 \rightarrow x_1 \rightarrow x_2)...W_e^{(j)}(x_{k-1} \rightarrow x_k)$$
 
@@ -156,11 +168,14 @@ $$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\the
 
 $f_j$ is a product of several factors:
 - the light emission $L_e$, which is simply the brightness of the light at position $x_0$ 
-- geometry factors between each pair of vertices -- $G$
-- the scattering factors $f_s$ for each inner vertex (reflection point), which model the material
+- **geometry factors** between each pair of vertices -- $G$
+- the **scattering factors** $f_s$ for each inner vertex (reflection point), which model the material
 - and finally the importance emission from the camera $W_e$. 
 
-TBC
+<img src="{{ site.url }}/images\2024-08-15-pbr-math-dump\Screenshot 2024-08-15 184845.png" style="display:block; margin:auto;" width="600">
+
+So the path integral formulation is really just an integral which **integrates over all surfaces at the same time**.
+
 
 <!-- https://computergraphics.stackexchange.com/questions/9015/rendering-equation-in-terms-of-paths-rather-than-directions
 
