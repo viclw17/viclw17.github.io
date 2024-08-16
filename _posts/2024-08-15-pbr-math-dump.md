@@ -54,6 +54,8 @@ Radiance $L$ is flux per unit projected area per unit solid angle:
 
 $$L = \frac{d\Phi}{dA^\perp dw}$$
 
+<img src="https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiance.svg" style="display:block; margin:auto;" width="200">
+
 Radiance is a density over both space and angle.
 
 - Sensors are sensitive to radiance
@@ -86,6 +88,9 @@ TBC
 
 
 # Rendering equation
+
+<img src="https://i.redd.it/802mndge03t01.png" style="display:block; margin:auto;" width="600">
+
 Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
 ## 1. Recursive formulation
