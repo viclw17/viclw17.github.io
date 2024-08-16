@@ -29,12 +29,16 @@ $$L_i(x) = \int_\Omega L_i(x,w)cos(\theta_x)dw$$
 - Full solid angle is $4\pi$. 
 - Hemisphere has solid angle of $2\pi$
 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Angle_solide_coordonnees.svg/440px-Angle_solide_coordonnees.svg.png" style="display:block; margin:auto;" width="200">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Wikipedia </figcaption>
+
 ## Differential term conversion
 Relationship between a surface patch and the solid angle:
 
 $$dw = \frac{dAcos\theta}{r^2}$$
 
 <img src="{{ site.url }}/images\2024-08-15-pbr-math-dump\Screenshot 2024-08-15 185234.png" style="display:block; margin:auto;" width="400">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Rendering (186.101, 2021S), TU Wien </figcaption>
 
 ## Light integral over the surface
 Integrate over a single light surface:
@@ -56,9 +60,10 @@ Radiance $L$ is flux per unit projected area per unit solid angle:
 
 $$L = \frac{d\Phi}{dA^\perp dw}$$
 
-<img src="https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiance.svg" style="display:block; margin:auto;" width="200">
-
 Radiance is a density over both space and angle.
+
+<img src="https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiance.svg" style="display:block; margin:auto;" width="250">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: pbrt - <a href="https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Radiometry#" style="color:lightgrey">4.1 Radiometry</a> </figcaption>
 
 - Sensors are sensitive to radiance
   - It's what you assign to pixels
@@ -66,11 +71,12 @@ Radiance is a density over both space and angle.
 - radiance stays constant along straight lines*
 - All relevant quantities (irradiance, etc.) can be derived from radiance
 
-## BRDF
+## BSDF
+Recap irradiance:
 
 $$L_i(x) = \int_\Omega L_i(x,w)cos(\theta_x)dw$$
 
-is irradiance. Now update integral to calculate how much light is going to the camera:
+Now update integral to calculate **how much light is going to the camera**:
 
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
@@ -82,6 +88,10 @@ $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
 - light from direction $w$
 - differential solid angle $dw$
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/BSDF05_800.png/560px-BSDF05_800.png" style="display:block; margin:auto;" width="300">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Wikipedia </figcaption>
+
 
 ## Furnace test
 White furnace test, energy conservation
@@ -96,34 +106,38 @@ TBC
 # Rendering equation
 
 <img src="https://i.redd.it/802mndge03t01.png" style="display:block; margin:auto;" width="500">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Reddit - <a href="https://www.reddit.com/r/visualizedmath/comments/8dofla/rendering_equation_explained/" style="color:lightgrey">Rendering equation explained - by r/visualizedmath</a> </figcaption>
 
-Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
+> Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
 ## 1. Recursive formulation
 
-### Recap light integral
+Recap light integral with BSDF:
 
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
-Compute the light which is going into direction $v$, integrate over $hemisphere$, check all directions for **incoming light**, **cosine weighting** and **material**
+It computes the light which is going into direction $v$, integrate over **hemisphere**, check **all directions for incoming light**, **cosine weighting** and **material**
 
 Add light emittance, now we have recursive formulation:
 
 $$L_e(x,v) = E(x,v) + \int_{\Omega} f_r(x,w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
-### Expanding the recursion
+### Expand the recursion
 
 $$L(x_1 \rightarrow v) = E(x_1 \rightarrow v) + \int_{\Omega_1} f_r(x_1,w_1 \rightarrow v) L(x_1 \leftarrow w_1) cos(\theta_x) dw_1$$
 
 $$L(x_1 \rightarrow w_2) = E(x_2 \rightarrow w_2) + \int_{\Omega_2} f_r(x_2,w \rightarrow w_2) L(x_2 \leftarrow w) cos(\theta_x) dw$$
 
-$$ where, \;\; L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$$
+where,
+
+$$L(x_1 \leftarrow w_1) = L(x_1 \rightarrow w_2)$$
+
+<img src="{{ site.url }}/images/2024-08-15-pbr-math-dump/Screenshot 2024-08-15 183630.png" style="display:block; margin:auto;" width="400">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Rendering (186.101, 2021S), TU Wien </figcaption>
 
 Generally:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
-
-<img src="{{ site.url }}/images/2024-08-15-pbr-math-dump/Screenshot 2024-08-15 183630.png" style="display:block; margin:auto;" width="400">
 
 ## 2. Operator formulation
 
@@ -147,23 +161,26 @@ $$S = (I-T)^{-1} = I + T +T^2+...$$
 
 $$L = E + TE+T^2E+\;..., \;\;|T^k|\leq 1$$
 
-This equation reaches an equilibrium after infinite time / iterations, after which it gives us the solution for the light distribution in the scene.
+This equation reaches an **equilibrium** after infinite time / iterations, after which it gives us the solution for the light distribution in the scene.
 
 ## 3. Path integral formulation
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
 
 - $I_j$ is measurement for a sensor element aka pixel
-- $\Omega$ set of all transport paths at all lengths
-- $f_j$ measurement contribution function
-- $\bar{x}$ path between light source and sensor
-- $\mu$ measure on $\Omega$
+- $\Omega$ is tje set of **all transport paths at all lengths**
+- $f_j$ is *measurement contribution function*
+- $\bar{x}$ is path between light source and sensor
+- $\mu$ is measure on $\Omega$
+
+<img src="{{ site.url }}/images\2024-08-15-pbr-math-dump\Screenshot 2024-08-15 184845.png" style="display:block; margin:auto;" width="600">
+<figcaption style="text-align:center; font-size:15px; font-style:italic;"> Source: Rendering (186.101, 2021S), TU Wien </figcaption>
 
 $$\bar{x} = x_0 x_1...x_k$$
 
 $$d_\mu(\bar{x}) = dA(x_0) dA(x_1) ... dA(x_k)$$
 
-measurement contribution function:
+Expand the **measurement contribution function**:
 
 $$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)$$
 
@@ -178,25 +195,27 @@ where,
 $$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\theta_i')|}{||x-x'||^2}$$
 
 $f_j$ is a product of several factors:
-- the light emission $L_e$, which is simply the brightness of the light at position $x_0$ 
-- **geometry factors** between each pair of vertices -- $G$
+- the **light emission** $L_e$, which is simply the brightness of the light at position $x_0$ 
+- the **geometry factors** between each pair of vertices -- $G$
 - the **scattering factors** $f_s$ for each inner vertex (reflection point), which model the material
 - and finally the importance emission from the camera $W_e$. 
 
-<img src="{{ site.url }}/images\2024-08-15-pbr-math-dump\Screenshot 2024-08-15 184845.png" style="display:block; margin:auto;" width="600">
 
 So the path integral formulation is really just an integral which **integrates over all surfaces at the same time**.
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
 
-$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infin}} f_j(\bar{x}) d_\mu(\bar{x})$$
+$$= \int_{\Omega_0} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; \int_{\Omega_1} f_j(\bar{x}) d_\mu(\bar{x}) \; + \; ... \; + \;\int_{\Omega_{\infty}} f_j(\bar{x}) d_\mu(\bar{x})$$
 
+
+More on pbrt:
+
+- [13.1.3 The Surface Form of the LTE](https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation#TheSurfaceFormoftheLTE)
+- [13.1.4 Integral over Paths](https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation#IntegraloverPaths)
 
 
 
 <!-- https://computergraphics.stackexchange.com/questions/9015/rendering-equation-in-terms-of-paths-rather-than-directions
-
----
 
 https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path-Space_Measurement_Equation#
 
@@ -226,6 +245,7 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 <!-- > drand48 is a Linux function, not a standard C++ function.  -->
 
 ## Direct lighting
+Start from recursive formulation for rendering equation:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 
@@ -243,6 +263,11 @@ Replace indefinite integral with Monte Carlo integral:
 
 $$ L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N \left( \frac{1}{\pi} E_y \; cos(\theta_{\omega_i}) \frac{1}{p(w_i)} \right) $$
 
+Pull the sum out:
+
+$$ L(x \rightarrow v) = \frac{1}{N} \sum_{i=1}^N \left( E_x + \frac{1}{\pi} E_y \; cos(\theta_{\omega_i}) \frac{1}{p(w_i)} \right) $$
+
+
 ### Uniform hemisphere sampling
 - For each $w$, draw 2 uniform random numbers $x1,x2$ in range $[0, 1)$
 - Calculate $cos(\theta) = x_1, \; sin(\theta) = \sqrt{1−cos^2(\theta)}$
@@ -252,7 +277,27 @@ $$ L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N \left( \frac{1}{\pi} E_y 
 
 Note that resulting $w$ is in **local coordinate frame**, z axis is normal to surface. To intersect scene, rays have to be in **world space**. Use coordinate transform between local and world.
 
+Pseudocode:
+
+```c
+for (i = 0; i < N; i++)
+  v_inv = camera.gen_ray(px, py)
+  x = scene.trace(v_inv)
+  f = x.emit
+  omega_i, prob_i = hemisphere_uniform_world(x)
+  
+  r = make_ray(x, omega_i)
+  y = scene.trace(r)
+  
+  f = 1/pi * y.emit * dot(x.normal, omega_i) / prob_i
+  
+  pixel_color += f
+
+pixel_color /= N
+```
+
 ## Indirect lighting
+Start from recursive formulation for rendering equation:
 
 $$L(x \rightarrow v) = E(x \rightarrow v) + \int_{\Omega} f_r(x,w \rightarrow v) L(x \leftarrow w) cos(\theta_x) dw$$
 
@@ -270,7 +315,33 @@ Turning into Monte Carlo integration:
 
 $$L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N f_r \; \left( E_{x'} + \frac{1}{N} \sum_{j=1}^N f_{r'} \; ... \; cos(\theta_{\omega_j'})\frac{1}{p(w_j')} \right) \; cos(\theta_{\omega_i})\frac{1}{p(w_i)}$$
 
-## Reconsider sample distribution
+or collapse back:
+
+$$L(x \rightarrow v) = E_x + \frac{1}{N} \sum_{i=1}^N f_r \; L(x \leftarrow w_i) \; cos(\theta_{\omega_i})\frac{1}{p(w_i)}$$
+
+Pseudocode:
+
+```c
+v_inv = camera.gen_ray(px, py)
+pixel_color = Li(v_inv, 0)
+
+function Li(v_inv, D)
+  if (D >= NUM_BOUNCES)
+    return 0
+  
+  x = scene.trace(v_inv)
+  f = 0
+  
+  for (i = 0; i < N; i++)
+    omega_i, prob_i = hemisphere_uniform_world(x)
+    ray = make_ray(x, omega_i)
+    f += x.alb/pi * Li(ray, D+1) * dot(x.normal, omega_i) / prob_i
+  
+  return x.emit + f/N
+
+```
+
+### Reconsider sample distribution
 
 Flatten the integral
 
@@ -289,6 +360,8 @@ $$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; \int_{\Omega''} f_r'' \;\; E_{x'''
 
 $$ + ... $$
 
+## Recap path integral form
+
 Compare it with the **path integral fomulation**
 
 $$I_j = \int_\Omega f_j(\bar{x}) d_\mu(\bar{x})$$
@@ -303,11 +376,13 @@ $$+ \int_{\Omega_1} \; f_r \; E_{x'} \; cos(\theta_\omega) \; d\mu({\bar x})$$
 
 $$+ \int_{\Omega_2} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; d\mu({\bar x})$$
 
+$$+ \int_{\Omega_3} \; f_r f_r' f_r'' \;\; E_{x'''} \;\; cos(\theta_{\omega''})cos(\theta_{\omega'})cos(\theta_w) \;\; d\mu({\bar x})$$
+
 $$ + ... $$
 
 <!-- > https://www.overleaf.com/learn/latex/Integrals%2C_sums_and_limits -->
 
-replace each integral with **Monte Carlo integration**
+Replace each integral with **Monte Carlo integration**
 
 $$ L(x \rightarrow v) = E_x $$
 
@@ -317,7 +392,7 @@ $$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})co
 
 $$ + ... $$
 
-Pull the sum to the front, we achieve using a single sum for integration with recursion. 
+Pull the sum to the front, we achieve **using a single sum for integration with recursion**. 
 
 Pseudocode:
 
@@ -330,14 +405,16 @@ pixel_color /= N
 function Li(v_inv, D)
   if (D >= NUM_BOUNCES)
     return 0
+  
   x = scene.trace(v_inv)
   f = x.emit
   omega, prob = hemisphere_uniform_world(x)
+  
   r = make_ray(x, omega)
+  
   f += x.alb/pi * Li(r, D+1) * dot(x.normal, omega)/prob
+  
   return f
 ```
 
-
-
-TBC
+END
