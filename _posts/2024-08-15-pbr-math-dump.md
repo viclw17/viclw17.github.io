@@ -95,7 +95,7 @@ TBC
 
 # Rendering equation
 
-<img src="https://i.redd.it/802mndge03t01.png" style="display:block; margin:auto;" width="600">
+<img src="https://i.redd.it/802mndge03t01.png" style="display:block; margin:auto;" width="500">
 
 Photons are emitted from light sources, reflected by surfaces in the scene until they reach the sensor. In rendering, we (can) go the opposite way. We trace importons until they reach a light source.
 
@@ -206,3 +206,71 @@ https://pbr-book.org/3ed-2018/Light_Transport_III_Bidirectional_Methods/The_Path
 
 
 
+# Path tracing
+https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer
+
+## path tracing roadmap
+- rendering equation recap
+- direct lighting
+- path tracing v0.5
+- sample distribution
+- russian roulette
+- bsdf interface
+- path tracing v1.0
+
+<!-- > drand48 is a Linux function, not a standard C++ function.  -->
+
+## Direct lighting with RE
+
+$$L(x \rightarrow v) = E_x + \int_\Omega \frac{1}{\pi} E_y \; cos(\theta_\omega)dw$$
+
+## Indirect lightng with RE
+
+$$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
+
+## Sample Distribution
+
+$$L(x \rightarrow v) = E_x + \int_\Omega f_r \; \left( E_{x'} + \int_{\Omega'} f_{r'} \; ... \; cos(\theta_{\omega'})dw' \right) \; cos(\theta_\omega)dw$$
+
+rewrite this one big integral:
+
+
+$$L(x \rightarrow v) = E_x$$
+
+$$+ \int_\Omega f_r \; E_{x'} \; cos(\theta_\omega)dw$$
+
+$$+ \int_\Omega f_r \; \int_{\Omega'} f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; dw'dw$$
+
+$$ + ... $$
+
+---
+
+The **path integral form** used **a single integral for each bounce**!
+
+$$ L(x \rightarrow v) = E_x $$
+
+$$+ \int_{\Omega_1} \; f_r \; E_{x'} \; cos(\theta_\omega) \; d\mu({\bar x})$$
+
+$$+ \int_{\Omega_2} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; d\mu({\bar x})$$
+
+$$ + ... $$
+
+<!-- > https://www.overleaf.com/learn/latex/Integrals%2C_sums_and_limits -->
+
+replace each integral with **Monte Carlo integration**
+
+$$ L(x \rightarrow v) = E_x $$
+
+$$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r \; E_{x'} \; cos(\theta_\omega) \; \frac{1}{p(w)}$$
+
+$$+ \frac{1}{N} \sum_{i=1}^{N} \; f_r f_r' \; E_{x''} \; cos(\theta_{\omega'})cos(\theta_w) \; \frac{1}{p(w)p(w')}$$
+
+$$ + ... $$
+
+pull the sum to the front...
+
+
+
+
+
+TBC
