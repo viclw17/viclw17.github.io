@@ -166,7 +166,15 @@ $$d_\mu(\bar{x}) = dA(x_0) dA(x_1) ... dA(x_k)$$
 
 measurement contribution function:
 
-$$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)G(x_0 \rightarrow x_1)f_s(x_0 \rightarrow x_1 \rightarrow x_2)...W_e^{(j)}(x_{k-1} \rightarrow x_k)$$
+$$f_j(\bar{x}) = L_e(x_0 \rightarrow x_1)$$
+
+$$G(x_0 \rightarrow x_1)f_s(x_0 \rightarrow x_1 \rightarrow x_2)$$
+
+$$G(x_1 \rightarrow x_2)f_s(x_1 \rightarrow x_2 \rightarrow x_3)$$
+
+$$... \; G(x_{k-1} \rightarrow x_k)W_e^{(j)}(x_{k-1} \rightarrow x_k)$$
+
+where,
 
 $$G(x \leftrightarrow x') = V(x \leftrightarrow x') \frac{|cos(\theta_o)cos(\theta_i')|}{||x-x'||^2}$$
 
