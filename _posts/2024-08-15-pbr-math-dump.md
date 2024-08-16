@@ -68,6 +68,10 @@ Radiance is a density over both space and angle.
 
 ## BRDF
 
+$$L_i(x) = \int_\Omega L_i(x,w)cos(\theta_x)dw$$
+
+is irradiance. Now update integral to calculate how much light is going to the camera:
+
 $$L_e(x,v) = \int_\Omega f_r(x, w \rightarrow v) L_i(x,w) cos(\theta_x) dw$$
 
 - $L_e(x,v)$ is **exitant light** going towards direction $v$ from point $x$
