@@ -1,5 +1,5 @@
 ---
-title: "Path Tracing Cornell Note"
+title: "Cornell Note on Path Tracing Algorithms"
 type: article
 layout: post
 # image: 2024-08-15-pbr-math-dump/thomas-t-OPpCbAAKWv8-unsplash.jpg
@@ -10,12 +10,13 @@ Archived source from [link](https://www.cs.cornell.edu/courses/cs6630/2022fa/)
 {:toc}
 
 # Version 0: brute force recursive sampling
+The idea of path tracing is to use **Monte Carlo** to compute the **illumination integral** for **a surface point**, 
 
-The idea of path tracing is to use Monte Carlo to compute the illumination integral for a surface point, but to make a recursive call to get all radiance incident on the surface rather than just the direct radiance.
+but to **make a recursive call** to get all radiance incident on the surface rather than just the direct radiance.
 
 $$L_r(x,w)=\int_{H^2}f_r(x,w,w')L_i(x,w')d\mu(w')$$
 
-- integrand: $f_r(x,w,w')L_i(x,w')$
+- integrand: $f_r(x,w,w')L_i(x,w')$, recursive here!
 - probability: $d\mu(w')$, uniform $\frac{1}{\pi}$
 - estimator:
 
@@ -31,16 +32,12 @@ rayRadianceEst(x, ω):
 reflectedRadianceEst(x, ωr): 
     ωi = uniformRandomPSA(n(x)) 
     return π * brdf(x, ωi, ωr) * rayRadianceEst(x, ωi)
-
 ```
 
-
-
 # Version 0.5: Russian Roulette
-
-When we are evaluating the integral we 
-- replace a fraction of the samples with zero (i.e. terminate some paths) and 
-- increase the weight of the remaining samples to preserve the mean.
+When we are evaluating the integral we:
+- replace a fraction of the samples with zero (i.e. **terminate some paths**) and 
+- **increase the weight** of the remaining samples to **preserve the mean**.
 
 ```c
 rayRadianceEst(x, ω): 
@@ -56,8 +53,9 @@ reflectedRadianceEst(x, ωr):
 ```
 
 # Version 0.75: BRDF sampling
+We can improve things by doing **importance sampling according to the BRDF** rather than the **uniform projected solid angle** sampling.
 
-We can improve things by doing **importance sampling according to the BRDF** rather than the **uniform projected solid angle** sampling
+Replace dividing $1/\pi$ with $1/pdf$.
 
 ```c
 rayRadianceEst(x, ω): 
@@ -70,29 +68,29 @@ reflectedRadianceEst(x, ωr):
         return brdf(x, ωi, ωr) * rayRadianceEst(x, ωi) / (pdf * survivalProbability) 
     else 
         return 0
-
 ```
 
 # Version 1.0: direct illumination
-
-Separate the integral into direct and indirect and use two samples
+Separate the integral into direct and indirect and use two samples:
 
 $$L_r(x,w)=\int_{H^2}f_r(x,w,w') \; [L_i^{0}(x,w'), L_i^{+}(x,w')] \; d\mu(w')$$
 
 $$=\int_{H^2}f_r(x,w,w') \; L_i^{0}(x,w')d\mu(w') + \int_{H^2}f_r(x,w,w') \; L_i^{+}(x,w') \; d\mu(w')$$
-
 
 - sample according to luminaires $P_L$
 - sample according to BRDF $P_B$
 
 This means we trace two rays, 
 
-- one by luminaire (L) sampling and 
-- one by BRDF (B) sampling.
+- one by **luminaire (L) sampling** and 
+- one by **BRDF (B) sampling**.
 
 The L ray goes toward a luminaire and its **radiance value is the emitted light** from its direction.
 
 > We don’t recurse on the L ray (called a **shadow ray**).  
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Ray_trace_diagram.svg/2880px-Ray_trace_diagram.svg.png" style="display:block; margin:auto;" width="300">
+<!-- <figcaption style="text-align:center; font-size:15px; font-style:italic;"><a href="https://www.researchgate.net/publication/258008934_Voxel_Based_Indirect_Illumination_using_Spherical_Harmonics" style="color:lightgrey">Source</a> </figcaption> -->
 
 The B ray (the indirect ray) goes in some arbitrary direction (maybe toward a luminaire, maybe not) but in either case its **radiance value is the reflected light (recursively estimated)** of the surface it hits.  
 
@@ -122,7 +120,6 @@ indirectRadianceEst(x, ωr):
         return brdf(x, ωi, ωr)  * reflectedRadianceEst(y, –ωi) / (pdf * survivalProbability) 
     else: 
         return 0
-
 ```
 
 # Version 1.0m: direct by multiple importance
