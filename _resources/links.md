@@ -6,3 +6,7 @@
 
 - https://www.reedbeta.com/blog/reading-veach-thesis/
 - https://ameye.dev/notes/sampling-the-hemisphere/
+
+- https://github.com/marksurnin/computer-graphics-nyuad/issues/2
+> This issue is created to address the problem of converting a recursive ray tracing algorithm to an iterative one. GLSL for WebGL does not support recursive function calls.
+
