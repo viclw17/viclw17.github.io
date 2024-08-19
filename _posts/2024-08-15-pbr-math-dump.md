@@ -4,7 +4,7 @@ type: article
 layout: post
 image: 2024-08-15-pbr-math-dump/thomas-t-OPpCbAAKWv8-unsplash.jpg
 ---
-A post of all mathmatical descriptions for rendering and path tracing theories that I found inspiring. Mainly based on the open courses [Rendering (186.101, 2021S) by TU Wien](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr), and with references to *pbrt*.
+A post of all mathmatical descriptions and diagrams for rendering and path tracing theories that I found inspiring. Mainly based on the open courses [Rendering (186.101, 2021S) by TU Wien](https://youtube.com/playlist?list=PLmIqTlJ6KsE2yXzeq02hqCDpOdtj6n6A9&si=0UzTvrBhRnMOKXVr), and few references to *pbrt*.
 
 * This will become a table of contents (this text will be scrapped).
 {:toc}
