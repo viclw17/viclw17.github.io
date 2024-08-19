@@ -1,0 +1,1 @@
+- https://cgg.mff.cuni.cz/~jaroslav/teaching/2019-npgr010/
