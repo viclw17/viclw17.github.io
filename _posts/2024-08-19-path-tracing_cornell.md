@@ -39,6 +39,14 @@ When we are evaluating the integral we:
 - replace a fraction of the samples with zero (i.e. **terminate some paths**) and 
 - **increase the weight** of the remaining samples to **preserve the mean**.
 
+proof:
+
+$g(x)$ is an estimator for L,
+
+$$g'(x)  = \begin{cases} \frac{1}{q}g(x), \; with \; probability \; q \\0, \; with \; probability \; (1-q)\end{cases}$$
+
+$$E\{g'(x)\}=q \cdot (\frac{1}{q}g(x)) + (1-q) \cdot 0 = g(x)$$
+
 ```c
 rayRadianceEst(x, ω): 
     y = traceRay(x, ω) 
